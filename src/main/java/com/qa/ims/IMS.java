@@ -31,44 +31,51 @@ public class IMS {
 		String password = utils.getString();
 
 		DBUtils.connect(username, password);
+
 		Domain domain = null;
 		do {
 			LOGGER.info("Which entity would you like to use?");
 			Domain.printDomains();
 
 			domain = Domain.getDomain(utils);
-			boolean changeDomain = false;
-			do {
 
-				CrudController<?> active = null;
-				switch (domain) {
-				case CUSTOMER:
-					active = this.customers;
-					break;
-				case ITEM:
-					active = null;
-					break;
-				case ORDER:
-					active = null;
-					break;
-				case STOP:
-					return;
-				default:
-					break;
-				}
+			domainAction(domain);
 
-				LOGGER.info("What would you like to do with " + domain.name().toLowerCase() + ":");
-
-				Action.printActions();
-				Action action = Action.getAction(utils);
-
-				if (action == Action.RETURN) {
-					changeDomain = true;
-				} else {
-					doAction(active, action);
-				}
-			} while (!changeDomain);
 		} while (domain != Domain.STOP);
+	}
+
+	private void domainAction(Domain domain) {
+		boolean changeDomain = false;
+		do {
+
+			CrudController<?> active = null;
+			switch (domain) {
+			case CUSTOMER:
+				active = this.customers;
+				break;
+			case ITEM:
+				active = null;
+				break;
+			case ORDER:
+				active = null;
+				break;
+			case STOP:
+				return;
+			default:
+				break;
+			}
+
+			LOGGER.info("What would you like to do with " + domain.name().toLowerCase() + ":");
+
+			Action.printActions();
+			Action action = Action.getAction(utils);
+
+			if (action == Action.RETURN) {
+				changeDomain = true;
+			} else {
+				doAction(active, action);
+			}
+		} while (!changeDomain);
 	}
 
 	public void doAction(CrudController<?> crudController, Action action) {
