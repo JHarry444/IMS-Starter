@@ -7,14 +7,14 @@ public class Customer {
 	private String surname;
 
 	public Customer(String firstName, String surname) {
-		this.firstName = firstName;
-		this.surname = surname;
+		this.setFirstName(firstName);
+		this.setSurname(surname);
 	}
 
 	public Customer(Long id, String firstName, String surname) {
-		this.id = id;
-		this.firstName = firstName;
-		this.surname = surname;
+		this.setId(id);
+		this.setFirstName(firstName);
+		this.setSurname(surname);
 	}
 
 	public Long getId() {
@@ -65,10 +65,10 @@ public class Customer {
 		if (getClass() != obj.getClass())
 			return false;
 		Customer other = (Customer) obj;
-		if (firstName == null) {
-			if (other.firstName != null)
+		if (getFirstName() == null) {
+			if (other.getFirstName() != null)
 				return false;
-		} else if (!firstName.equals(other.firstName))
+		} else if (!getFirstName().equals(other.getFirstName()))
 			return false;
 		if (id == null) {
 			if (other.id != null)
