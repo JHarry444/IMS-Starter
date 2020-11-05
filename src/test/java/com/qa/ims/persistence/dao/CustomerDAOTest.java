@@ -17,8 +17,7 @@ public class CustomerDAOTest {
 
 	@Before
 	public void setup() {
-		DBUtils.connect("src/test/resources/db.properties");
-		DBUtils.getInstance().init("src/test/resources/sql-schema.sql", "src/test/resources/sql-data.sql");
+		DBUtils.getInstance().executeSQLFiles("src/test/resources/sql-schema.sql", "src/test/resources/sql-data.sql");
 	}
 
 	@Test

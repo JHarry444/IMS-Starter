@@ -17,6 +17,12 @@ public class CustomerDAO implements Dao<Customer> {
 
 	public static final Logger LOGGER = LogManager.getLogger();
 
+	/**
+	 * Converts a <code>ResultSet</code> into a <code>Customer</code> entity.
+	 * 
+	 * @param resultSet The <code>ResultSet</code> returned by a JDBC query.
+	 * @return <code>Customer</code> entity.
+	 */
 	@Override
 	public Customer modelFromResultSet(ResultSet resultSet) throws SQLException {
 		Long id = resultSet.getLong("id");
@@ -47,6 +53,11 @@ public class CustomerDAO implements Dao<Customer> {
 		return new ArrayList<>();
 	}
 
+	/**
+	 * Fetches newest <code>Customer</code> entity from data source.
+	 * 
+	 * @return <code>Customer</code> entity or <code>null</code>
+	 */
 	public Customer readLatest() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
@@ -61,9 +72,10 @@ public class CustomerDAO implements Dao<Customer> {
 	}
 
 	/**
-	 * Creates a customer in the database
+	 * Creates a customer in the database.
 	 * 
 	 * @param customer - takes in a customer object. id will be ignored
+	 * @return New customer entity or <code>null</code>
 	 */
 	@Override
 	public Customer create(Customer customer) {
@@ -79,6 +91,11 @@ public class CustomerDAO implements Dao<Customer> {
 		return null;
 	}
 
+	/**
+	 * 
+	 * @param id The id of the <code>Customer</code> to fetch from the data source
+	 * @return The matching <code>Customer</code> entity or <code>null</code>
+	 */
 	public Customer readCustomer(Long id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
@@ -93,11 +110,11 @@ public class CustomerDAO implements Dao<Customer> {
 	}
 
 	/**
-	 * Updates a customer in the database
+	 * Updates a customer in the database.
 	 * 
-	 * @param customer - takes in a customer object, the id field will be used to
-	 *                 update that customer in the database
-	 * @return
+	 * @param customer - takes in a <code>Customer</code> object, the id field will
+	 *                 be used to update that customer in the database
+	 * @return updated <code>Customer</code> entity or <strong>null</strong>
 	 */
 	@Override
 	public Customer update(Customer customer) {
@@ -114,7 +131,7 @@ public class CustomerDAO implements Dao<Customer> {
 	}
 
 	/**
-	 * Deletes a customer in the database
+	 * Deletes a customer in the database.
 	 * 
 	 * @param id - id of the customer
 	 */

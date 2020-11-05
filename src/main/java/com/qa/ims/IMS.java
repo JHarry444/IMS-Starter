@@ -22,11 +22,11 @@ public class IMS {
 		this.utils = new Utils();
 		final CustomerDAO custDAO = new CustomerDAO();
 		this.customers = new CustomerController(custDAO, utils);
+		DBUtils.getInstance();
 	}
 
 	public void imsSystem() {
 		LOGGER.info("Welcome to the Inventory Management System!");
-		DBUtils.connect();
 
 		Domain domain = null;
 		do {

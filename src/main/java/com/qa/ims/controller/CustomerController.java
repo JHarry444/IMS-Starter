@@ -28,6 +28,8 @@ public class CustomerController implements CrudController<Customer> {
 
 	/**
 	 * Reads all customers to the logger
+	 * 
+	 * @return List of Customers
 	 */
 	@Override
 	public List<Customer> readAll() {
@@ -39,7 +41,9 @@ public class CustomerController implements CrudController<Customer> {
 	}
 
 	/**
-	 * Creates a customer by taking in user input
+	 * Creates a Customer by taking in user input
+	 * 
+	 * @return a new Customer
 	 */
 	@Override
 	public Customer create() {
@@ -53,7 +57,9 @@ public class CustomerController implements CrudController<Customer> {
 	}
 
 	/**
-	 * Updates an existing customer by taking in user input
+	 * Updates an existing Customer by taking in user input
+	 * 
+	 * @return The updated Customer
 	 */
 	@Override
 	public Customer update() {
@@ -71,7 +77,7 @@ public class CustomerController implements CrudController<Customer> {
 	/**
 	 * Deletes an existing customer by the id of the customer
 	 * 
-	 * @return
+	 * @return number of customers deleted
 	 */
 	@Override
 	public int delete() {

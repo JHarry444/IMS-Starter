@@ -1,5 +1,11 @@
 package com.qa.ims.persistence.domain;
 
+/**
+ * Customer entity.
+ * 
+ * @author Chris Perrins
+ *
+ */
 public class Customer {
 
 	private Long id;
