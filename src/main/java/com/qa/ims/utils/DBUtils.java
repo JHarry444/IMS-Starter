@@ -25,7 +25,7 @@ public class DBUtils {
 		this.DB_USER = username;
 		this.DB_PASS = password;
 
-		init();
+//		init();
 	}
 
 	public int init() {
