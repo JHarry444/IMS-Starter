@@ -1,4 +1,3 @@
-drop schema ims;
 CREATE SCHEMA IF NOT EXISTS `ims`;
 USE `ims` ;
 CREATE TABLE IF NOT EXISTS `ims`.`customers` (

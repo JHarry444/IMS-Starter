@@ -3,17 +3,17 @@ package com.qa.ims.persistence.domain;
 public class Item {
 	
 	private Long ID;
-	private String name;
+	private String title;
 	private Double value;
 	
-	public Item(String name, Double value) {
-		this.name = name;
+	public Item(String title, Double value) {
+		this.title = title;
 		this.value = value;
 	}
 	
-	public Item(Long ID, String name, Double value) {
+	public Item(Long ID, String title, Double value) {
 		this.ID = ID;
-		this.name = name;
+		this.title = title;
 		this.value = value;
 	}
 
@@ -25,12 +25,12 @@ public class Item {
 		ID = iD;
 	}
 
-	public String getName() {
-		return name;
+	public String getTitle() {
+		return title;
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.title = name;
 	}
 
 	public Double getValue() {
@@ -42,7 +42,7 @@ public class Item {
 	}
 	@Override
 	public String toString() {
-		return "id:"+ID+" name: "+name +" Value: "+value;
+		return "id:"+ID+" Title: "+title +" Value: "+value;
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -53,10 +53,10 @@ public class Item {
 		if (getClass() != obj.getClass())
 			return false;
 		Item other = (Item) obj;
-		if (name == null) {
-			if (other.name != null)
+		if (title == null) {
+			if (other.title != null)
 				return false;
-		} else if (!name.equals(other.name))
+		} else if (!title.equals(other.title))
 			return false;
 		if (ID == null) {
 			if (other.ID != null)

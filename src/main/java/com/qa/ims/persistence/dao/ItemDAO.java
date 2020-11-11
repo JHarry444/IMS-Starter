@@ -15,14 +15,100 @@ import com.qa.ims.utils.DBUtils;
 
 public class ItemDAO {
 	public static final Logger LOGGER = LogManager.getLogger();
-	
+
 	public Item modelFromResultSet(ResultSet resultSet) throws SQLException {
 		Long id = resultSet.getLong("ID");
-		String name = resultSet.getString("name");
-		Double value = resultSet.getDouble("Value");
-		return new Item(id,name,value);
+		String title = resultSet.getString("title");
+		Double price = resultSet.getDouble("price");
+		return new Item(id,title,price);
 	}
-	//reading customers
+	//reading items
+	public List<Item> readAll(){
+		try(Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement.executeQuery("select * from items");
+				) {
+					List<Item> items = new ArrayList<>();
+					while(resultSet.next()) {
+						items.add(modelFromResultSet(resultSet));
+					}
+					return items;
+				}catch (SQLException e) {
+					LOGGER.debug(e);
+					LOGGER.error(e.getMessage());
+				}
+				return new ArrayList<>();
+	}
+	public Item readLatest() {
+		try(Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement.executeQuery("Select * from items order by id desc limit 1");
+				){
+					resultSet.next();
+					return modelFromResultSet(resultSet);
+				} catch(Exception e) {
+					LOGGER.debug(e);
+					LOGGER.error(e.getMessage());
+				}
+				return null;
+	}
+	public Item create(Item item) {
+		try(
+			Connection connection = DBUtils.getInstance().getConnection();
+			Statement statement = connection.createStatement();
+			){
+			statement.executeUpdate("insert into items(title,price)values('"+item.getTitle()+"','"+item.getValue()+"')");
+			return readLatest();
+	}	catch(Exception e) {
+		LOGGER.debug(e);
+		LOGGER.error(e.getMessage());
+	}
+	return null;
+	}
 	
-
+	public Item readItem(Long id) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM items where ID = " + id);) {
+			resultSet.next();
+			return modelFromResultSet(resultSet);
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return null;
+	}
+	
+	public Item update(Item item) {
+		try(
+			Connection connection = DBUtils.getInstance().getConnection();
+			Statement statement = connection.createStatement();)
+		{
+			statement.executeUpdate("update items set title='"+item.getTitle()+"',price ="+item.getValue()+"WHERE ID ="+item.getID());
+			return readItem(item.getID());
+		} catch(Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return null;
+	}
+	public static int delete(long id) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();) {
+				return statement.executeUpdate("delete from items where ID ="+id);
+		}catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return 0;
+				
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 }
