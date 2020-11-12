@@ -32,7 +32,7 @@ public class ItemController implements CrudController<Item> {
 		for (Item item:items) {
 			LOGGER.info(item.toString());
 		}
-		return null;
+		return items;
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class ItemController implements CrudController<Item> {
 		LOGGER.info("Please enter price");
 		Double price = utils.getDouble();
 		Item item = itemDAO.create(new Item(title,price));
-		return null;
+		return item;
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public class ItemController implements CrudController<Item> {
 		LOGGER.info("Please enter a new price");
 		Double price = utils.getDouble();
 		Item item = itemDAO.update(new Item(id,title,price));
-		return null;
+		return item;
 	}
 
 	@Override
