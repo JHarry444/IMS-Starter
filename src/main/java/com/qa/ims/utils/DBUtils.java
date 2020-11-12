@@ -24,7 +24,6 @@ public class DBUtils {
 	private DBUtils(String username, String password) {
 		this.DB_USER = username;
 		this.DB_PASS = password;
-
 		init();
 	}
 
