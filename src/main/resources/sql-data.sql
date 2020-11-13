@@ -1,0 +1,1 @@
+insert into `ims`.`customers` (`first_name`,`surname`) values ("tom","smith");
