@@ -36,11 +36,13 @@ public class OrderController implements CrudController<Order>{
 	public Order create() {
 		LOGGER.info("Please enter the ID of the customer making the order");
 		Long custID = utils.getLong();
-		LOGGER.info("please enter Item ID to add to order");
-		Long itemID = utils.getLong();
 		Order order = orderDAO.create(new Order(custID));
-		return order;
-	}
+		//boolean active = true;
+		LOGGER.info("please enter Item ID to add to order");
+		//Long itemID = utils.getLong();
+		//while(active) {
+		return order;	
+		}
 	
 	@Override
 	public Order update() {

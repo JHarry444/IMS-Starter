@@ -26,6 +26,12 @@ public class OrderDAO implements Dao<Order> {
 		Long total = resultSet.getLong("Total");
 		return new Order(id, customerID,customer,items,total);
 	}
+	
+	public Order limitedmodel(ResultSet resultSet) throws SQLException{
+		Long id = resultSet.getLong("OrderID");
+		Long customerID = resultSet.getLong("CustomerID");
+		return new Order(id,customerID);
+	}
 
 	//reading orders
 	public List<Order> readAll(){
@@ -47,12 +53,34 @@ public class OrderDAO implements Dao<Order> {
 			}
 			return new ArrayList<>();
 	}
+	
+	public Order readLatest() {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+			Statement statement = connection.createStatement(); 
+			ResultSet resultSet = statement.executeQuery("Select * from orders order by OrderID desc limit 1");
+		){
+			resultSet.next();
+			return limitedmodel(resultSet);
+		} catch(Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return null;
+		
+	}
 
 	@Override
 	public Order create(Order t) {
-		// TODO Auto-generated method stub
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();) {
+				statement.executeUpdate("insert into orders (CustomerID) values("+t.getCustomerID()+");");
+				return readLatest();
+		}catch(Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
 		return null;
-	}
+		}
 
 	@Override
 	public Order update(Order t) {
