@@ -41,13 +41,7 @@ public class OrderController implements CrudController<Order>{
 		Order order = orderDAO.create(new Order(custID));
 		return order;
 	}
-	public Order moreitems() {
-		LOGGER.info("Type return to exit, or the ID of another item to add to the order");
-		String ret = utils.getString();
-		while(!ret.toLowerCase().equals("return")) {
-			
-		}
-	}
+	
 	@Override
 	public Order update() {
 		// TODO Auto-generated method stub
@@ -56,8 +50,9 @@ public class OrderController implements CrudController<Order>{
 
 	@Override
 	public int delete() {
-		// TODO Auto-generated method stub
-		return 0;
+		LOGGER.info("Please enter the ID of the order to delete:");
+		Long ID= utils.getLong();
+		return orderDAO.delete(ID);
 	}
 	
 

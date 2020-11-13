@@ -95,7 +95,7 @@ public class ItemDAO {
 	public static int delete(long id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
-				return statement.executeUpdate("delete from items where ItemID ="+id);
+				return statement.executeUpdate("delete from items where ItemID ="+id+";");
 		}catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
