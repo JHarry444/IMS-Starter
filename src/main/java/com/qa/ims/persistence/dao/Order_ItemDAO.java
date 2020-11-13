@@ -25,5 +25,5 @@ public class Order_ItemDAO {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
 		}
-		}
+	}
 }
