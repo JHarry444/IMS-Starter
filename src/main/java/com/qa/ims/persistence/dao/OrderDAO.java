@@ -38,7 +38,7 @@ public class OrderDAO implements Dao<Order> {
 		try(Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet resultSet = statement.executeQuery(
-						"select orders.OrderID, customers.CustomerID , concat(customers.first_name,\" \", customers.surname) as Customer, group_concat(items.title separator\", \") as Items, sum(items.price) as Total from order_item  join items on order_item.ItemID = items.ItemID  join orders on order_item.OrderID = orders.OrderID join customers on orders.CustomerID = customers.CustomerID group by OrderID order by OrderID;;"
+						"select orders.OrderID, customers.CustomerID , concat(customers.first_name,\" \", customers.surname) as Customer, group_concat(items.title separator\", \") as Items, sum(items.price) as Total from order_item  join items on order_item.ItemID = items.ItemID  join orders on order_item.OrderID = orders.OrderID join customers on orders.CustomerID = customers.CustomerID group by OrderID order by OrderID;"
 						);
 				){
 				List<Order> orders = new ArrayList<>();
@@ -53,7 +53,24 @@ public class OrderDAO implements Dao<Order> {
 			}
 			return new ArrayList<>();
 	}
+	public Order readSingle(Long orderID) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement(); 
+				ResultSet resultSet = statement.executeQuery(
+						"select orders.OrderID, customers.CustomerID , concat(customers.first_name,\" \", customers.surname) as Customer, group_concat(items.title separator\", \") as Items, sum(items.price) as Total from order_item  join items on order_item.ItemID = items.ItemID  join orders on order_item.OrderID = orders.OrderID join customers on orders.CustomerID = customers.CustomerID where orders.OrderID ="+orderID+";");
+			){
+				resultSet.next();
+				return modelFromResultSet(resultSet);
+			} catch(Exception e) {
+				LOGGER.debug(e);
+				LOGGER.error(e.getMessage());
+			}
+			return null; 
+	}
 	
+	
+	
+	//reading most recent order for creation purposes
 	public Order readLatest() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 			Statement statement = connection.createStatement(); 
@@ -68,7 +85,7 @@ public class OrderDAO implements Dao<Order> {
 		return null;
 		
 	}
-
+	//creating new order - see order controller for interaction with order_itemDAO
 	@Override
 	public Order create(Order t) {
 		try (Connection connection = DBUtils.getInstance().getConnection();

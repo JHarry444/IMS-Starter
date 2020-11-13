@@ -16,12 +16,14 @@ public class OrderController implements CrudController<Order>{
 	private OrderDAO orderDAO;
 	private Utils utils;
 	private Order_ItemDAO order_itemDAO;
+	private OrderAction orderaction;
 	
 	public OrderController(OrderDAO orderDAO, Utils utils, Order_ItemDAO order_itemDAO) {
 		super();
 		this.orderDAO = orderDAO;
 		this.utils = utils;
 		this.order_itemDAO = order_itemDAO;
+		this.orderaction = orderaction;
 	}
 	
 // reads all orders	
@@ -60,7 +62,36 @@ public class OrderController implements CrudController<Order>{
 	
 	@Override
 	public Order update() {
-		// TODO Auto-generated method stub
+		LOGGER.info("Please enter the ID of the order to update");
+		Long orderID  =utils.getLong();
+		boolean on = true;
+		while(on) {
+			Order order = orderDAO.readSingle(orderID);
+			LOGGER.info(order.toString()+"\r");
+			LOGGER.info("What would you like to do to order "+orderID+"?");
+			OrderAction.printActions();
+			OrderAction orderaction = OrderAction.getAction(utils);
+			switch (orderaction) {
+			case ADD:
+				LOGGER.info("Please enter the ID of the item to add");
+				Long itemID = utils.getLong();
+				order_itemDAO.create(orderID, itemID);
+				break;
+			case REMOVE:
+				LOGGER.info("Please enter the ID of the item to remove");
+				itemID = utils.getLong();
+				order_itemDAO.remove(orderID, itemID);
+				break;
+			case CUSTOMER:
+				LOGGER.info("Please enter the new customer ID");
+				Long customerID = utils.getLong();
+				order_itemDAO.cust(orderID, customerID);
+				break;
+			case RETURN:
+				on = false;
+				break;
+			}
+		}	
 		return null;
 	}
 

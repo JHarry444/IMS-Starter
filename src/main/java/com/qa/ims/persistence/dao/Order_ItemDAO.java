@@ -26,4 +26,22 @@ public class Order_ItemDAO {
 			LOGGER.error(e.getMessage());
 		}
 	}
+	public void remove(Long orderID, Long ItemID) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();) {
+				statement.executeUpdate("delete from order_item where ItemID ="+ ItemID+" AND OrderID ="+orderID+" limit 1;");
+		}catch(Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+	}
+	public void cust(Long orderID, Long custID) {
+		try(Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();) {
+				statement.executeUpdate("update orders set CustomerID ="+ custID+" where OrderID ="+orderID+";");
+		}catch(Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+	}
 }

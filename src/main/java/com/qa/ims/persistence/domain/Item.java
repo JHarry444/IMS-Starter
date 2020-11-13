@@ -42,7 +42,7 @@ public class Item {
 	}
 	@Override
 	public String toString() {
-		return "id:"+ID+" Title: "+title +" Value: "+value;
+		return "id:"+ID+" Title: "+title +" Value: £"+value;
 	}
 	@Override
 	public boolean equals(Object obj) {
