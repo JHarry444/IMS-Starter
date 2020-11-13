@@ -17,7 +17,7 @@ public class ItemDAO {
 	public static final Logger LOGGER = LogManager.getLogger();
 
 	public Item modelFromResultSet(ResultSet resultSet) throws SQLException {
-		Long id = resultSet.getLong("ID");
+		Long id = resultSet.getLong("ItemID");
 		String title = resultSet.getString("title");
 		Double price = resultSet.getDouble("price");
 		return new Item(id,title,price);
@@ -42,7 +42,7 @@ public class ItemDAO {
 	public Item readLatest() {
 		try(Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("Select * from items order by id desc limit 1");
+				ResultSet resultSet = statement.executeQuery("Select * from items order by ItemID desc limit 1");
 				){
 					resultSet.next();
 					return modelFromResultSet(resultSet);
@@ -69,7 +69,7 @@ public class ItemDAO {
 	public Item readItem(Long id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("SELECT * FROM items where ID = " + id);) {
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM items where ItemID = " + id);) {
 			resultSet.next();
 			return modelFromResultSet(resultSet);
 		} catch (Exception e) {
@@ -84,7 +84,7 @@ public class ItemDAO {
 			Connection connection = DBUtils.getInstance().getConnection();
 			Statement statement = connection.createStatement();)
 		{
-			statement.executeUpdate("update items set title='"+item.getTitle()+"',price ="+item.getValue()+"WHERE ID ="+item.getID());
+			statement.executeUpdate("update items set title='"+item.getTitle()+"',price ="+item.getValue()+"WHERE ItemID ="+item.getID());
 			return readItem(item.getID());
 		} catch(Exception e) {
 			LOGGER.debug(e);
@@ -95,7 +95,7 @@ public class ItemDAO {
 	public static int delete(long id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
-				return statement.executeUpdate("delete from items where ID ="+id);
+				return statement.executeUpdate("delete from items where ItemID ="+id);
 		}catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());

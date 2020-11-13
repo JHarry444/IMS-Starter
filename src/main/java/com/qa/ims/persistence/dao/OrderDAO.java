@@ -19,26 +19,33 @@ public class OrderDAO implements Dao<Order> {
 
 	@Override
 	public Order modelFromResultSet(ResultSet resultSet) throws SQLException {
-		Long id = resultSet.getLong("id");
-		Long customerID = resultSet.getLong("customerID");
-		return new Order(id, customerID);
+		Long id = resultSet.getLong("OrderID");
+		Long customerID = resultSet.getLong("CustomerID");
+		String customer = resultSet.getString("Customer");
+		String items = resultSet.getString("Items");
+		Long total = resultSet.getLong("Total");
+		return new Order(id, customerID,customer,items,total);
 	}
 
 	//reading orders
 	public List<Order> readAll(){
 		try(Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("select orders.OrderID, group_concat(items.title),concat(customers.first_name,\" \", customers.surname) as Customer,sum(items.price) as total from order_item join items on order_item.ItemID = items.ItemID join orders on order_item.OrderID = orders.OrderID join customers on orders.CustomerID = customers.CustomerID group by OrderID order by OrderID;");){
-			List<Order> orders = new ArrayList<>();
-			while (resultSet.next()) {
-				orders.add(modelFromResultSet(resultSet));
+				ResultSet resultSet = statement.executeQuery(
+						"select orders.OrderID, customers.CustomerID , concat(customers.first_name,\" \", customers.surname) as Customer, group_concat(items.title separator\", \") as Items, sum(items.price) as Total from order_item  join items on order_item.ItemID = items.ItemID  join orders on order_item.OrderID = orders.OrderID join customers on orders.CustomerID = customers.CustomerID group by OrderID order by OrderID;;"
+						);
+				){
+				List<Order> orders = new ArrayList<>();
+				while (resultSet.next()) {
+					orders.add(modelFromResultSet(resultSet));
+				}
+				return orders;
+				
+			} catch (SQLException e) {
+				LOGGER.debug(e);
+				LOGGER.error(e.getMessage());
 			}
-			return orders;
-		} catch (SQLException e) {
-			LOGGER.debug(e);
-			LOGGER.error(e.getMessage());
-		}
-		return new ArrayList<>();
+			return new ArrayList<>();
 	}
 
 	@Override

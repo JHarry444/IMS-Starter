@@ -3,6 +3,9 @@ package com.qa.ims.persistence.domain;
 public class Order {
 	private Long ID;
 	private Long CustomerID;
+	private String Customer;
+	private String Items;
+	private long Total;
 	//getters and setters
 	public Long getID() {
 		return ID;
@@ -16,6 +19,13 @@ public class Order {
 	public void setCustomerID(Long customerID) {
 		CustomerID = customerID;
 	}
+	public String getCustomer() {
+		return Customer;
+	}
+	public void setCustomer(String customer) {
+		Customer =customer;
+	}
+	
 	//constructors
 	public Order(Long ID, Long CustomerID) {
 		this.ID = ID;
@@ -24,6 +34,19 @@ public class Order {
 	public Order(Long CustomerID) {
 		this.CustomerID = CustomerID;
 	}
+	public Order(Long ID, Long CustomerID, String Customer, String Items, Long Total) {
+		this.ID = ID;
+		this.CustomerID = CustomerID;
+		this.Customer = Customer;
+		this.Items = Items;
+		this.Total = Total;
+	}
+	
+	@Override
+	public String toString() {
+		return "ID:"+ID+" CustomerID: "+CustomerID+" Customer: "+Customer+" Items: "+Items+" Total: "+Total;
+	}
+
 	
 	
 	public boolean equals(Object obj) {

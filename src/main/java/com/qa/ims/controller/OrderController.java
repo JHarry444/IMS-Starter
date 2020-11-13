@@ -27,17 +27,27 @@ public class OrderController implements CrudController<Order>{
 	public List<Order> readAll() {
 		List<Order> orders = orderDAO.readAll();
 		for (Order order:orders) {
-			LOGGER.info(orders.toString());
+			LOGGER.info(order.toString());
 		}
 		return orders;
 	}
 
 	@Override
 	public Order create() {
-		// TODO Auto-generated method stub
-		return null;
+		LOGGER.info("Please enter the ID of the customer making the order");
+		Long custID = utils.getLong();
+		LOGGER.info("please enter Item ID to add to order");
+		Long itemID = utils.getLong();
+		Order order = orderDAO.create(new Order(custID));
+		return order;
 	}
-
+	public Order moreitems() {
+		LOGGER.info("Type return to exit, or the ID of another item to add to the order");
+		String ret = utils.getString();
+		while(!ret.toLowerCase().equals("return")) {
+			
+		}
+	}
 	@Override
 	public Order update() {
 		// TODO Auto-generated method stub
