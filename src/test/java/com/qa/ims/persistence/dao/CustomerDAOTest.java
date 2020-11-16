@@ -1,6 +1,7 @@
 package com.qa.ims.persistence.dao;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,7 @@ public class CustomerDAOTest {
 
 	@BeforeClass
 	public static void init() {
-		DBUtils.connect("root", "pass");
+		DBUtils.connect("root", "root");
 	}
 
 	@Before
@@ -44,6 +45,18 @@ public class CustomerDAOTest {
 		assertEquals(new Customer(1L, "jordan", "harrison"), DAO.readLatest());
 	}
 
+	@Test 
+	public void testReadLatestFail() {
+		assertNull(new Customer(2L, "Adam" "Hackworth"), DAO.readLatest());
+		
+	}
+	
+	@Test 
+	public void testReadLatestFail2() {
+		assertNull(new Customer(3L, "Adam ';", "Hackworth"), DAO.readLatest());
+		
+	}
+	
 	@Test
 	public void testRead() {
 		final long ID = 1L;
@@ -61,4 +74,20 @@ public class CustomerDAOTest {
 	public void testDelete() {
 		assertEquals(1, DAO.delete(1));
 	}
+	
+	
+	@Test 
+	public void UpdateFail() {
+		final Customer update = new Customer (3L, "HI", "BYE");
+		assertNull(DAO.update(update)); 
+	}
+	
+	@Test 
+	public void UpdateFail2() {
+		final Customer update = new Customer(1L, "Hi' ; INSERT INTO ;;;", "BYE");
+		assertNull(DAO.update(update));
+		
+	}
+	
 }
+
