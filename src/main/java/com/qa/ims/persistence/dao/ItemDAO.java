@@ -93,9 +93,17 @@ public class ItemDAO {
 		return null;
 	}
 	public static int delete(long id) {
+		ArrayList<Long> IDs = new ArrayList<Long>();
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
-				return statement.executeUpdate("delete from items where ItemID ="+id+";");
+				ResultSet resultSet = statement.executeQuery("select OrderID from order_item where ItemID = "+id+" group by OrderID;");
+				while(resultSet.next()) {
+					IDs.add(resultSet.getLong("OrderID"));
+				}
+				statement.executeUpdate("delete from order_item where ItemID ="+id+";");
+				for(Long ident:IDs) {
+					return statement.executeUpdate("delete from items where ItemID ="+ident+";");
+				}
 		}catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
