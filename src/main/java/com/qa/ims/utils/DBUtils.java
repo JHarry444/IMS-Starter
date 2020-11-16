@@ -19,17 +19,16 @@ public class DBUtils {
 
 	private final String DB_PASS;
 
-	private final String DB_URL = "jdbc:mysql://localhost:3306/ims";
+	private final String DB_URL = "jdbc:mysql://127.0.0.1:3306/ims";
 
 	private DBUtils(String username, String password) {
 		this.DB_USER = username;
 		this.DB_PASS = password;
-
 		init();
 	}
 
 	public int init() {
-		return this.init("src/main/resources/sql-schema.sql", "src/main/resources/sql-data.sql");
+		return this.init("src/main/resources/sql-schema.sql");
 	}
 
 	public int init(String... paths) {
