@@ -19,10 +19,11 @@ public class CustomerDAO implements Dao<Customer> {
 
 	@Override
 	public Customer modelFromResultSet(ResultSet resultSet) throws SQLException {
-		Long id = resultSet.getLong("id");
+		Long id = resultSet.getLong("customer_id");
 		String firstName = resultSet.getString("first_name");
-		String surname = resultSet.getString("surname");
-		return new Customer(id, firstName, surname);
+		String surname = resultSet.getString("last_name");
+		String email = resultSet.getString("email");
+		return new Customer(id, firstName, surname, email);
 	}
 
 	/**
@@ -50,7 +51,7 @@ public class CustomerDAO implements Dao<Customer> {
 	public Customer readLatest() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("SELECT * FROM customers ORDER BY id DESC LIMIT 1");) {
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM customers ORDER BY customer_id DESC LIMIT 1");) {
 			resultSet.next();
 			return modelFromResultSet(resultSet);
 		} catch (Exception e) {
@@ -69,8 +70,8 @@ public class CustomerDAO implements Dao<Customer> {
 	public Customer create(Customer customer) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("INSERT INTO customers(first_name, surname) values('" + customer.getFirstName()
-					+ "','" + customer.getSurname() + "')");
+			statement.executeUpdate("INSERT INTO customers(first_name, last_name, email) values('" + customer.getFirstName()
+					+ "','" + customer.getSurname() + "','" + customer.getEmail() + "')");
 			return readLatest();
 		} catch (Exception e) {
 			LOGGER.debug(e);

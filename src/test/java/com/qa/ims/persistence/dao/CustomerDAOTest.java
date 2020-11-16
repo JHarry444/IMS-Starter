@@ -1,6 +1,7 @@
 package com.qa.ims.persistence.dao;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,7 @@ public class CustomerDAOTest {
 
 	@BeforeClass
 	public static void init() {
-		DBUtils.connect("root", "pass");
+		DBUtils.connect("root", "root");
 	}
 
 	@Before
@@ -28,31 +29,32 @@ public class CustomerDAOTest {
 
 	@Test
 	public void testCreate() {
-		final Customer created = new Customer(2L, "chris", "perrins");
+		final Customer created = new Customer(2L, "chris", "perrins", "Chris.perrins@gmail.com");
 		assertEquals(created, DAO.create(created));
 	}
 
 	@Test
 	public void testReadAll() {
 		List<Customer> expected = new ArrayList<>();
-		expected.add(new Customer(1L, "jordan", "harrison"));
+		expected.add(new Customer(1L, "jordan", "harrison", "Jordan.harrison@gmail.com"));
 		assertEquals(expected, DAO.readAll());
 	}
 
 	@Test
 	public void testReadLatest() {
-		assertEquals(new Customer(1L, "jordan", "harrison"), DAO.readLatest());
+		assertEquals(new Customer(1L, "jordan", "harrison", "Jordan.harrison@gmail.com"), DAO.readLatest());
 	}
 
+	
 	@Test
 	public void testRead() {
 		final long ID = 1L;
-		assertEquals(new Customer(ID, "jordan", "harrison"), DAO.readCustomer(ID));
+		assertEquals(new Customer(ID, "jordan", "harrison", "jordan.harrison@gmail.com"), DAO.readCustomer(ID));
 	}
 
 	@Test
 	public void testUpdate() {
-		final Customer updated = new Customer(1L, "chris", "perrins");
+		final Customer updated = new Customer(1L, "chris", "perrins", "Chris.perrins@gmail.com");
 		assertEquals(updated, DAO.update(updated));
 
 	}
@@ -61,4 +63,20 @@ public class CustomerDAOTest {
 	public void testDelete() {
 		assertEquals(1, DAO.delete(1));
 	}
+	
+	
+	@Test 
+	public void UpdateFail() {
+		final Customer update = new Customer (3L, "HI", "BYE", "adad");
+		assertNull(DAO.update(update)); 
+	}
+	
+	@Test 
+	public void UpdateFail2() {
+		final Customer update = new Customer(1L, "Hi' ; INSERT INTO ;;;", "BYE", "sadasdasdasdasd;;;");
+		assertNull(DAO.update(update));
+		
+	}
+	
 }
+
