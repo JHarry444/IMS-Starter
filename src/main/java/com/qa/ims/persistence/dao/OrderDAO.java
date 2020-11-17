@@ -23,7 +23,7 @@ public class OrderDAO implements Dao<Order> {
 		Long customerID = resultSet.getLong("CustomerID");
 		String customer = resultSet.getString("Customer");
 		String items = resultSet.getString("Items");
-		Long total = resultSet.getLong("Total");
+		Double total = resultSet.getDouble("Total");
 		return new Order(id, customerID,customer,items,total);
 	}
 	
@@ -38,7 +38,7 @@ public class OrderDAO implements Dao<Order> {
 		try(Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet resultSet = statement.executeQuery(
-						"select orders.OrderID, customers.CustomerID , concat(customers.first_name,\" \", customers.surname) as Customer, group_concat(items.title separator\", \") as Items, sum(items.price) as Total from order_item  join items on order_item.ItemID = items.ItemID  join orders on order_item.OrderID = orders.OrderID join customers on orders.CustomerID = customers.CustomerID group by OrderID order by OrderID;"
+						"select orders.OrderID, customers.CustomerID , concat(customers.first_name,\" \", customers.surname) as Customer, group_concat(items.title separator\", \") as Items, ROUND(sum(items.price),2) as Total from order_item  join items on order_item.ItemID = items.ItemID  join orders on order_item.OrderID = orders.OrderID join customers on orders.CustomerID = customers.CustomerID group by OrderID order by OrderID;"
 						);
 				){
 				List<Order> orders = new ArrayList<>();
@@ -101,7 +101,7 @@ public class OrderDAO implements Dao<Order> {
 
 	@Override
 	public Order update(Order t) {
-		// TODO Auto-generated method stub
+		// See Order_ItemDOA for this functionality
 		return null;
 	}
 

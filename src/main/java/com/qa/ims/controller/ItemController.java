@@ -32,7 +32,7 @@ public class ItemController implements CrudController<Item> {
 		for (Item item:items) {
 			LOGGER.info(item.toString());
 		}
-		return items;
+		return items; 
 	}
 
 	@Override
@@ -61,8 +61,7 @@ public class ItemController implements CrudController<Item> {
 	public int delete() {
 		LOGGER.info("Please enter the id of the item you'd like to delete");
 		Long id = utils.getLong();
-		ItemDAO DAO = new ItemDAO();
-		return DAO.delete(id);
+		return itemDAO.delete(id);
 	}
 	
 }
