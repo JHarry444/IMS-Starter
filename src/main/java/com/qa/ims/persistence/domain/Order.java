@@ -5,7 +5,7 @@ public class Order {
 	private Long CustomerID;
 	private String Customer;
 	private String Items;
-	private long Total;
+	private Double Total;
 	//getters and setters
 	public Long getID() {
 		return ID;
@@ -34,7 +34,7 @@ public class Order {
 	public Order(Long CustomerID) {
 		this.CustomerID = CustomerID;
 	}
-	public Order(Long ID, Long CustomerID, String Customer, String Items, Long Total) {
+	public Order(Long ID, Long CustomerID, String Customer, String Items, Double Total) {
 		this.ID = ID;
 		this.CustomerID = CustomerID;
 		this.Customer = Customer;

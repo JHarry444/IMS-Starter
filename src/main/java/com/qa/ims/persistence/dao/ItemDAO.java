@@ -92,7 +92,7 @@ public class ItemDAO {
 		}
 		return null;
 	}
-	public static int delete(long id) {
+	public int delete(long id) {
 		ArrayList<Long> IDs = new ArrayList<Long>();
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
@@ -102,7 +102,7 @@ public class ItemDAO {
 				}
 				statement.executeUpdate("delete from order_item where ItemID ="+id+";");
 				for(Long ident:IDs) {
-					return statement.executeUpdate("delete from items where ItemID ="+ident+";");
+					statement.executeUpdate("delete from items where ItemID ="+ident+";");
 				}
 		}catch (Exception e) {
 			LOGGER.debug(e);

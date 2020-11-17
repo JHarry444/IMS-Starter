@@ -20,16 +20,17 @@ public class Utils {
 	}
 
 	public Long getLong() {
-		String input = getString();
+		String input;
 		Long longInput = null;
 		do {
+			input = getString();
 			try {
 				longInput = Long.parseLong(input);
 			} catch (NumberFormatException nfe) {
 				LOGGER.info("Error - Please enter a number");
 			}
 		} while (longInput == null);
-		return longInput;
+		return longInput; 
 	}
 
 	public String getString() {
@@ -37,9 +38,10 @@ public class Utils {
 	}
 
 	public Double getDouble() {
-		String input = getString();
+		String input;
 		Double doubleInput = null;
 		do {
+			input = getString();
 			try {
 				doubleInput = Double.parseDouble(input);
 			} catch (NumberFormatException nfe) {
