@@ -90,6 +90,8 @@ public class ItemControllerTest {
 		Mockito.when(DAO.readAll()).thenReturn(items);
 		
 		assertEquals(items,controller.readAll());
+		
+		Mockito.verify(DAO,Mockito.times(1)).readAll();
 	}
 	
 }

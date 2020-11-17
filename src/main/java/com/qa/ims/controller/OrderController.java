@@ -56,6 +56,9 @@ public class OrderController implements CrudController<Order>{
 			else if (result.toLowerCase().equals("n")) {
 				active = false;
 			}
+			else{
+				LOGGER.info("Please enter Y or N");
+			}
 		}
 		return order;	
 		}
@@ -80,12 +83,12 @@ public class OrderController implements CrudController<Order>{
 			case REMOVE:
 				LOGGER.info("Please enter the ID of the item to remove");
 				itemID = utils.getLong();
-				order_itemDAO.remove(orderID, itemID);
+				 order_itemDAO.remove(orderID, itemID);
 				break;
 			case CUSTOMER:
 				LOGGER.info("Please enter the new customer ID");
 				Long customerID = utils.getLong();
-				order_itemDAO.cust(orderID, customerID);
+				 order_itemDAO.cust(orderID, customerID);
 				break;
 			case RETURN:
 				on = false;

@@ -17,13 +17,13 @@ public class Order_ItemDAO {
 	ItemDAO itemDAO = new ItemDAO();
 	OrderDAO orderDAO = new OrderDAO();
 	
-	public Item readLatest() {
+	public Order readLatest() {
 		try(Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("Select items.ItemID,items.title,items.price from items join order_item on order_item.ItemID = items.ItemID order by order_item.OI_ID desc limit 1;");
+				ResultSet resultSet = statement.executeQuery("Select orders.CustomerID, orders.OrderID from orders join order_item on order_item.OrderID = orders.OrderID order by order_item.OI_ID desc limit 1;");
 				){
 					resultSet.next();
-					return itemDAO.modelFromResultSet(resultSet);
+					return orderDAO.limitedmodel(resultSet);
 				} catch(SQLException e) {
 					LOGGER.debug(e);
 					LOGGER.error(e.getMessage());
@@ -32,7 +32,7 @@ public class Order_ItemDAO {
 	}
 	
 	
-	public Item create(Long orderID, Long ItemID) {
+	public Order create(Long orderID, Long ItemID) {
 		try (
 				Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
@@ -46,7 +46,7 @@ public class Order_ItemDAO {
 		}
 		return null;
 	}
-	public Item remove(Long orderID, Long ItemID) {
+	public Order remove(Long orderID, Long ItemID) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
 				statement.executeUpdate("delete from order_item where ItemID ="+ ItemID+" AND OrderID ="+orderID+" limit 1;");

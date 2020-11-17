@@ -24,18 +24,18 @@ public class Order_ItemDAOTest {
 	
 	@Test
 	public void TestReadLatest() {
-		Item read = new Item(1L,"cheese",10.98D);
+		Order read = new Order(2L,2l);
 		assertEquals(read,DAO.readLatest());
 	}
 	@Test
 	public void TestCreate() {
-		Item created = new Item(2L,"chips",98.0D);
+		Order created = new Order(2L,2l);
 		assertEquals(created,DAO.create(2L,2L));
 	}
 	@Test
 	public void TestRemove() {
-		Item removed = new Item(1L,"cheese",10.98D);
-		assertEquals(removed,DAO.remove(2L, 1l));
+		Order removed = new Order(2L,2l);
+		assertEquals(removed,DAO.remove(1L, 1l));
 	}
 	@Test
 	public void TestCust() {
