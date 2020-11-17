@@ -19,7 +19,7 @@ public class IMS {
 	private final ItemController items;
 	private final OrderController orders;
 	private final Utils utils;
-	private final CloseOut closeout;
+	private final CloseOut closeout; 
 
 	public IMS() {
 		this.utils = new Utils();
@@ -61,7 +61,8 @@ public class IMS {
 					active = this.orders;
 					break;
 				case STOP:
-					//closeout.GenerateCustomers();
+					closeout.GenerateCustomers();
+					closeout.GenerateItems();
 					return;
 				default:
 					break;
