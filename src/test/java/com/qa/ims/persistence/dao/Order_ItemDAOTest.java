@@ -2,6 +2,9 @@ package com.qa.ims.persistence.dao;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -42,5 +45,12 @@ public class Order_ItemDAOTest {
 		Order cust = new Order(2L,1L);
 		assertEquals(cust,DAO.cust(2L, 1L));
 	}
-	
+	@Test
+	public void TestReadItemsByOrder() {
+		Item item1 = new Item(1l,"cheese",10.98);
+		List<Item> items = new ArrayList<Item>();
+		items.add(item1);
+		items.add(item1);
+		assertEquals(items,DAO.readItemsByOrder(1l));
+	}
 }

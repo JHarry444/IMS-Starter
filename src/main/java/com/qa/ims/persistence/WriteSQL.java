@@ -29,6 +29,7 @@ public class WriteSQL {
 		}catch(IOException e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
+			return null;
 		}
 		return( "yote");
 	}
