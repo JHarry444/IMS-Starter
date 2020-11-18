@@ -1,5 +1,8 @@
 package com.qa.ims.persistence.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,6 +32,23 @@ public class Order_ItemDAO {
 					LOGGER.error(e.getMessage());
 				}
 				return null;
+	}
+	
+	public List<Item> readItemsByOrder(Long OrderID){
+		try(Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement.executeQuery("Select items.title,items.price,items.ItemID from items join order_item on order_item.ItemID = items.ItemID where order_item.OrderID ="+OrderID+";");
+				){
+				List<Item> items = new ArrayList<>();
+				while(resultSet.next()) {
+					items.add(itemDAO.modelFromResultSet(resultSet));
+				}
+				return(items);
+		}catch(SQLException e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return null;
 	}
 	
 	

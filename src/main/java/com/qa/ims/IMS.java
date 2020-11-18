@@ -5,7 +5,8 @@ import org.apache.logging.log4j.Logger;
 
 import com.qa.ims.controller.Action;
 import com.qa.ims.controller.*;
-import com.qa.ims.persistence.CloseOut;
+import com.qa.ims.persistence.GenerateSQL;
+import com.qa.ims.persistence.WriteSQL;
 import com.qa.ims.persistence.dao.*;
 import com.qa.ims.persistence.domain.Domain;
 import com.qa.ims.utils.DBUtils;
@@ -19,7 +20,8 @@ public class IMS {
 	private final ItemController items;
 	private final OrderController orders;
 	private final Utils utils;
-	private final CloseOut closeout; 
+	private final GenerateSQL sqlgen; 
+	private final WriteSQL sqlwrite;
 
 	public IMS() {
 		this.utils = new Utils();
@@ -30,7 +32,8 @@ public class IMS {
 		final OrderDAO orderDAO = new OrderDAO();
 		final Order_ItemDAO order_itemDAO = new Order_ItemDAO();
 		this.orders = new OrderController(orderDAO,utils,order_itemDAO);
-		this.closeout = new CloseOut();
+		this.sqlgen = new GenerateSQL();
+		this.sqlwrite = new WriteSQL();
 	}
 
 	public void imsSystem() {
@@ -63,7 +66,9 @@ public class IMS {
 				case STOP:
 //					closeout.GenerateCustomers();
 //					closeout.GenerateItems();
-					closeout.GenerateOrders();
+//					closeout.GenerateOrders();
+//					closeout.GenerateOrder_Item();
+					sqlwrite.SQLText();
 					return;
 				default:
 					break;
