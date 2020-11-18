@@ -61,8 +61,9 @@ public class IMS {
 					active = this.orders;
 					break;
 				case STOP:
-					closeout.GenerateCustomers();
-					closeout.GenerateItems();
+//					closeout.GenerateCustomers();
+//					closeout.GenerateItems();
+					closeout.GenerateOrders();
 					return;
 				default:
 					break;

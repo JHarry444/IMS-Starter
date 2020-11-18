@@ -12,12 +12,13 @@ public class CloseOut {
 	
 	CustomerDAO customerDAO = new CustomerDAO();
 	ItemDAO itemDAO = new ItemDAO();
+	OrderDAO orderDAO = new OrderDAO();
 	
 	public List<Customer> GenerateCustomers() {
 		List<Customer> customers = customerDAO.readAll();
 		List<String> data = new ArrayList<String>();
 		for (Customer customer : customers) {
-			String sqldata =("insert into`ims`.`customers`(`first_name`,`surname`)values('"+customer.getFirstName()+"','"+customer.getSurname()+"');");
+			String sqldata =("insert into`ims`.`customers`(`CustomerID`,`first_name`,`surname`)values("+customer.getId()+",'"+customer.getFirstName()+"','"+customer.getSurname()+"');");
 			data.add(sqldata);
 		}
 		System.out.println(data);
@@ -27,10 +28,21 @@ public class CloseOut {
 		List<Item> items = itemDAO.readAll();
 		List<String> data = new ArrayList<String>();
 		for (Item item : items){
-			String sqldata =("insert into`ims`.`items`(`title`,`price`)values('"+ item.getTitle()+"','"+item.getValue()+"');");
+			String sqldata =("insert into`ims`.`items`(`ItemID`,`title`,`price`)values("+item.getID()+",'" +item.getTitle()+"',"+item.getValue()+");");
 			data.add(sqldata);
 		}
 		System.out.println(data);
 		return items;
 		}
+	public List<Order> GenerateOrders(){
+		List <Order> orders = orderDAO.readAll();
+		List<String> data = new ArrayList<String>();
+		for (Order order :orders) {
+			String sqldata = ("insert into `ims`.`orders`(`OrderID`,`CustomerID`) VALUES("+order.getID()+","+order.getCustomerID()+";");
+			data.add(sqldata);
+		}
+		System.out.println(data);
+		return orders;
+	}
+	
 }
