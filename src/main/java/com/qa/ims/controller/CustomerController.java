@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.qa.ims.persistence.dao.CustomerDAO;
 import com.qa.ims.persistence.domain.Customer;
+import com.qa.ims.persistence.domain.Item;
 import com.qa.ims.utils.Utils;
 
 /**
@@ -26,9 +27,6 @@ public class CustomerController implements CrudController<Customer> {
 		this.utils = utils;
 	}
 
-	/**
-	 * Reads all customers to the logger
-	 */
 	@Override
 	public List<Customer> readAll() {
 		List<Customer> customers = customerDAO.readAll();
@@ -38,9 +36,6 @@ public class CustomerController implements CrudController<Customer> {
 		return customers;
 	}
 
-	/**
-	 * Creates a customer by taking in user input
-	 */
 	@Override
 	public Customer create() {
 		LOGGER.info("Please enter a first name");
@@ -52,13 +47,16 @@ public class CustomerController implements CrudController<Customer> {
 		return customer;
 	}
 
-	/**
-	 * Updates an existing customer by taking in user input
-	 */
 	@Override
 	public Customer update() {
-		LOGGER.info("Please enter the id of the customer you would like to update");
-		Long id = utils.getLong();
+		Customer current = null;
+		Long id = null;
+		do {
+			LOGGER.info("Please enter the id of the customer you would like to update");
+			id = utils.getLong();
+			current = customerDAO.readCustomer(id);
+		} while (current == null);
+		LOGGER.info(current.toString());
 		LOGGER.info("Please enter a first name");
 		String firstName = utils.getString();
 		LOGGER.info("Please enter a surname");
@@ -68,11 +66,6 @@ public class CustomerController implements CrudController<Customer> {
 		return customer;
 	}
 
-	/**
-	 * Deletes an existing customer by the id of the customer
-	 * 
-	 * @return
-	 */
 	@Override
 	public int delete() {
 		LOGGER.info("Please enter the id of the customer you would like to delete");
