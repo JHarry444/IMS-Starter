@@ -31,6 +31,19 @@ public class Utils {
 		} while (longInput == null);
 		return longInput;
 	}
+	
+	public int getInt() {
+		int returnint;
+		while(true) {
+			try {
+				returnint = scanner.nextInt();
+				break;
+			} catch (Exception e) {
+				LOGGER.info("Error - Please enter an int");
+			}
+		}
+		return returnint;
+	}
 
 	public String getString() {
 		return scanner.nextLine();

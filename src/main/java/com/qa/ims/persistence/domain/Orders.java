@@ -38,6 +38,14 @@ public class Orders {
 		this.unit_price = unit_price;
 		this.quantity = quantity;
 	}
+	
+	
+
+	public Orders(Long order_id, Long cust_id) {
+		super();
+		this.order_id = order_id;
+		this.customer = new Customer(cust_id, null, null);
+	}
 
 	public Orders(Customer customer) {
 		this.customer = customer;

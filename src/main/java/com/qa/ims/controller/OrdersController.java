@@ -5,8 +5,10 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.qa.ims.persistence.dao.ItemDAO;
 import com.qa.ims.persistence.dao.OrdersDAO;
 import com.qa.ims.persistence.domain.Customer;
+import com.qa.ims.persistence.domain.Item;
 import com.qa.ims.persistence.domain.Orders;
 import com.qa.ims.utils.Utils;
 
@@ -16,12 +18,15 @@ public class OrdersController implements CrudController<Orders> {
 	
 	private OrdersDAO ordersDAO;
 	private Utils utils;
+
+	private ItemDAO itemController;
 	
 	
-	public OrdersController(OrdersDAO ordersDAO, Utils utils) {
+	public OrdersController(OrdersDAO ordersDAO, Utils utils, ItemDAO itemController) {
 		super();
 		this.ordersDAO = ordersDAO;
 		this.utils = utils;
+		this.itemController = itemController;
 	}
 	
 	/**
@@ -42,24 +47,28 @@ public class OrdersController implements CrudController<Orders> {
 	 */
 	@Override
 	public Orders create() {
-		LOGGER.info("Enter your Customer ID");
+		LOGGER.info("Enter your customer ID");
 		Long id = utils.getLong();
-		Orders order = ordersDAO.create(new Orders(new Customer(id,null,null)));
-		
+		Orders order = ordersDAO.create(new Orders(new Customer(id, null, null)));
+		List<Item> items = itemController.readAll();
 		String result;
 		do {
-			LOGGER.info("Enter your Order ID");
-			Long order_id = utils.getLong();
+			for(Item item: items) {
+				LOGGER.info("Item ID: " + item.getItem_id() + " Name: " + item.getItem_name());	
+			}
 			LOGGER.info("Enter Item ID");
-			int item_id = utils.getInt();
-			LOGGER.info("Enter the Quantity");
-			int quantity = utils.getInt();
-		OrdersDAO.addItems(new Orders(order_id, null, item_id, null, quantity, null));
-		} 
-			
-		}
-		return order;
+			Long item_id = utils.getLong();
+			order.setItem(new Item(item_id, null, null));
+			ordersDAO.createOrdersItems(order);
+			LOGGER.info("Item " + item_id + " Added");
+			LOGGER.info("Would you like to add another?");
+			result = utils.getString();
+		} while(!result.toLowerCase().equals("yes"));
+
+		return order;	
 	}
+	
+	// might not need this 	
 	@Override
 	public Orders update() {
 		// TODO Auto-generated method stub
@@ -67,8 +76,9 @@ public class OrdersController implements CrudController<Orders> {
 	}
 	@Override
 	public int delete() {
-		// TODO Auto-generated method stub
-		return 0;
+		LOGGER.info("Please enter the id of the Order you would like to delete");
+		Long order_id = utils.getLong();
+		return ordersDAO.delete(order_id);
 	} 
 
 }
