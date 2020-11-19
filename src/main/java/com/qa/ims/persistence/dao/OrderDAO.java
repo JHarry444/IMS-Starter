@@ -122,7 +122,7 @@ public class OrderDAO implements Dao<Order> {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
 			statement.executeUpdate(
-					"update orders set fk_customer_id ='" + order.getCustomer_id() + " where id =" + order.getId());
+					"update orders set fk_customer_id =" + order.getCustomer_id() + " where id =" + order.getId());
 			return readOrder(order.getId());
 		} catch (Exception e) {
 			LOGGER.debug(e);
