@@ -56,10 +56,13 @@ public class OrdersController implements CrudController<Orders> {
 			for(Item item: items) {
 				LOGGER.info("Item ID: " + item.getItem_id() + " Name: " + item.getItem_name());	
 			}
+			LOGGER.info("Enter your order ID");
+			Long order_id = utils.getLong();
 			LOGGER.info("Enter Item ID");
-			Long item_id = utils.getLong();
-			order.setItem(new Item(item_id, null, null));
-			ordersDAO.createOrdersItems(order);
+			int item_id = utils.getInt();
+			LOGGER.info("Enter Quantity");
+			int quantity = utils.getInt();
+			ordersDAO.createOrdersItems(new Orders(order_id, item_id, quantity));
 			LOGGER.info("Item " + item_id + " Added");
 			LOGGER.info("Would you like to add another?");
 			result = utils.getString();
@@ -74,6 +77,8 @@ public class OrdersController implements CrudController<Orders> {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	
 	@Override
 	public int delete() {
 		LOGGER.info("Please enter the id of the Order you would like to delete");

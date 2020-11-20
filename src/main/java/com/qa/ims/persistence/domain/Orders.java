@@ -11,7 +11,6 @@ public class Orders {
 	
 	public Orders(Long order_id, Long order_item_id, Double unit_price, 
 			int quantity, Item item, Customer customer) {
-		super();
 		this.order_id = order_id;
 		this.order_item_id = order_item_id;
 		this.unit_price = unit_price;
@@ -21,7 +20,6 @@ public class Orders {
 	}
 
 	public Orders(Long order_item_id, Double unit_price, int quantity, Item item, int item_id, Customer customer) {
-		super();
 		this.order_item_id = order_item_id;
 		this.unit_price = unit_price;
 		this.quantity = quantity;
@@ -32,7 +30,6 @@ public class Orders {
 	
 	
 	public Orders(Long order_id, Long order_item_id, Double unit_price, int quantity) {
-		super();
 		this.order_id = order_id;
 		this.order_item_id = order_item_id;
 		this.unit_price = unit_price;
@@ -40,11 +37,31 @@ public class Orders {
 	}
 	
 	
+	
+	public Orders(Long order_item_id, Double unit_price, int quantity, Long order_id, int item_id ) {
+		this.order_id = order_id;
+		this.order_item_id = order_item_id;
+		this.unit_price = unit_price;
+		this.quantity = quantity;
+		this.item_id = item_id;
+	}
+
+	public Orders(Long order_id, int quantity, int item_id) {
+		this.order_id = order_id;
+		this.quantity = quantity;
+		this.item_id = item_id;
+	}
+	
 
 	public Orders(Long order_id, Long cust_id) {
-		super();
 		this.order_id = order_id;
 		this.customer = new Customer(cust_id, null, null);
+	}
+	
+
+	public Orders(Long order_id, int item_id) {
+		this.order_id = order_id;
+		this.item_id = item_id;
 	}
 
 	public Orders(Customer customer) {

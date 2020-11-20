@@ -16,21 +16,31 @@ import com.qa.ims.persistence.domain.Orders;
 import com.qa.ims.utils.DBUtils;
 
 public class OrdersDAO implements Dao<Orders> {
+
 	
 	public static final Logger LOGGER = LogManager.getLogger();
 	
 	@Override
 	public Orders modelFromResultSet(ResultSet resultSet) throws SQLException {
 		
-		Long order_id = resultSet.getLong("order_id");
-		Long customer_id = resultSet.getLong("fk_customer_id");
+		Long order_id = resultSet.getLong("fk_order_id");
+		int item_id = resultSet.getInt("fk_item_id");
+		Long order_item_id = resultSet.getLong("order_item_id");
+		Double unit_price = resultSet.getDouble("unit_price");
+		int quantity = resultSet.getInt("quantity");
 
 
 		
-		return new Orders(order_id, customer_id);	
+		return new Orders(order_item_id, unit_price, quantity,order_id, item_id);	
 	}	
 	
-	// model result for return items 
+	public Orders modelFromResultSet2(ResultSet resultSet) throws SQLException {
+		
+		Long order_id = resultSet.getLong("order_id");
+		Long customer_id = resultSet.getLong("fk_customer_id");
+		
+		return new Orders(order_id, customer_id);	
+	}
 	
 	
 	/**
@@ -46,7 +56,7 @@ public class OrdersDAO implements Dao<Orders> {
 				ResultSet resultSet = statement.executeQuery("SELECT * FROM orders");){
 			List<Orders> order = new ArrayList<>();
 			while (resultSet.next()) {
-				order.add(modelFromResultSet(resultSet));
+				order.add(modelFromResultSet2(resultSet));
 			}
 			return order;
 		} catch (SQLException e) {
@@ -59,7 +69,7 @@ public class OrdersDAO implements Dao<Orders> {
 	public Orders readLatest() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("SELECT * FROM orders ORDER BY order_id DESC LIMIT 1");){
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM orders_items ");){
 			resultSet.next();
 			return modelFromResultSet(resultSet);
 		} catch (Exception e) {
@@ -75,7 +85,11 @@ public class OrdersDAO implements Dao<Orders> {
 				Statement statement = connection.createStatement();){
 			statement.executeUpdate("INSERT INTO orders(fk_customer_id) values (" + 
 				order.getCustomer().getId() +") " );
-			return readLatest();
+			ResultSet resultSet = statement.executeQuery("SELECT order_id FROM orders WHERE fk_customer_id = " + order.getCustomer().getId());
+			while(resultSet.next()) {
+				LOGGER.info("Your order ID is:" + resultSet.getLong("order_id"));
+			}
+			return order;
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
@@ -84,12 +98,18 @@ public class OrdersDAO implements Dao<Orders> {
 	}
 	
 	// Create method -  for creating something in the orders_items table 
-	public Orders createOrdersItems(Orders order) {
+	public Orders createOrdersItems(Orders orderItem) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();){
-			//TotalCost(order); calling the method 
-			statement.executeUpdate("INSERT INTO orders_items (fk_item_id) values ("
-					+ order.getItem().getItem_id() + ")"); // Add query for total cost 
+			statement.executeUpdate("INSERT INTO orders_items (fk_item_id, fk_order_id, quantity, unit_price) values ("
+					+ orderItem.getItem().getItem_id()+ "," + orderItem.getOrder_id()+ "," + orderItem.getQuantity()+ "," + orderItem.getUnit_price() + ")");
+			ResultSet resultSet = statement.executeQuery("SELECT item_price FROM items WHERE item_id = " + orderItem.getItem_id());
+			while(resultSet.next()) {
+				Double totalPrice = resultSet.getDouble("item_price");
+				orderItem.setUnit_price(totalPrice * orderItem.getQuantity());
+				LOGGER.info("Total Price = " + orderItem.getUnit_price());
+				statement.executeUpdate("UPDATE orders_items SET unit_price = " + orderItem.getUnit_price() + " WHERE fk_order_id = " + orderItem.getOrder_id() + " AND fk_item_id = " + orderItem.getItem_id());
+			}
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
@@ -97,55 +117,7 @@ public class OrdersDAO implements Dao<Orders> {
 		return null;	
 	}
 	
-	// read take in order_id and read all items in the orders_items table that have that order id 
-
-	@Override
-	public Orders update(Orders order) {
-//		try (Connection connection = DBUtils.getInstance().getConnection();
-//				Statement statement = connection.createStatement();){
-//			statement.executeUpdate("UPDATE orders set order_id = '" + order.getOrder_id());
-//			
-//			return readOrder(order.getOrder_id());
-//		}
-		
-		return null;
-	}
 	
-	/**
-	 * Method to Calculate the total cost of the order ( unit_price ) 
-	 * This will take Order by order_id and then take the items by item_id
-	 * Then Multiply price of items (item_price) by quantity (quantity)
-	 * use getters and setters 
-	 * 
-	 * set the total for the total items 
-	 */
-	
-
-	public void TotalCost (Orders order) {
-		try (Connection connection = DBUtils.getInstance().getConnection();
-				Statement statement = connection.createStatement();) {
-			String order_idQuery = "SELECT item_price FROM items WHERE fk_customer_id= " + order.getCustomer().getId();
-			ResultSet ordersQuery = statement.executeQuery(order_idQuery);
-			
-			while(ordersQuery.next()) {
-				order.setOrder_id(ordersQuery.getLong("order_id"));
-			}
-			
-			String itemQuery = "SELECT item_price FROM items WHERE item_id = " + order.getItem_id();
-			ResultSet itemPrice= statement.executeQuery(itemQuery);
-			
-			while(itemPrice.next()) {
-				order.setUnit_price(itemPrice.getDouble("item_price"));
-			}
-			
-			double orderCost = order.getUnit_price() * order.getQuantity();
-			order.setUnit_price(orderCost);
-		} catch (Exception e) {
-			LOGGER.debug(e);
-			LOGGER.error(e.getMessage());
-		}
-	}
-
 	@Override
 	public int delete(long order_id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -157,6 +129,12 @@ public class OrdersDAO implements Dao<Orders> {
 		}
 	
 		return 0;
+	}
+
+	@Override
+	public Orders update(Orders t) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 
