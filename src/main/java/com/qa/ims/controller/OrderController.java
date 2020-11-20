@@ -18,14 +18,16 @@ public class OrderController implements CrudController<Order> {
 	public static final Logger LOGGER = LogManager.getLogger();
 
 	private OrderDAO orderDAO;
-	private CustomerDAO customerDAO = new CustomerDAO();
-	private ItemDAO itemDAO = new ItemDAO();
+	private CustomerDAO customerDAO;
+	private ItemDAO itemDAO;
 	private Utils utils;
 
-	public OrderController(OrderDAO orderDAO, Utils utils) {
+	public OrderController(OrderDAO orderDAO, Utils utils, CustomerDAO customerDAO, ItemDAO itemDAO) {
 		super();
 		this.orderDAO = orderDAO;
 		this.utils = utils;
+		this.customerDAO = customerDAO;
+		this.itemDAO= itemDAO;
 	}
 
 	@Override

@@ -20,4 +20,3 @@ INSERT INTO `ims`.`orders_items` (`fk_order_id`,`fk_item_id`) VALUES (2,2);
 INSERT INTO `ims`.`orders_items` (`fk_order_id`,`fk_item_id`) VALUES (2,2);
 INSERT INTO `ims`.`orders_items` (`fk_order_id`,`fk_item_id`) VALUES (2,2);
 INSERT INTO `ims`.`orders_items` (`fk_order_id`,`fk_item_id`) VALUES (2,2);
-

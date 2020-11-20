@@ -62,12 +62,14 @@ public class CustomerControllerTest {
 		Mockito.when(this.utils.getLong()).thenReturn(1L);
 		Mockito.when(this.utils.getString()).thenReturn(updated.getFirstName(), updated.getSurname());
 		Mockito.when(this.dao.update(updated)).thenReturn(updated);
-
+		Mockito.when(this.dao.readCustomer(Mockito.anyLong())).thenReturn(null, updated);
+		
 		assertEquals(updated, this.controller.update());
 
-		Mockito.verify(this.utils, Mockito.times(1)).getLong();
+		Mockito.verify(this.utils, Mockito.times(2)).getLong();
 		Mockito.verify(this.utils, Mockito.times(2)).getString();
 		Mockito.verify(this.dao, Mockito.times(1)).update(updated);
+		Mockito.verify(this.dao, Mockito.times(2)).readCustomer(Mockito.anyLong());
 	}
 
 	@Test

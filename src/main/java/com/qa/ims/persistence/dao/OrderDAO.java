@@ -101,7 +101,7 @@ public class OrderDAO implements Dao<Order> {
 		return null;
 	}
 
-	private List<Item> readLines(Long id) {
+	public List<Item> readLines(Long id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet resultSet = statement.executeQuery("SELECT * FROM orders_items where fk_order_id = " + id);) {
