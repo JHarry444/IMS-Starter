@@ -1,5 +1,6 @@
 package com.qa.ims;
 
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -35,7 +36,6 @@ public class imsTest {
 	
 	@Test
 	public void systemTest() {
-		
 		when(utils.getString()).thenReturn("root","root")
 		.thenReturn("CUSTOMER","create","read","update","delete","return")
 		.thenReturn("ITEM","create","read","update","delete","return")
@@ -67,5 +67,11 @@ public class imsTest {
 		verify(orders, times(1)).readAll();
 		verify(orders, times(1)).update();
 		verify(orders, times(1)).delete();
+	}
+	
+	@Test
+	public void uselessTest() {
+		IMS testims = new IMS();
+		assertNotNull(testims);
 	}
 }
