@@ -33,6 +33,13 @@ public class IMS {
 		this.items = new ItemController(itemDAO, utils);
 		this.orders = new OrderController(orderDAO, utils, custDAO, itemDAO);
 	}
+	
+	public IMS(Utils utils, CustomerController customers, ItemController items, OrderController orders) {
+		this.utils = utils;
+		this.customers = customers;
+		this.items = items;
+		this.orders = orders;
+	}
 
 	public void imsSystem() {
 		LOGGER.info("What is your username");

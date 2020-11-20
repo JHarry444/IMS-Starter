@@ -74,9 +74,6 @@ public class DBUtils {
 	}
 
 	public static DBUtils getInstance() {
-		if (instance == null) {
-			instance = new DBUtils("", "");
-		}
 		return instance;
 	}
 

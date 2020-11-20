@@ -32,7 +32,9 @@ public enum Domain {
 		Domain domain;
 		while (true) {
 			try {
-				domain = Domain.valueOf(utils.getString().toUpperCase());
+				String selection = utils.getString();
+				System.out.println(selection);
+				domain = Domain.valueOf(selection.toUpperCase());
 				break;
 			} catch (IllegalArgumentException e) {
 				LOGGER.error("Invalid selection please try again");
