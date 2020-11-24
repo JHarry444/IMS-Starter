@@ -38,6 +38,7 @@ public class CustomerDAOTest {
 		expected.add(new Customer(1L, "jordan", "harrison"));
 		expected.add(new Customer(2L, "chris", "perrins"));
 		expected.add(new Customer(3L, "piers", "barber"));
+		
 		assertEquals(expected, DAO.readAll());
 	}
 

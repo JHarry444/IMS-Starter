@@ -47,7 +47,7 @@ public class Order {
 
 	@Override
 	public String toString() {
-		String lines = "\n ";
+		String lines = "\n";
 		double totalPrice = 0.0;
 		for (Item item : items) {
 			totalPrice += item.getPrice();
