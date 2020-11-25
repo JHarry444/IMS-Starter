@@ -9,6 +9,10 @@
 	<properties>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
+		<sonar.host.url>http://localhost:9000</sonar.host.url>
+		<sonar.login>f6d0992fcd5c60d70115b490b57d7eacf642b597</sonar.login>
+		<sonar.language>java</sonar.language>
+		<sonar.scm.provider>git</sonar.scm.provider>
 	</properties>
 
 	<dependencies>
@@ -63,6 +67,12 @@
 						</manifest>
 					</archive>
 				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.sonarsource.scanner.maven</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>3.2</version>
 			</plugin>
 
 			<!-- Creates a "fat jar" with jar-with-dependencies at the end of the 
