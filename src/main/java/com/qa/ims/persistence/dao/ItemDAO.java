@@ -17,6 +17,12 @@ public class ItemDAO implements Dao<Item>{
 
 	public static final Logger LOGGER = LogManager.getLogger();
 
+	
+	/**
+	 * Reads all items from the database
+	 * 
+	 * @return A list of items
+	 */
 	@Override
 	public List<Item> readAll() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -60,6 +66,12 @@ public class ItemDAO implements Dao<Item>{
 		return null;
 	}
 
+	
+	/**
+	 * Creates an item in the database
+	 * 
+	 * @param customer - takes in an item object. Id will be ignored.
+	 */
 	@Override
 	public Item create(Item item) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -74,6 +86,13 @@ public class ItemDAO implements Dao<Item>{
 		return null;
 	}
 
+	/**
+	 * Updates an item in the database
+	 * 
+	 * @param item - takes in an item object, the id field will be used to
+	 *               update that item in the database.
+	 * @return
+	 */
 	@Override
 	public Item update(Item item) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -88,6 +107,11 @@ public class ItemDAO implements Dao<Item>{
 		return null;
 	}
 
+	/**
+	 * Deletes an item in the database
+	 * 
+	 * @param id - id of the item
+	 */
 	@Override
 	public int delete(long id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();

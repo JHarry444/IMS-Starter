@@ -52,7 +52,7 @@ public class ItemController implements CrudController<Item>{
 	}
 
 	/**
-	 * Updates an existing customer by taking in user input
+	 * Updates an existing item by taking in user input
 	 */
 	@Override
 	public Item update() {
@@ -68,7 +68,7 @@ public class ItemController implements CrudController<Item>{
 	}
 
 	/**
-	 * Deletes an existing item by the id of the customer
+	 * Deletes an existing item by the id of the item
 	 * 
 	 * @return
 	 */
