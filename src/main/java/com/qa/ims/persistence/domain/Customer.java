@@ -6,11 +6,13 @@ public class Customer {
 	private String firstName;
 	private String surname;
 
+	// Generator for creating new customers
 	public Customer(String firstName, String surname) {
 		this.firstName = firstName;
 		this.surname = surname;
 	}
 
+	// Generator for updating existing customers
 	public Customer(Long id, String firstName, String surname) {
 		this.id = id;
 		this.firstName = firstName;
