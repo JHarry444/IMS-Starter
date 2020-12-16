@@ -29,7 +29,7 @@ public class DBUtils {
 	}
 
 	public int init() {
-		return this.init("src/main/resources/sql-schema.sql", "src/main/resources/sql-data.sql");
+		return this.init("src/main/resources/sql-schema.sql");
 	}
 
 	public int init(String... paths) {
