@@ -7,3 +7,4 @@ CREATE TABLE IF NOT EXISTS `ims`.`customers` (
     `surname` VARCHAR(40) NULL DEFAULT NULL,
     PRIMARY KEY (`id`)
 );
+
