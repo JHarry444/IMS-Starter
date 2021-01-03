@@ -19,19 +19,6 @@ public class Utils {
 		scanner = new Scanner(System.in);
 	}
 
-	public Long getLong() {
-		String input = getString();
-		Long longInput = null;
-		do {
-			try {
-				longInput = Long.parseLong(input);
-			} catch (NumberFormatException nfe) {
-				LOGGER.info("Error - Please enter a number");
-			}
-		} while (longInput == null);
-		return longInput;
-	}
-
 	public String getString() {
 		return scanner.nextLine();
 	}
@@ -43,10 +30,38 @@ public class Utils {
 			try {
 				doubleInput = Double.parseDouble(input);
 			} catch (NumberFormatException nfe) {
-				LOGGER.info("Error - Please enter a number");
+				LOGGER.info("Error - Please enter a number john");
 			}
 		} while (doubleInput == null);
 		return doubleInput;
 	}
+	
 
+	public Long getLong() {
+		String input = getString();
+		Long longInput = null;
+		do {
+			try {
+				longInput = Long.parseLong(input);
+			} catch (NumberFormatException nfe) {
+				LOGGER.info("Error - Please enter a number keith");
+			}
+		} while (longInput == null);
+		return longInput;
+	}
+
+	public Float getFloat() {
+		String input = getString();
+		Float floatInput = null;
+		do {
+			try {
+				floatInput = Float.parseFloat(input);
+			} catch (NumberFormatException nfe) {
+				LOGGER.info("Error - Please enter number in price format");
+			}
+		} while (floatInput == null);
+		return floatInput;
+	
+	}
+	
 }
