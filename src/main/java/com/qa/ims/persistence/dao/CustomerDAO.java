@@ -19,10 +19,13 @@ public class CustomerDAO implements Dao<Customer> {
 
 	@Override
 	public Customer modelFromResultSet(ResultSet resultSet) throws SQLException {
-		Long id = resultSet.getLong("id");
+		Long customerID = resultSet.getLong("customer_id");
 		String firstName = resultSet.getString("first_name");
-		String surname = resultSet.getString("surname");
-		return new Customer(id, firstName, surname);
+		String lastName = resultSet.getString("last_name");
+		String email = resultSet.getString("email_address");
+		String addressLine1 = resultSet.getString("address_line_1");
+		String postcode = resultSet.getString("postcode");
+		return new Customer(customerID, firstName, lastName, email, addressLine1, postcode);
 	}
 
 	/**
@@ -50,7 +53,7 @@ public class CustomerDAO implements Dao<Customer> {
 	public Customer readLatest() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("SELECT * FROM customers ORDER BY id DESC LIMIT 1");) {
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM customers ORDER BY customer_id DESC LIMIT 1");) {
 			resultSet.next();
 			return modelFromResultSet(resultSet);
 		} catch (Exception e) {
@@ -69,8 +72,8 @@ public class CustomerDAO implements Dao<Customer> {
 	public Customer create(Customer customer) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("INSERT INTO customers(first_name, surname) values('" + customer.getFirstName()
-					+ "','" + customer.getSurname() + "')");
+			statement.executeUpdate("INSERT INTO customers(first_name, last_name, email, address_line_1, postcode) values('" + customer.getFirstName()
+					+ "','" + customer.getLastName() + "','" + customer.getEmail() + "','" + customer.getAddressLine1() + "','" + customer.getPostcode() + "')");
 			return readLatest();
 		} catch (Exception e) {
 			LOGGER.debug(e);
@@ -79,10 +82,10 @@ public class CustomerDAO implements Dao<Customer> {
 		return null;
 	}
 
-	public Customer readCustomer(Long id) {
+	public Customer readCustomer(Long customer_id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("SELECT * FROM customers where id = " + id);) {
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM customers where customer id = " + customer_id);) {
 			resultSet.next();
 			return modelFromResultSet(resultSet);
 		} catch (Exception e) {
@@ -103,9 +106,12 @@ public class CustomerDAO implements Dao<Customer> {
 	public Customer update(Customer customer) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("update customers set first_name ='" + customer.getFirstName() + "', surname ='"
-					+ customer.getSurname() + "' where id =" + customer.getId());
-			return readCustomer(customer.getId());
+			statement.executeUpdate("update customers set first_name ='" + customer.getFirstName() + "', last_name ='"
+					+ customer.getLastName() + "', email ='"
+							+ customer.getEmail() + "', address_line_1 ='"
+									+ customer.getAddressLine1() + "', postcode ='"
+											+ customer.getPostcode() + "' where id =" + customer.getCustomerID());
+			return readCustomer(customer.getCustomerID());
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
@@ -119,10 +125,10 @@ public class CustomerDAO implements Dao<Customer> {
 	 * @param id - id of the customer
 	 */
 	@Override
-	public int delete(long id) {
+	public int delete(long CustomerID) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
-			return statement.executeUpdate("delete from customers where id = " + id);
+			return statement.executeUpdate("delete from customers where customer_id = " + CustomerID);
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());

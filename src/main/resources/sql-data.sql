@@ -6,7 +6,6 @@ INSERT INTO `ims_project`.`customers` (`customer_id`,`first_name`, `last_name`, 
 INSERT INTO `ims_project`.`customers` (`customer_id`,`first_name`, `last_name`, `email_address`, `address_line_1`, `postcode`) VALUES (`Erwin`,`Smith`,`esmith@gmail.com`,`2 Guild Street`, `NW8 8YU`);
 INSERT INTO `ims_project`.`customers` (`customer_id`,`first_name`, `last_name`, `email_address`, `address_line_1`, `postcode`) VALUES (`Levi`,`Ackerman`,`l.ackerman@hotmail.co.uk`,`89 Great Western Road`,`HP27 5DD`);
 INSERT INTO `ims_project`.`customers` (`customer_id`,`first_name`, `last_name`, `email_address`, `address_line_1`, `postcode`) VALUES (`Sasha`,`Braus`,`sasha@outlook.com`,`57 Winchester Road`, `PO20 8HN`);
-
 ## PRODUCT DETAILS ##
 INSERT INTO `ims_project`.`products` (`product_id`, `product_name`, `artist`, `release_date` , `product_price`, `product_qty`) VALUES (`SAWAYAMA (Deluxe Edition)`,`Rina Sawayama`, 20200417, 9.99, 500);
 INSERT INTO `ims_project`.`products` (`product_id`, `product_name`, `artist`, `release_date` , `product_price`, `product_qty`) VALUES (`BE (Deuluxe Edition)`,`BTS`, 20201120, 49.63, 850);
