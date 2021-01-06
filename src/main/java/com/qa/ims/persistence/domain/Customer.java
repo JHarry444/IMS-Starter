@@ -17,8 +17,8 @@ public class Customer {
 		this.postcode = postcode;
 	}
 
-	public Customer(Long customerID, String firstName, String lastName, String email, String addressLine1, String postcode) {
-		this.customerID = customerID;
+	public Customer(Long i, String firstName, String lastName, String email, String addressLine1, String postcode) {
+		this.customerID = i;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
