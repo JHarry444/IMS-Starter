@@ -28,31 +28,31 @@ public class CustomerDAOTest {
 
 	@Test
 	public void testCreate() {
-		final Customer created = new Customer(2L, "chris", "perrins", "a", "b", "c");
+		final Customer created = new Customer(2L, "Chris", "Perrins", "cperrins@gmail.com", "61 Kingsway North", "LL13 1HE");
 		assertEquals(created, DAO.create(created));
 	}
 
 	@Test
 	public void testReadAll() {
 		List<Customer> expected = new ArrayList<>();
-		expected.add(new Customer(1L, "jordan", "harrison", "e", "f", "g"));
+		expected.add(new Customer(1L, "Jordan", "Harrison", "json@gmail.com", "61 Kingsway North", "LL13 1HE"));
 		assertEquals(expected, DAO.readAll());
 	}
 
 	@Test
 	public void testReadLatest() {
-		assertEquals(new Customer(1L, "jordan", "harrison", "h", "i", "j"), DAO.readLatest());
+		assertEquals(new Customer(1L, "Jordan", "Harrison", "json@gmail.com", "61 Kingsway North", "LL13 1HE"), DAO.readLatest());
 	}
 
 	@Test
 	public void testRead() {
-		final long ID = 1L;
-		assertEquals(new Customer(ID, "jordan", "harrison", "h", "i", "j"), DAO.readCustomer(ID));
+		final long customerID = 1L;
+		assertEquals(new Customer(customerID, "Jordan", "Harrison", "json@gmail.com", "61 Kingsway North", "LL13 1HE"), DAO.readCustomer(customerID));
 	}
 
 	@Test
 	public void testUpdate() {
-		final Customer updated = new Customer(1L, "chris", "perrins", "a", "b", "c");
+		final Customer updated = new Customer(1L, "Jordan", "Harrison", "json@gmail.com", "61 Kingsway North", "LL13 1HE");
 		assertEquals(updated, DAO.update(updated));
 
 	}
