@@ -1,6 +1,5 @@
 package com.qa.ims.controller;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -11,7 +10,7 @@ import com.qa.ims.persistence.domain.Orders;
 import com.qa.ims.utils.Utils;
 
 /**
- * Takes in customer details for CRUD functionality
+ * Takes in item details for CRUD functionality
  *
  */
 public class OrdersController implements CrudController<Orders> {
@@ -28,33 +27,35 @@ public class OrdersController implements CrudController<Orders> {
 	}
 
 	/**
-	 * Reads all customers to the logger
+	 * Reads all items to the logger
 	 */
 	@Override
 	public List<Orders> readAll() {
-		List<Orders> orders = ordersDAO.readAll();
-		for (Orders order : orders) {
-			LOGGER.info(order.toString());
+		List<Orders> order = ordersDAO.readAll();
+		for (Orders orders : order) {
+			LOGGER.info(orders.toString());
 		}
-		return orders;
+		return order;
 	}
 
 	/**
-	 * Creates a customer by taking in user input
+	 * Creates an item by taking in user input
 	 */
 	@Override
 	public Orders create() {
-		LOGGER.info("Please enter the Customer ID");
+		LOGGER.info("Please enter the customer ID");
 		Long customerID = utils.getLong();
-		LOGGER.info("Please enter the Product ID ");
+		LOGGER.info("Please enter the product ID");
 		Long productID = utils.getLong();
-		LOGGER.info("Please enter the quantity of items purchased");
-		Double orderQty = utils.getDouble();
-		LOGGER.info("Please enter the total price of items purchased");
-		BigDecimal totalPrice = utils.getBigDecimal();
-		Orders order = ordersDAO.create(new Orders(customerID, productID, orderQty, totalPrice));
+		LOGGER.info("Please enter the number of albums ordered");
+		Double productQty = utils.getDouble();
+		LOGGER.info("Please enter the order total price");
+		Double totalPrice = utils.getDouble();
+		LOGGER.info("Please enter whether the order has been completed");
+		Boolean orderStatus = utils.getBoolean();
+		Orders orders = ordersDAO.create(new Orders(customerID, productID, productQty, totalPrice, orderStatus));
 		LOGGER.info("Order created");
-		return order;
+		return orders;
 	}
 
 	/**
@@ -64,17 +65,19 @@ public class OrdersController implements CrudController<Orders> {
 	public Orders update() {
 		LOGGER.info("Please enter the ID of the order you would like to update");
 		Long orderID = utils.getLong();
-		LOGGER.info("Please enter the Customer ID");
+		LOGGER.info("Please enter the customer ID");
 		Long customerID = utils.getLong();
-		LOGGER.info("Please enter the Product ID ");
+		LOGGER.info("Please enter the product ID");
 		Long productID = utils.getLong();
-		LOGGER.info("Please enter the quantity of items purchased");
-		Double orderQty = utils.getDouble();
-		LOGGER.info("Please enter the total price of items purchased");
-		BigDecimal totalPrice = utils.getBigDecimal();
-		Orders order = ordersDAO.create(new Orders(orderID, customerID, productID, orderQty, totalPrice));
+		LOGGER.info("Please enter the number of albums ordered");
+		Double productQty = utils.getDouble();
+		LOGGER.info("Please enter the order total price");
+		Double totalPrice = utils.getDouble();
+		LOGGER.info("Please enter whether the order has been completed");
+		Boolean orderStatus = utils.getBoolean();
+		Orders orders = ordersDAO.update(new Orders(orderID, customerID, productID, productQty, totalPrice, orderStatus));
 		LOGGER.info("Order updated");
-		return order;
+		return orders;
 	}
 
 	/**

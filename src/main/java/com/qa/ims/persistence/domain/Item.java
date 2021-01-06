@@ -1,34 +1,34 @@
 package com.qa.ims.persistence.domain;
 
-import java.math.BigDecimal;
-import java.sql.Date;
-
-public class Items {
+public class Item {
 
 	private Long productID;
 	private String productName;
-	private String artist;
-	private Date releaseDate;
-	private BigDecimal productPrice;
+	private String artistName;
+	private Double releaseDate;
+	private Double productPrice;
 	private Double productQty;
+	
 
-	public Items(String productName, String artist, Date releaseDate, BigDecimal productPrice, Double productQty) {
+	public Item(String productName, String artistName, Double releaseDate, Double productPrice, Double productQty) {
 		this.productName = productName;
-		this.artist = artist;
+		this.artistName = artistName;
 		this.releaseDate = releaseDate;
 		this.productPrice = productPrice;
 		this.productQty = productQty;
 	}
 
-	public Items(Long productID, String productName, String artist, Date releaseDate, BigDecimal productPrice, Double productQty) {
+	public Item(Long productID, String productName, String artistName, Double releaseDate, Double productPrice, Double productQty) {
 		this.productID = productID;
 		this.productName = productName;
-		this.artist = artist;
+		this.artistName = artistName;
 		this.releaseDate = releaseDate;
 		this.productPrice = productPrice;
 		this.productQty = productQty;
 	}
 
+	
+	
 	public Long getProductID() {
 		return productID;
 	}
@@ -45,27 +45,27 @@ public class Items {
 		this.productName = productName;
 	}
 
-	public String getArtist() {
-		return artist;
+	public String getArtistName() {
+		return artistName;
 	}
 
-	public void setArtist(String artist) {
-		this.artist = artist;
+	public void setArtistName(String artistName) {
+		this.artistName = artistName;
 	}
 
-	public Date getReleaseDate() {
+	public Double getReleaseDate() {
 		return releaseDate;
 	}
 
-	public void setReleaseDate(Date releaseDate) {
+	public void setReleaseDate(Double releaseDate) {
 		this.releaseDate = releaseDate;
 	}
 
-	public BigDecimal getProductPrice() {
+	public Double getProductPrice() {
 		return productPrice;
 	}
 
-	public void setProductPrice(BigDecimal productPrice) {
+	public void setProductPrice(Double productPrice) {
 		this.productPrice = productPrice;
 	}
 
@@ -78,11 +78,6 @@ public class Items {
 	}
 
 	@Override
-	public String toString() {
-		return "Product ID:" + productID + " Product Name:" + productName + " Artist:" + artist + " Release Date:" + releaseDate + "Product Price:" + productPrice + " Product Qty:" + productQty;
-	}
-
-	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -90,7 +85,7 @@ public class Items {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Items other = (Items) obj;
+		Item other = (Item) obj;
 		if (productName == null) {
 			if (other.productName != null)
 				return false;
@@ -101,10 +96,10 @@ public class Items {
 				return false;
 		} else if (!productID.equals(other.productID))
 			return false;
-		if (artist == null) {
-			if (other.artist != null)
+		if (artistName == null) {
+			if (other.artistName != null)
 				return false;
-		} else if (!artist.equals(other.artist))
+		} else if (!artistName.equals(other.artistName))
 			return false;
 		if (releaseDate == null) {
 			if (other.releaseDate != null)

@@ -1,6 +1,5 @@
 package com.qa.ims.persistence.dao;
 
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,8 +23,9 @@ public class OrdersDAO implements Dao<Orders> {
 		Long customerID = resultSet.getLong("customer_id");
 		Long productID = resultSet.getLong("product_id");
 		Double orderQty = resultSet.getDouble("order_qty");
-		BigDecimal totalPrice = resultSet.getBigDecimal("total_price");
-		return new Orders(orderID, customerID, productID, orderQty, totalPrice);
+		Double totalPrice = resultSet.getDouble("total_price");
+		Boolean orderStatus = resultSet.getBoolean("order_status");
+		return new Orders(orderID, customerID, productID, orderQty, totalPrice, orderStatus);
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class OrdersDAO implements Dao<Orders> {
 	public Orders readLatest() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("SELECT * FROM orders ORDER BY order_id DESC LIMIT 1");) {
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM orders ORDER BY product_id DESC LIMIT 1");) {
 			resultSet.next();
 			return modelFromResultSet(resultSet);
 		} catch (Exception e) {
@@ -64,16 +64,16 @@ public class OrdersDAO implements Dao<Orders> {
 	}
 
 	/**
-	 * Creates an Item in the database
+	 * Creates a customer in the database
 	 * 
-	 * @param item - takes in a item object. id will be ignored
+	 * @param customer - takes in a customer object. id will be ignored
 	 */
 	@Override
 	public Orders create(Orders orders) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("INSERT INTO orders(customer_id, product_id, order_qty, total_price) values('" + orders.getCustomerID()
-					+ "','" + orders.getProductID() + "','" + orders.getOrderQty() + "','" + orders.getTotalPrice());
+			statement.executeUpdate("INSERT INTO orders(customer_id, product_id, order_qty, total_price, order_status) values('" + orders.getCustomerID()
+					+ "','" + orders.getProductID() + "','" + orders.getOrderQty() + "','" + orders.getTotalPrice() + "','" + orders.getOrderStatus() + "')");
 			return readLatest();
 		} catch (Exception e) {
 			LOGGER.debug(e);
@@ -82,10 +82,10 @@ public class OrdersDAO implements Dao<Orders> {
 		return null;
 	}
 
-	public Orders readItems(Long order_id) {
+	public Orders readOrders(Long orderID) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("SELECT * FROM orders where order id = " + order_id);) {
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM orders where order_id = " + orderID);) {
 			resultSet.next();
 			return modelFromResultSet(resultSet);
 		} catch (Exception e) {
@@ -96,10 +96,10 @@ public class OrdersDAO implements Dao<Orders> {
 	}
 
 	/**
-	 * Updates an item in the database
+	 * Updates a customer in the database
 	 * 
-	 * @param item - takes in an item object, the id field will be used to
-	 *                 update that item in the database
+	 * @param customer - takes in a customer object, the id field will be used to
+	 *                 update that customer in the database
 	 * @return
 	 */
 	@Override
@@ -107,10 +107,9 @@ public class OrdersDAO implements Dao<Orders> {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
 			statement.executeUpdate("update orders set customer_id ='" + orders.getCustomerID() + "', product_id ='"
-					+ orders.getProductID() + "', order_qty ='"
-							+ orders.getOrderQty() + "', total_price ='"
-									+ orders.getTotalPrice());
-			return readItems(orders.getOrderID());
+					+ orders.getProductID() + "' order_qty =" + orders.getOrderQty()
+					 + "' total_price =" + orders.getTotalPrice() + "'order_status =" + orders.getOrderStatus() + "'where order_id =" + orders.getOrderID());
+			return readOrders(orders.getOrderID());
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
@@ -119,15 +118,15 @@ public class OrdersDAO implements Dao<Orders> {
 	}
 
 	/**
-	 * Deletes an item in the database
+	 * Deletes a customer in the database
 	 * 
-	 * @param id - id of the item
+	 * @param id - id of the customer
 	 */
 	@Override
-	public int delete(long OrderID) {
+	public int delete(long orderID) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
-			return statement.executeUpdate("delete from orders where order_id = " + OrderID);
+			return statement.executeUpdate("delete from orders where order_id = " + orderID);
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());

@@ -48,12 +48,12 @@ public class CustomerController implements CrudController<Customer> {
 		LOGGER.info("Please enter a last name");
 		String lastName = utils.getString();
 		LOGGER.info("Please enter an email address");
-		String email = utils.getString();
-		LOGGER.info("Please enter the first line of address");
+		String emailAddress = utils.getString();
+		LOGGER.info("Please enter the first line of an address");
 		String addressLine1 = utils.getString();
 		LOGGER.info("Please enter the postcode");
 		String postcode = utils.getString();
-		Customer customer = customerDAO.create(new Customer(firstName, lastName, email, addressLine1, postcode));
+		Customer customer = customerDAO.create(new Customer(firstName, lastName, emailAddress, addressLine1, postcode));
 		LOGGER.info("Customer created");
 		return customer;
 	}
@@ -70,12 +70,12 @@ public class CustomerController implements CrudController<Customer> {
 		LOGGER.info("Please enter a last name");
 		String lastName = utils.getString();
 		LOGGER.info("Please enter an email address");
-		String email = utils.getString();
-		LOGGER.info("Please enter the first line of address");
+		String emailAddress = utils.getString();
+		LOGGER.info("Please enter the first line of an address");
 		String addressLine1 = utils.getString();
 		LOGGER.info("Please enter the postcode");
 		String postcode = utils.getString();
-		Customer customer = customerDAO.update(new Customer(customerID, firstName, lastName, email, addressLine1, postcode));
+		Customer customer = customerDAO.update(new Customer(customerID, firstName, lastName, emailAddress, addressLine1, postcode));
 		LOGGER.info("Customer Updated");
 		return customer;
 	}

@@ -6,28 +6,26 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.math.BigDecimal;
-import java.sql.Date;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.qa.ims.persistence.domain.Items;
+import com.qa.ims.persistence.domain.Item;
 import com.qa.ims.utils.DBUtils;
 
-public class ItemsDAO implements Dao<Items> {
+public class ItemDAO implements Dao<Item> {
 
 	public static final Logger LOGGER = LogManager.getLogger();
 
 	@Override
-	public Items modelFromResultSet(ResultSet resultSet) throws SQLException {
+	public Item modelFromResultSet(ResultSet resultSet) throws SQLException {
 		Long productID = resultSet.getLong("product_id");
 		String productName = resultSet.getString("product_name");
-		String artist = resultSet.getString("artist");
-		Date releaseDate = resultSet.getDate("release_date");
-		BigDecimal productPrice = resultSet.getBigDecimal("product_price");
+		String artistName = resultSet.getString("artist_name");
+		Double releaseDate = resultSet.getDouble("release_date");
+		Double productPrice = resultSet.getDouble("product_price");
 		Double productQty = resultSet.getDouble("product_qty");
-		return new Items(productID, productName, artist, releaseDate, productPrice, productQty);
+		return new Item(productID, productName, artistName, releaseDate, productPrice, productQty);
 	}
 
 	/**
@@ -36,15 +34,15 @@ public class ItemsDAO implements Dao<Items> {
 	 * @return A list of customers
 	 */
 	@Override
-	public List<Items> readAll() {
+	public List<Item> readAll() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet resultSet = statement.executeQuery("select * from items");) {
-			List<Items> items = new ArrayList<>();
+			List<Item> item = new ArrayList<>();
 			while (resultSet.next()) {
-				items.add(modelFromResultSet(resultSet));
+				item.add(modelFromResultSet(resultSet));
 			}
-			return items;
+			return item;
 		} catch (SQLException e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
@@ -52,7 +50,7 @@ public class ItemsDAO implements Dao<Items> {
 		return new ArrayList<>();
 	}
 
-	public Items readLatest() {
+	public Item readLatest() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet resultSet = statement.executeQuery("SELECT * FROM items ORDER BY product_id DESC LIMIT 1");) {
@@ -66,16 +64,16 @@ public class ItemsDAO implements Dao<Items> {
 	}
 
 	/**
-	 * Creates an Item in the database
+	 * Creates a customer in the database
 	 * 
-	 * @param item - takes in a item object. id will be ignored
+	 * @param customer - takes in a customer object. id will be ignored
 	 */
 	@Override
-	public Items create(Items items) {
+	public Item create(Item item) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("INSERT INTO items(product_name, artist, release_date, product_price, product_qty) values('" + items.getProductName()
-					+ "','" + items.getArtist() + "','" + items.getReleaseDate() + "','" + items.getProductPrice() + "','" + items.getProductQty() + "')");
+			statement.executeUpdate("INSERT INTO items(product_name, artist_name, release_date, product_price, product_qty) values('" + item.getProductName()
+					+ "','" + item.getArtistName() + "','" + item.getReleaseDate() + "','" + item.getProductPrice() + "','" + item.getProductQty() + "')");
 			return readLatest();
 		} catch (Exception e) {
 			LOGGER.debug(e);
@@ -84,10 +82,10 @@ public class ItemsDAO implements Dao<Items> {
 		return null;
 	}
 
-	public Items readItems(Long product_id) {
+	public Item readItem(Long productID) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("SELECT * FROM items where product id = " + product_id);) {
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM items where product_id = " + productID);) {
 			resultSet.next();
 			return modelFromResultSet(resultSet);
 		} catch (Exception e) {
@@ -98,22 +96,20 @@ public class ItemsDAO implements Dao<Items> {
 	}
 
 	/**
-	 * Updates an item in the database
+	 * Updates a customer in the database
 	 * 
-	 * @param item - takes in an item object, the id field will be used to
-	 *                 update that item in the database
+	 * @param customer - takes in a customer object, the id field will be used to
+	 *                 update that customer in the database
 	 * @return
 	 */
 	@Override
-	public Items update(Items items) {
+	public Item update(Item item) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("update item set product_name ='" + items.getProductName() + "', artist ='"
-					+ items.getArtist() + "', release_date ='"
-							+ items.getReleaseDate() + "', product_price ='"
-									+ items.getProductPrice() + "', product_qty ='"
-											+ items.getProductQty() + "' where product_id =" + items.getProductID());
-			return readItems(items.getProductID());
+			statement.executeUpdate("update items set product_name ='" + item.getProductName() + "', artist_name ='"
+					+ item.getArtistName() + "' release_date =" + item.getReleaseDate()
+					 + "' product_price =" + item.getProductPrice() + "'product_qty =" + item.getProductQty() + "'where product_id =" + item.getProductID());
+			return readItem(item.getProductID());
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
@@ -122,15 +118,15 @@ public class ItemsDAO implements Dao<Items> {
 	}
 
 	/**
-	 * Deletes an item in the database
+	 * Deletes a customer in the database
 	 * 
-	 * @param id - id of the item
+	 * @param id - id of the customer
 	 */
 	@Override
-	public int delete(long ProductID) {
+	public int delete(long productID) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
-			return statement.executeUpdate("delete from items where product_id = " + ProductID);
+			return statement.executeUpdate("delete from items where product_id = " + productID);
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());

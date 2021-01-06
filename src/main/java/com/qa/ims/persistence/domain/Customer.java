@@ -5,27 +5,29 @@ public class Customer {
 	private Long customerID;
 	private String firstName;
 	private String lastName;
-	private String email;
+	private String emailAddress;
 	private String addressLine1;
 	private String postcode;
+	
 
-	public Customer(String firstName, String lastName, String email, String addressLine1, String postcode) {
+	public Customer(String firstName, String lastName, String emailAddress, String addressLine1, String postcode) {
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.email = email;
+		this.emailAddress = emailAddress;
 		this.addressLine1 = addressLine1;
 		this.postcode = postcode;
 	}
 
-	public Customer(Long i, String firstName, String lastName, String email, String addressLine1, String postcode) {
-		this.customerID = i;
+	public Customer(Long customerID, String firstName, String lastName, String emailAddress, String addressLine1, String postcode){
+		this.customerID = customerID;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.email = email;
+		this.emailAddress = emailAddress;
 		this.addressLine1 = addressLine1;
 		this.postcode = postcode;
 	}
 
+	
 	public Long getCustomerID() {
 		return customerID;
 	}
@@ -50,12 +52,12 @@ public class Customer {
 		this.lastName = lastName;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getEmailAddress() {
+		return emailAddress;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
 	}
 
 	public String getAddressLine1() {
@@ -73,12 +75,7 @@ public class Customer {
 	public void setPostcode(String postcode) {
 		this.postcode = postcode;
 	}
-
-	@Override
-	public String toString() {
-		return "Customer ID:" + customerID + " First Name:" + firstName + " Last Name:" + lastName + " Email Address:" + email + " Address Line 1:" + addressLine1 + " Postcode:" + postcode;
-	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -103,10 +100,10 @@ public class Customer {
 				return false;
 		} else if (!lastName.equals(other.lastName))
 			return false;
-		if (email == null) {
-			if (other.email != null)
+		if (emailAddress == null) {
+			if (other.emailAddress != null)
 				return false;
-		} else if (!email.equals(other.email))
+		} else if (!emailAddress.equals(other.emailAddress))
 			return false;
 		if (addressLine1 == null) {
 			if (other.addressLine1 != null)
@@ -119,7 +116,5 @@ public class Customer {
 		} else if (!postcode.equals(other.postcode))
 			return false;
 		return true;
-		
 	}
-
 }

@@ -1,29 +1,32 @@
 package com.qa.ims.persistence.domain;
 
-import java.math.BigDecimal;
-
 public class Orders {
 
 	private Long orderID;
 	private Long customerID;
 	private Long productID;
 	private Double orderQty;
-	private BigDecimal totalPrice;
+	private Double totalPrice;
+	private Boolean orderStatus;
+	
 
-	public Orders(Long customerID, Long productID, Double orderQty, BigDecimal totalPrice) {
+	public Orders(Long customerID, Long productID, Double orderQty, Double totalPrice, Boolean orderStatus) {
 		this.customerID = customerID;
 		this.productID = productID;
 		this.orderQty = orderQty;
 		this.totalPrice = totalPrice;
+		this.orderStatus = orderStatus;
 	}
 
-	public Orders(Long orderID, Long customerID, Long productID, Double orderQty, BigDecimal totalPrice) {
+	public Orders(Long orderID, Long customerID, Long productID, Double orderQty, Double totalPrice, Boolean orderStatus) {
 		this.orderID = orderID;
 		this.customerID = customerID;
 		this.productID = productID;
 		this.orderQty = orderQty;
 		this.totalPrice = totalPrice;
+		this.orderStatus = orderStatus;
 	}
+
 	
 	public Long getOrderID() {
 		return orderID;
@@ -57,17 +60,20 @@ public class Orders {
 		this.orderQty = orderQty;
 	}
 
-	public BigDecimal getTotalPrice() {
+	public Double getTotalPrice() {
 		return totalPrice;
 	}
 
-	public void setTotalPrice(BigDecimal totalPrice) {
+	public void setTotalPrice(Double totalPrice) {
 		this.totalPrice = totalPrice;
 	}
 
-	@Override
-	public String toString() {
-		return "Order ID:" + orderID + " Customer ID:" + customerID + " Product ID:" + productID + " Order Qty:" + orderQty + "Total Price:" + totalPrice;
+	public Boolean getOrderStatus() {
+		return orderStatus;
+	}
+
+	public void setOrderStatus(Boolean orderStatus) {
+		this.orderStatus = orderStatus;
 	}
 
 	@Override
@@ -94,15 +100,20 @@ public class Orders {
 				return false;
 		} else if (!productID.equals(other.productID))
 			return false;
+		if (totalPrice == null) {
+			if (other.totalPrice != null)
+				return false;
+		} else if (!totalPrice.equals(other.totalPrice))
+			return false;
 		if (orderQty == null) {
 			if (other.orderQty != null)
 				return false;
 		} else if (!orderQty.equals(other.orderQty))
 			return false;
-		if (totalPrice == null) {
-			if (other.totalPrice != null)
+		if (orderStatus == null) {
+			if (other.orderStatus != null)
 				return false;
-		} else if (!totalPrice.equals(other.totalPrice))
+		} else if (!orderStatus.equals(other.orderStatus))
 			return false;
 		return true;
 	}

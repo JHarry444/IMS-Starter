@@ -31,10 +31,10 @@ public class CustomerControllerTest {
 
 	@Test
 	public void testCreate() {
-		final String F_NAME = "barry", L_NAME = "scott";
-		final Customer created = new Customer(F_NAME, L_NAME);
+		final String firstName = "Abigail", lastName = "Jones", email = "aj@gmail.com", addressLine1 = "25 Crown Street", postcode = "SW1Y 5JH" ;
+		final Customer created = new Customer(firstName, lastName, email, addressLine1, postcode);
 
-		Mockito.when(utils.getString()).thenReturn(F_NAME, L_NAME);
+		Mockito.when(utils.getString()).thenReturn(firstName, lastName, email, addressLine1, postcode);
 		Mockito.when(dao.create(created)).thenReturn(created);
 
 		assertEquals(created, controller.create());
@@ -46,7 +46,7 @@ public class CustomerControllerTest {
 	@Test
 	public void testReadAll() {
 		List<Customer> customers = new ArrayList<>();
-		customers.add(new Customer(1L, "jordan", "harrison"));
+		customers.add(new Customer("Claude", "Duvalier", "cd1990@gmail.com", "65 Hudson Street", "DG6 6PZ"));
 
 		Mockito.when(dao.readAll()).thenReturn(customers);
 
@@ -57,10 +57,10 @@ public class CustomerControllerTest {
 
 	@Test
 	public void testUpdate() {
-		Customer updated = new Customer(1L, "chris", "perrins");
+		Customer updated = new Customer("Tasha", "Lee", "tasha.lee@outlook.com", "35 Crown Street", "W12 4WW");
 
-		Mockito.when(this.utils.getLong()).thenReturn(1L);
-		Mockito.when(this.utils.getString()).thenReturn(updated.getFirstName(), updated.getSurname());
+		Mockito.when(this.utils.getLong()).thenReturn((long) 001);
+		Mockito.when(this.utils.getString()).thenReturn(updated.getFirstName(), updated.getLastName());
 		Mockito.when(this.dao.update(updated)).thenReturn(updated);
 
 		assertEquals(updated, this.controller.update());
@@ -72,7 +72,7 @@ public class CustomerControllerTest {
 
 	@Test
 	public void testDelete() {
-		final long ID = 1L;
+		final long ID = 001;
 
 		Mockito.when(utils.getLong()).thenReturn(ID);
 		Mockito.when(dao.delete(ID)).thenReturn(1);

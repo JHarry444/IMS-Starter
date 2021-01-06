@@ -1,9 +1,6 @@
 package com.qa.ims.utils;
 
-import java.math.BigDecimal;
-import java.sql.Date;
 import java.util.Scanner;
-
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -34,6 +31,7 @@ public class Utils {
 		} while (longInput == null);
 		return longInput;
 	}
+		
 
 	public String getString() {
 		return scanner.nextLine();
@@ -51,15 +49,18 @@ public class Utils {
 		} while (doubleInput == null);
 		return doubleInput;
 	}
-
-	public Date getDate() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public BigDecimal getBigDecimal() {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public Boolean getBoolean() {
+		String input = getString();
+		Boolean bool = null;
+		do {
+			try {
+				bool = Boolean.parseBoolean(input);
+			} catch (Exception e) {
+				LOGGER.info("Error - Please enter TRUE or FALSE");
+			}
+		} while (bool == null);
+		return bool;
 	}
 
 }
