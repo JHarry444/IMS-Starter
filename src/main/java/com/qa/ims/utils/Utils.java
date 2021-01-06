@@ -22,6 +22,10 @@ public class Utils {
 	public String getString() {
 		return scanner.nextLine();
 	}
+	
+//	public List getList() {
+//		return scanner.nextLine();
+//	}
 
 	public Double getDouble() {
 		String input = getString();
@@ -30,7 +34,7 @@ public class Utils {
 			try {
 				doubleInput = Double.parseDouble(input);
 			} catch (NumberFormatException nfe) {
-				LOGGER.info("Error - Please enter a number john");
+				LOGGER.info("Error - Please enter a number");
 			}
 		} while (doubleInput == null);
 		return doubleInput;
@@ -44,7 +48,7 @@ public class Utils {
 			try {
 				longInput = Long.parseLong(input);
 			} catch (NumberFormatException nfe) {
-				LOGGER.info("Error - Please enter a number keith");
+				LOGGER.info("Error - Please enter a number");
 			}
 		} while (longInput == null);
 		return longInput;

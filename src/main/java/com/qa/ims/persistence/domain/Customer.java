@@ -2,7 +2,7 @@ package com.qa.ims.persistence.domain;
 
 public class Customer {
 
-	private Long customer_id;
+	public Long customer_id;
 	private String firstName;
 	private String surname;
 

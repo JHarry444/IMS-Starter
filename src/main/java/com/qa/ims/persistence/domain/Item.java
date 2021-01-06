@@ -2,21 +2,21 @@ package com.qa.ims.persistence.domain;
 
 public class Item {
 	private Long item_id;
-	private String  item_name;
+	private String item_name;
 	private Float price;
-	private Long quantity;
-	public Item(String item_name, float price, long quantity) {
+	
+	
+	
+	public Item(String item_name, float price) {
 		super();
 		this.item_name = item_name;
 		this.price = price;
-		this.quantity = quantity;
 	}
-	public Item(long item_id, String item_name, float price, long quantity) {
+	public Item(long item_id, String item_name, float price) {
 		super();
 		this.item_id = item_id;
 		this.item_name = item_name;
 		this.price = price;
-		this.quantity = quantity;
 	}
 	public Long getItem_id() {
 		return item_id;
@@ -36,15 +36,10 @@ public class Item {
 	public void setPrice(float price) {
 		this.price = price;
 	}
-	public Long getQuantity() {
-		return quantity;
-	}
-	public void setQuantity(long quantity) {
-		this.quantity = quantity;
-	}
+
 	@Override
 	public String toString() {
-		return "id:" + item_id + " item name:" + item_name + " price:" + price + " quantity:" + quantity;
+		return "id:" + item_id + " item name:" + item_name + " price:" + price;
 	}
 
 	@Override
@@ -70,11 +65,6 @@ public class Item {
 			if (other.price != null)
 				return false;
 		} else if (!price.equals(other.price))
-			return false;
-		if (quantity == null) {
-			if (other.price != null)
-				return false;
-		} else if (!quantity.equals(other.quantity))
 			return false;
 		return true;
 	}
