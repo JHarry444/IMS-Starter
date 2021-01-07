@@ -5,7 +5,7 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.qa.ims.persistence.dao.OrderlineDAO;
+import com.qa.ims.persistence.dao.OrderlineDAOTest;
 import com.qa.ims.persistence.domain.Orderline;
 import com.qa.ims.utils.Utils;
 
@@ -17,10 +17,10 @@ public class OrderlineController implements CrudController<Orderline> {
 
 	public static final Logger LOGGER = LogManager.getLogger();
 
-	private OrderlineDAO orderlineDAO;
+	private OrderlineDAOTest orderlineDAO;
 	private Utils utils;
 
-	public OrderlineController(OrderlineDAO orderlineDAO, Utils utils) {
+	public OrderlineController(OrderlineDAOTest orderlineDAO, Utils utils) {
 		super();
 		this.orderlineDAO = orderlineDAO;
 		this.utils = utils;
