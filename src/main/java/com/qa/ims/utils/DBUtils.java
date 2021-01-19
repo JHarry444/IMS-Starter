@@ -1,7 +1,6 @@
 package com.qa.ims.utils;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -26,7 +25,7 @@ public class DBUtils {
 
 	private DBUtils(String properties) {
 		Properties dbProps = new Properties();
-		try (InputStream fis = new FileInputStream(properties)) {
+		try (InputStream fis = ClassLoader.getSystemResourceAsStream(properties)) {
 			dbProps.load(fis);
 		} catch (Exception e) {
 			LOGGER.error(e);
@@ -37,7 +36,7 @@ public class DBUtils {
 	}
 
 	public DBUtils() {
-		this("src/main/resources/db.properties");
+		this("db.properties");
 	}
 
 	public int init(String... paths) {
