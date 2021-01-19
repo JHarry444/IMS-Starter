@@ -17,7 +17,7 @@ public class CustomerDAOTest {
 
 	@Before
 	public void setup() {
-		DBUtils.connect("src/test/resources/db.properties");
+		DBUtils.connect();
 		DBUtils.getInstance().init("src/test/resources/sql-schema.sql", "src/test/resources/sql-data.sql");
 	}
 
@@ -42,7 +42,7 @@ public class CustomerDAOTest {
 	@Test
 	public void testRead() {
 		final long ID = 1L;
-		assertEquals(new Customer(ID, "jordan", "harrison"), DAO.readCustomer(ID));
+		assertEquals(new Customer(ID, "jordan", "harrison"), DAO.read(ID));
 	}
 
 	@Test
