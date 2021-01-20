@@ -2,10 +2,12 @@ package com.qa.ims.utils;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Properties;
 import java.util.stream.Stream;
 
 import org.apache.logging.log4j.LogManager;
@@ -15,21 +17,26 @@ public class DBUtils {
 
 	private static final Logger LOGGER = LogManager.getLogger();
 
-	private final String DB_USER;
+	private final String dbUrl;
 
-	private final String DB_PASS;
+	private final String dbUser;
 
-	private final String DB_URL = "jdbc:mysql://localhost:3306/ims";
+	private final String dbPassword;
 
-	private DBUtils(String username, String password) {
-		this.DB_USER = username;
-		this.DB_PASS = password;
-
-		init();
+	private DBUtils(String properties) {
+		Properties dbProps = new Properties();
+		try (InputStream fis = ClassLoader.getSystemResourceAsStream(properties)) {
+			dbProps.load(fis);
+		} catch (Exception e) {
+			LOGGER.error(e);
+		}
+		this.dbUrl = dbProps.getProperty("db.url", "");
+		this.dbUser = dbProps.getProperty("db.user", "");
+		this.dbPassword = dbProps.getProperty("db.password", "");
 	}
 
-	public int init() {
-		return this.init("src/main/resources/sql-schema.sql", "src/main/resources/sql-data.sql");
+	public DBUtils() {
+		this("db.properties");
 	}
 
 	public int init(String... paths) {
@@ -63,19 +70,24 @@ public class DBUtils {
 	}
 
 	public Connection getConnection() throws SQLException {
-		return DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+		return DriverManager.getConnection(dbUrl, dbUser, dbPassword);
 	}
 
-	public static DBUtils instance;
+	private static DBUtils instance;
 
-	public static DBUtils connect(String username, String password) {
-		instance = new DBUtils(username, password);
+	public static DBUtils connect() {
+		instance = new DBUtils();
+		return instance;
+	}
+
+	public static DBUtils connect(String properties) {
+		instance = new DBUtils(properties);
 		return instance;
 	}
 
 	public static DBUtils getInstance() {
 		if (instance == null) {
-			instance = new DBUtils("", "");
+			instance = new DBUtils();
 		}
 		return instance;
 	}

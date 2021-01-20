@@ -1,6 +1,7 @@
 package com.qa.ims.persistence.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -34,7 +35,7 @@ public class CustomerDAO implements Dao<Customer> {
 	public List<Customer> readAll() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("select * from customers");) {
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM customers");) {
 			List<Customer> customers = new ArrayList<>();
 			while (resultSet.next()) {
 				customers.add(modelFromResultSet(resultSet));
@@ -68,9 +69,11 @@ public class CustomerDAO implements Dao<Customer> {
 	@Override
 	public Customer create(Customer customer) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
-				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("INSERT INTO customers(first_name, surname) values('" + customer.getFirstName()
-					+ "','" + customer.getSurname() + "')");
+				PreparedStatement statement = connection
+						.prepareStatement("INSERT INTO customers(first_name, surname) VALUES (?, ?)");) {
+			statement.setString(1, customer.getFirstName());
+			statement.setString(2, customer.getSurname());
+			statement.executeUpdate();
 			return readLatest();
 		} catch (Exception e) {
 			LOGGER.debug(e);
@@ -79,12 +82,15 @@ public class CustomerDAO implements Dao<Customer> {
 		return null;
 	}
 
-	public Customer readCustomer(Long id) {
+	@Override
+	public Customer read(Long id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
-				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("SELECT * FROM customers where id = " + id);) {
-			resultSet.next();
-			return modelFromResultSet(resultSet);
+				PreparedStatement statement = connection.prepareStatement("SELECT * FROM customers WHERE id = ?");) {
+			statement.setLong(1, id);
+			try (ResultSet resultSet = statement.executeQuery();) {
+				resultSet.next();
+				return modelFromResultSet(resultSet);
+			}
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
@@ -102,10 +108,13 @@ public class CustomerDAO implements Dao<Customer> {
 	@Override
 	public Customer update(Customer customer) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
-				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("update customers set first_name ='" + customer.getFirstName() + "', surname ='"
-					+ customer.getSurname() + "' where id =" + customer.getId());
-			return readCustomer(customer.getId());
+				PreparedStatement statement = connection
+						.prepareStatement("UPDATE customers SET first_name = ?, surname = ? WHERE id = ?");) {
+			statement.setString(1, customer.getFirstName());
+			statement.setString(2, customer.getSurname());
+			statement.setLong(3, customer.getId());
+			statement.executeUpdate();
+			return read(customer.getId());
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
@@ -121,8 +130,9 @@ public class CustomerDAO implements Dao<Customer> {
 	@Override
 	public int delete(long id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
-				Statement statement = connection.createStatement();) {
-			return statement.executeUpdate("delete from customers where id = " + id);
+				PreparedStatement statement = connection.prepareStatement("DELETE FROM customers WHERE id = ?");) {
+			statement.setLong(1, id);
+			return statement.executeUpdate();
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
