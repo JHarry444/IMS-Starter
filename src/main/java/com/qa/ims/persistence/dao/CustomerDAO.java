@@ -87,9 +87,10 @@ public class CustomerDAO implements Dao<Customer> {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection.prepareStatement("SELECT * FROM customers WHERE id = ?");) {
 			statement.setLong(1, id);
-			ResultSet resultSet = statement.executeQuery();
-			resultSet.next();
-			return modelFromResultSet(resultSet);
+			try (ResultSet resultSet = statement.executeQuery();) {
+				resultSet.next();
+				return modelFromResultSet(resultSet);
+			}
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
@@ -107,7 +108,8 @@ public class CustomerDAO implements Dao<Customer> {
 	@Override
 	public Customer update(Customer customer) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
-				PreparedStatement statement = connection.prepareStatement("UPDATE customers SET first_name = ?, surname = ? WHERE id = ?");) {
+				PreparedStatement statement = connection
+						.prepareStatement("UPDATE customers SET first_name = ?, surname = ? WHERE id = ?");) {
 			statement.setString(1, customer.getFirstName());
 			statement.setString(2, customer.getSurname());
 			statement.setLong(3, customer.getId());
