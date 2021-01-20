@@ -33,7 +33,7 @@ public class CustomerController implements CrudController<Customer> {
 	public List<Customer> readAll() {
 		List<Customer> customers = customerDAO.readAll();
 		for (Customer customer : customers) {
-			LOGGER.info(customer.toString());
+			LOGGER.info(customer);
 		}
 		return customers;
 	}

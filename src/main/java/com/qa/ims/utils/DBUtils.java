@@ -17,11 +17,11 @@ public class DBUtils {
 
 	private static final Logger LOGGER = LogManager.getLogger();
 
-	private final String DB_URL;
+	private final String dbUrl;
 
-	private final String DB_USER;
+	private final String dbUser;
 
-	private final String DB_PASS;
+	private final String dbPassword;
 
 	private DBUtils(String properties) {
 		Properties dbProps = new Properties();
@@ -30,9 +30,9 @@ public class DBUtils {
 		} catch (Exception e) {
 			LOGGER.error(e);
 		}
-		this.DB_URL = dbProps.getProperty("db.url", "");
-		this.DB_USER = dbProps.getProperty("db.user", "");
-		this.DB_PASS = dbProps.getProperty("db.password", "");
+		this.dbUrl = dbProps.getProperty("db.url", "");
+		this.dbUser = dbProps.getProperty("db.user", "");
+		this.dbPassword = dbProps.getProperty("db.password", "");
 	}
 
 	public DBUtils() {
@@ -70,10 +70,10 @@ public class DBUtils {
 	}
 
 	public Connection getConnection() throws SQLException {
-		return DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+		return DriverManager.getConnection(dbUrl, dbUser, dbPassword);
 	}
 
-	public static DBUtils instance;
+	private static DBUtils instance;
 
 	public static DBUtils connect() {
 		instance = new DBUtils();
