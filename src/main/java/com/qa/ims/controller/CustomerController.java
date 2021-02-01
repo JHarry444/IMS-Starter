@@ -29,7 +29,7 @@ public class CustomerController implements CrudController<Customer> {
 	/**
 	 * Reads all customers to the logger
 	 */
-	@Override
+	@Override 
 	public List<Customer> readAll() {
 		List<Customer> customers = customerDAO.readAll();
 		for (Customer customer : customers) {
@@ -44,7 +44,7 @@ public class CustomerController implements CrudController<Customer> {
 	@Override
 	public Customer create() {
 		LOGGER.info("Please enter a first name");
-		String firstName = utils.getString();
+		String firstName = utils.getString(); 
 		LOGGER.info("Please enter a surname");
 		String surname = utils.getString();
 		Customer customer = customerDAO.create(new Customer(firstName, surname));

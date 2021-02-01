@@ -1,11 +1,15 @@
 package com.qa.ims.persistence.dao;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
+import org.junit.rules.ExpectedException;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 
 import com.qa.ims.persistence.domain.Customer;
@@ -14,6 +18,9 @@ import com.qa.ims.utils.DBUtils;
 public class CustomerDAOTest {
 
 	private final CustomerDAO DAO = new CustomerDAO();
+	
+	@Rule
+	public ExpectedException thrown = ExpectedException.none();
 
 	@Before
 	public void setup() {
@@ -29,6 +36,9 @@ public class CustomerDAOTest {
 
 	@Test
 	public void testReadAll() {
+		
+		
+		thrown.expect(SQLException.class);
 		List<Customer> expected = new ArrayList<>();
 		expected.add(new Customer(1L, "jordan", "harrison"));
 		assertEquals(expected, DAO.readAll());
@@ -36,6 +46,7 @@ public class CustomerDAOTest {
 
 	@Test
 	public void testReadLatest() {
+		thrown.expect(Exception.class);
 		assertEquals(new Customer(1L, "jordan", "harrison"), DAO.readLatest());
 	}
 
