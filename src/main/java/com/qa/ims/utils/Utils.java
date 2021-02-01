@@ -38,6 +38,9 @@ public class Utils {
 		return scanner.nextLine();
 	}
 
+	public int getInt() {
+		return scanner.nextInt();
+	}
 	public Double getDouble() {
 		String input = null;
 		Double doubleInput = null;

@@ -12,6 +12,11 @@ public class Item {
 		this.item_price = item_price;
 	}
 
+	public Item(String itemName, int itemPrice) {
+		this.setItem_name(itemName);
+		this.setItem_price(itemPrice);
+	}
+
 	public long getItem_id() {
 		return item_id;
 	}

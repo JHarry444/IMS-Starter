@@ -1,6 +1,7 @@
 package com.qa.ims.persistence.dao;
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -68,7 +69,7 @@ public class CustomerDAO implements Dao<Customer> {
 	 */
 	@Override
 	public Customer create(Customer customer) {
-		try (Connection connection = DBUtils.getInstance().getConnection();
+		try  (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection
 						.prepareStatement("INSERT INTO customers(first_name, surname) VALUES (?, ?)");) {
 			statement.setString(1, customer.getFirstName());
