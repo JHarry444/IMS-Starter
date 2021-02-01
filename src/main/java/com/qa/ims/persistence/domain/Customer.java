@@ -5,7 +5,7 @@ public class Customer {
 	private Long id;
 	private String firstName;
 	private String surname;
-
+ 
 	public Customer(String firstName, String surname) {
 		this.setFirstName(firstName);
 		this.setSurname(surname);
@@ -54,13 +54,13 @@ public class Customer {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((surname == null) ? 0 : surname.hashCode());
 		return result;
-	}
+	} 
 
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
+		if (obj == null) 
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
@@ -80,7 +80,7 @@ public class Customer {
 				return false;
 		} else if (!surname.equals(other.surname))
 			return false;
-		return true;
+		return true; 
 	}
 
 }
