@@ -8,7 +8,7 @@ public class Customer {
  
 	public Customer(String firstName, String surname) {
 		this.setFirstName(firstName);
-		this.setSurname(surname);
+		this.setSurname(surname); 
 	}
 
 	public Customer(Long id, String firstName, String surname) {

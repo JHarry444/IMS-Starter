@@ -27,12 +27,12 @@ public class ItemController implements CrudController<Item> {
 		for (Item item : items) {
 			LOGGER.info(item);
 		}
-		return items;
+		return items; 
 	}
 
 	@Override
 	public Item create() {
-		LOGGER.info("Please enter a first name");
+		LOGGER.info("Please enter a name");
 		String name = utils.getString();
 		LOGGER.info("Please enter a cost");
 		Double cost = utils.getDouble();
