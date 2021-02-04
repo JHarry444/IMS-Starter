@@ -22,7 +22,7 @@ public class OrderItemsController implements CrudController<OrderItems> {
 		this.orderItemsDAO = orderItemsDAO;
 		this.utils = utils;
 	}
-
+ 
 	@Override
 	public List<OrderItems> readAll() {
 		LOGGER.info("Would you like to read ALL orders or by an ID?");
@@ -50,7 +50,11 @@ public class OrderItemsController implements CrudController<OrderItems> {
 		return null;
 	}
 
-	public OrderItems create(Long cust_id, Long order_id) {
+	public void readChoice() {
+		
+	}
+	
+	public OrderItems create(Long order_id) {
 		Long item_id = 0L;
 		Long quantity = 0L;
 
@@ -60,23 +64,33 @@ public class OrderItemsController implements CrudController<OrderItems> {
 		LOGGER.info("Please enter the quantity");
 		quantity = utils.getLong();
 
-		LOGGER.info("Test before");
 		OrderItems orderItem = orderItemsDAO.create(new OrderItems(item_id, order_id, quantity));
-		LOGGER.info("Test after");
+		
 		return orderItem;
 	}
 
 	@Override
 	public OrderItems update() {
-		LOGGER.info("");
+		LOGGER.info("Please enter your Order ID: ");
+		Long order_id = utils.getLong();
+		LOGGER.info("Please enter the Item ID: ");
+		Long item_id = utils.getLong();
+		LOGGER.info("Please enter the quantity: ");
+		Long quantity = utils.getLong();
+		OrderItems orderItem = orderItemsDAO.update(new OrderItems(item_id, order_id, quantity));
 		return null;
 	}
-
+	
 	@Override
 	public int delete() {
 		LOGGER.info("Please enter the id of the order you want to delete");
 		Long order_id = utils.getLong();
 		return orderItemsDAO.delete(order_id);
+	}
+	
+	public int deleteNullOrders() {
+		LOGGER.info("Delete all orders that have ZERO items");
+		return orderItemsDAO.deleteNullOrders();
 	}
 
 	@Override

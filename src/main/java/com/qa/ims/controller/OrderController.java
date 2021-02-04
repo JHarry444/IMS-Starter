@@ -50,7 +50,7 @@ public class OrderController implements CrudController<Order> {
 			LOGGER.info("Would you like to order another item? Y/N");
 			choice = utils.getString();
 			if (choice.equalsIgnoreCase("Y")) {
-				orderItems.create(cust_id, order.getOrder_id());
+				orderItems.create(order.getOrder_id());
 			} else {
 				complete = true;
 			}
@@ -59,7 +59,7 @@ public class OrderController implements CrudController<Order> {
 		} while (!complete);
 	
 		LOGGER.info("Order created");
-		return order;
+		return order; 
 	}
 
 	@Override

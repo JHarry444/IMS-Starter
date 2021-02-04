@@ -11,13 +11,11 @@ public class OrderItems {
 	private String item_desc;
 	private Double total_cost;
 	
-
-
 	public OrderItems(Long item_id, Long order_id, Long quantity) {
 		this.setItem_id(item_id);
 		this.setOrder_id(order_id);
 		this.setQuantity(quantity);
-	}
+	} 
 
 	public OrderItems(String fname, String sname, Long order_id, Long item_id, Long quantity, String item_name, Double item_cost, Double total_cost, String item_desc) {
 		this.setFname(fname);
@@ -79,7 +77,6 @@ public class OrderItems {
 		this.quantity = quantity;
 	}
 	
-
 	public String getFname() {
 		return fname;
 	}

@@ -43,7 +43,7 @@ public class Customer {
 
 	@Override
 	public String toString() {
-		return "id:" + id + " first name:" + firstName + " surname:" + surname;
+		return "id:" + id + " First name:" + firstName + " Surname:" + surname;
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class Customer {
 		result = prime * result + ((surname == null) ? 0 : surname.hashCode());
 		return result;
 	} 
-
+ 
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

@@ -15,7 +15,7 @@ import com.qa.ims.persistence.domain.OrderItems;
 import com.qa.ims.utils.DBUtils;
 
 public class OrderItemsDAO implements Dao<OrderItems> {
-	
+
 	public static final Logger LOGGER = LogManager.getLogger();
 
 	@Override
@@ -41,7 +41,6 @@ public class OrderItemsDAO implements Dao<OrderItems> {
 
 	@Override
 	public List<OrderItems> readAll() {
-
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet resultSet = statement.executeQuery(
@@ -74,8 +73,10 @@ public class OrderItemsDAO implements Dao<OrderItems> {
 
 	public List<OrderItems> readSpecific(Long id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
-				PreparedStatement statement = connection
-						.prepareStatement("SELECT c.first_name, c.surname, oi.order_id, oi.item_id, oi.quantity, i.item_name, i.item_cost, SUM(item_cost * quantity) as TotalCost, i.item_desc from orders_items oi left join items i on i.item_id=oi.item_id left join orders o on o.order_id=oi.order_id left join customers c on c.id=o.cust_id group by oi.order_item_id HAVING oi.order_id = ?");) {
+				PreparedStatement statement = connection.prepareStatement(
+						"SELECT c.first_name, c.surname, oi.order_id, oi.item_id, oi.quantity, i.item_name, i.item_cost, SUM(item_cost * quantity) as TotalCost" + 
+						", i.item_desc from orders_items oi left join items i on i.item_id=oi.item_id left join orders o on o.order_id=oi.order_id left join customers" 
+								+" c on c.id=o.cust_id group by oi.order_item_id HAVING oi.order_id = ?");) {
 			statement.setLong(1, id);
 			List<OrderItems> orderItems = new ArrayList<>();
 			try (ResultSet resultSet = statement.executeQuery();) {
@@ -100,7 +101,6 @@ public class OrderItemsDAO implements Dao<OrderItems> {
 			statement.setLong(2, orderItems.getOrder_id());
 			statement.setLong(3, orderItems.getQuantity());
 			statement.executeUpdate();
-			LOGGER.info("here");
 			return readLatest();
 		} catch (Exception e) {
 			LOGGER.debug(e);
@@ -113,31 +113,30 @@ public class OrderItemsDAO implements Dao<OrderItems> {
 	public OrderItems read(Long id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection
-						.prepareStatement("SELECT * FROM orders_items_ WHERE order_id = ?");) {
+						.prepareStatement("SELECT * FROM orders_items WHERE order_id = ?");) {
 			statement.setLong(1, id);
 			try (ResultSet resultSet = statement.executeQuery();) {
 				resultSet.next();
-				return modelFromResultSet(resultSet);
+				return modelFromResultSetBeforeJoin(resultSet);
 			}
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
 		}
 
-		return null;
+		return null; 
 
 	}
 
 	@Override
-	public OrderItems update(OrderItems t) {
+	public OrderItems update(OrderItems oi) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection
-						.prepareStatement("UPDATE orders_items SET order_id = ?, item_id = ?, quantity = ?");) {
-			statement.setLong(1, t.getItem_id());
-			statement.setLong(2, t.getOrder_id());
-			statement.setLong(3, t.getQuantity());
+						.prepareStatement("UPDATE orders_items SET item_id = ?, quantity = ?");) {
+			statement.setLong(1, oi.getItem_id());
+			statement.setLong(2, oi.getQuantity());
 			statement.executeUpdate();
-			return read(t.getOrder_id());
+			return read(oi.getOrder_id());
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
@@ -152,6 +151,19 @@ public class OrderItemsDAO implements Dao<OrderItems> {
 						.prepareStatement("DELETE FROM orders_items WHERE order_items_id = ?");) {
 			statement.setLong(1, id);
 			return statement.executeUpdate();
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return 0;
+	}
+	
+	public int deleteNullOrders() {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement
+						.executeQuery("DELETE o from orders o\r\n"
+								+ "left join orders_items oi on o.order_id=oi.order_id where quantity is null;");) {
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
