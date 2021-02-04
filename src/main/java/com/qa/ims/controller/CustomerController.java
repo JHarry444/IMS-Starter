@@ -25,7 +25,7 @@ public class CustomerController implements CrudController<Customer> {
 		this.customerDAO = customerDAO;
 		this.utils = utils;
 	}
-
+ 
 	/**
 	 * Reads all customers to the logger
 	 */
@@ -66,7 +66,7 @@ public class CustomerController implements CrudController<Customer> {
 		Customer customer = customerDAO.update(new Customer(id, firstName, surname));
 		LOGGER.info("Customer Updated");
 		return customer;
-	}
+	} 
 
 	/**
 	 * Deletes an existing customer by the id of the customer

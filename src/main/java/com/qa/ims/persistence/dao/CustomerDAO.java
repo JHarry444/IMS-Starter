@@ -17,15 +17,15 @@ import com.qa.ims.utils.DBUtils;
 public class CustomerDAO implements Dao<Customer> {
 
 	public static final Logger LOGGER = LogManager.getLogger();
- 
+
 	@Override
 	public Customer modelFromResultSet(ResultSet resultSet) throws SQLException {
 		Long id = resultSet.getLong("id");
 		String firstName = resultSet.getString("first_name");
 		String surname = resultSet.getString("surname");
 		return new Customer(id, firstName, surname);
-	} 
- 
+	}
+
 	/**
 	 * Reads all customers from the database
 	 * 

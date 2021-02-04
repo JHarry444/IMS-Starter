@@ -32,7 +32,7 @@ public class CustomerDAOTest {
 	public void testCreate() {
 		final Customer created = new Customer(2L, "chris", "perrins");
 		assertEquals(created, DAO.create(created));
-	}
+	}	
 
 	@Test
 	public void testReadAll() {
@@ -62,7 +62,8 @@ public class CustomerDAOTest {
 		assertEquals(updated, DAO.update(updated));
 
 	}
-
+	
+	
 	@Test
 	public void testDelete() {
 		assertEquals(1, DAO.delete(1));

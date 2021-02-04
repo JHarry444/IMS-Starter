@@ -8,7 +8,7 @@ public class Customer {
  
 	public Customer(String firstName, String surname) {
 		this.setFirstName(firstName);
-		this.setSurname(surname);
+		this.setSurname(surname); 
 	}
 
 	public Customer(Long id, String firstName, String surname) {
@@ -43,7 +43,7 @@ public class Customer {
 
 	@Override
 	public String toString() {
-		return "id:" + id + " first name:" + firstName + " surname:" + surname;
+		return "id:" + id + " First name:" + firstName + " Surname:" + surname;
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class Customer {
 		result = prime * result + ((surname == null) ? 0 : surname.hashCode());
 		return result;
 	} 
-
+ 
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
