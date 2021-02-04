@@ -34,7 +34,7 @@ public class DBUtils {
 		this.dbUser = dbProps.getProperty("db.user", "");
 		this.dbPassword = dbProps.getProperty("db.password", "");
 	}
-
+ 
 	public DBUtils() {
 		this("db.properties");
 	}

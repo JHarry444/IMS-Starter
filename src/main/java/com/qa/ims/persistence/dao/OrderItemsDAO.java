@@ -156,7 +156,7 @@ public class OrderItemsDAO implements Dao<OrderItems> {
 			LOGGER.error(e.getMessage());
 		}
 		return 0;
-	}
+	} 
 	
 	public int deleteNullOrders() {
 		try (Connection connection = DBUtils.getInstance().getConnection();

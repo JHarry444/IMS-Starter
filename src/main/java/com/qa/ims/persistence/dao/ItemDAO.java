@@ -99,6 +99,7 @@ public class ItemDAO implements Dao<Item> {
 			statement.setString(1, item.getName());
 			statement.setDouble(2, item.getCost());
 			statement.setString(3, item.getDescription());
+			statement.setDouble(4, item.getId());
 			statement.executeUpdate();
 			return read(item.getId());
 		} catch (Exception e) {
@@ -118,7 +119,7 @@ public class ItemDAO implements Dao<Item> {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
 		}
-
+ 
 		return 0;
 	}
 
