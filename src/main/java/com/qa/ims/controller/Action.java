@@ -39,6 +39,14 @@ public enum Action {
 			LOGGER.info(action.getDescription());
 		}
 	}
+	/**
+	 * Prints out possible actions when Order domain is selected
+	 */
+	public static void printActionsOrders() {
+		for (Action action : Action.values()) {
+			LOGGER.info(action.getDescription());
+		}
+	}
 
 	/**
 	 * Gets an action based on a users input. If user enters a non-specified

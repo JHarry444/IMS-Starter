@@ -8,6 +8,8 @@ import java.util.List;
  */
 public interface CrudController<T> {
 
+	String toString = null;
+
 	List<T> readAll();
 
 	T create();
@@ -15,5 +17,6 @@ public interface CrudController<T> {
 	T update();
 
 	int delete();
+	
 
 }
