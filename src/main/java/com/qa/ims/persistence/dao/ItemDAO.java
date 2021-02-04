@@ -89,7 +89,7 @@ public class ItemDAO implements Dao<Item>{
 					statement.setInt(2, item.getItem_price());
 					statement.setLong(3, item.getItem_id());
 					statement.executeUpdate();
-					return read(item.getItem_id());
+					 return read(item.getItem_id());
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
