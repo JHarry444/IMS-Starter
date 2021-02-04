@@ -9,6 +9,6 @@ public class CustomerTest {
 	@Test
 	public void testEquals() {
 		EqualsVerifier.simple().forClass(Customer.class).verify();
-	}
+	} 
 
 }
