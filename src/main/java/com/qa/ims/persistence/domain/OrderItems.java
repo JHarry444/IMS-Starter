@@ -105,8 +105,8 @@ public class OrderItems {
 	@Override
 	public String toString() {
 		return "Name: " + fname + " " + sname  + " Order ID: " + order_id + " Item ID: " + item_id
-				+ " Quantity: " + quantity + " Item Name: " + item_name + " Item Cost: " + item_cost + " Item Description: "
-				+ item_desc + " Total Cost: " + total_cost;
+				+ " Quantity: " + quantity + " Item Name: " + item_name + " Item Cost: £" + item_cost + " Item Description: "
+				+ item_desc + " Total Cost: £" + total_cost;
 	}
 
 	@Override
