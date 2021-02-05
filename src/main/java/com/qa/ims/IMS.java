@@ -25,18 +25,16 @@ public class IMS {
 	private final ItemController items;
 	private final OrderController orders;
 	private final Utils utils;
-	private final OrderItemsController orders_items;
+
 
 	public IMS() {
 		this.utils = new Utils();
 		final CustomerDAO custDAO = new CustomerDAO();
 		final ItemDAO itemDAO = new ItemDAO();
 		final OrderDAO orderDAO = new OrderDAO();
-		final OrderItemsDAO orderItemsDAO = new OrderItemsDAO();
 		this.customers = new CustomerController(custDAO, utils);
 		this.items = new ItemController(itemDAO, utils);
-		this.orders = new OrderController(orderDAO, utils);
-		this.orders_items = new OrderItemsController(orderItemsDAO, utils);
+		this.orders = new OrderController(orderDAO, utils);		
 	}
 
 	public void imsSystem() {
@@ -70,9 +68,6 @@ public class IMS {
 			case ORDER:
 				active = this.orders;
 				break;
-			case ORDERSANDITEMS:
-				active = this.orders_items;
-				break;
 			case STOP:
 				return;
 			default:
@@ -89,10 +84,11 @@ public class IMS {
 			} else {
 				doAction(active, action);
 			}
-		} while (!changeDomain);
+		} while (!changeDomain); 
 	}
 
 	public void doAction(CrudController<?> crudController, Action action) {
+		
 		switch (action) {
 		case CREATE:
 			crudController.create();

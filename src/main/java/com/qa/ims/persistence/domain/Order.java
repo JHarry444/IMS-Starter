@@ -36,7 +36,7 @@ public class Order {
 
 	@Override
 	public String toString() {
-		return "Order ID : " + this.order_id + " Customer ID: " + this.customer_id;
+		return "Customer ID: " + this.customer_id + " Order ID : " + this.order_id +  "\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-";
 	}
 
 	@Override

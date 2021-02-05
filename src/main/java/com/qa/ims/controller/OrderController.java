@@ -33,16 +33,14 @@ public class OrderController implements CrudController<Order> {
 		for (Order order : orders) {
 			LOGGER.info(order);
 		}
-		//orderItemsDAO.readOrderItemsJoin();
+		orderItems.readAll();
 		return orders;
 	} 
 
 	@Override
 	public Order create() {
 		boolean complete = false;
-		
 		String choice;
-		
 		LOGGER.info("Enter your customer id");
 		Long cust_id = utils.getLong();
 		Order order = orderDAO.create(new Order(cust_id));
@@ -53,9 +51,7 @@ public class OrderController implements CrudController<Order> {
 				orderItems.create(order.getOrder_id());
 			} else {
 				complete = true;
-			}
-
-		
+			}		
 		} while (!complete);
 	
 		LOGGER.info("Order created");
@@ -64,12 +60,8 @@ public class OrderController implements CrudController<Order> {
 
 	@Override
 	public Order update() {
-		LOGGER.info("Please enter the order id");
-		Long order_id = utils.getLong();
-		LOGGER.info("Please enter the new customer id");
-		Long cust_id = utils.getLong();
-		Order order = orderDAO.update(new Order(order_id, cust_id));
-		return order;		
+		orderItems.update();
+		return null;		
 	}
 
 	@Override

@@ -132,9 +132,10 @@ public class OrderItemsDAO implements Dao<OrderItems> {
 	public OrderItems update(OrderItems oi) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection
-						.prepareStatement("UPDATE orders_items SET item_id = ?, quantity = ?");) {
-			statement.setLong(1, oi.getItem_id());
-			statement.setLong(2, oi.getQuantity());
+						.prepareStatement("UPDATE orders_items SET quantity = ? WHERE order_id = ? AND item_id = ? ");) {
+			statement.setLong(1, oi.getQuantity());
+			statement.setLong(2, oi.getItem_id());
+			statement.setLong(3, oi.getOrder_id());
 			statement.executeUpdate();
 			return read(oi.getOrder_id());
 		} catch (Exception e) {
@@ -156,7 +157,7 @@ public class OrderItemsDAO implements Dao<OrderItems> {
 			LOGGER.error(e.getMessage());
 		}
 		return 0;
-	}
+	} 
 	
 	public int deleteNullOrders() {
 		try (Connection connection = DBUtils.getInstance().getConnection();

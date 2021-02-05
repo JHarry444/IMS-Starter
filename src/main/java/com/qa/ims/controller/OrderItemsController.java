@@ -53,10 +53,10 @@ public class OrderItemsController implements CrudController<OrderItems> {
 	public void readChoice() {
 		
 	}
-	
+
 	public OrderItems create(Long order_id) {
 		Long item_id = 0L;
-		Long quantity = 0L;
+		Long quantity = 0L; 
 
 		LOGGER.info("Please enter the item id");
 		item_id = utils.getLong();
@@ -89,18 +89,20 @@ public class OrderItemsController implements CrudController<OrderItems> {
 	}
 	
 	public int deleteNullOrders() {
-		LOGGER.info("Delete all orders that have ZERO items");
 		return orderItemsDAO.deleteNullOrders();
 	}
 
-	@Override
-	public OrderItems create() {
-		return null;
-	}
+
 
 	public Double calculateCost(List<OrderItems> oi) {
 		LOGGER.info("Total Cost of orders: ");
 		return orderItemsDAO.calculateCost(oi);
+	}
+
+	@Override
+	public OrderItems create() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
