@@ -140,7 +140,9 @@ public class OrderController implements CrudController<Order> {
 	}
 
 	public Double calculateCost(List<Order> o) {
-		LOGGER.info("\nTotal Cost of orders: ");
+
+		LOGGER.info("\nTotal Cost of orders: �");
+
 		return orderDAO.calculateCost(o);
 	}
 
