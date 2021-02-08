@@ -87,12 +87,7 @@ public class OrderDAO implements Dao<Order> {
 	}
 
 	public Order readLatestItem(boolean item) {
-		String query = null;
-		if (item) {
-			query = Queries.READLATESTORDER.getDescription();
-		} else {
-			query = Queries.READALLORDERITEMS.getDescription();
-		}
+		String query = item ? Queries.READLATESTORDER.getDescription() : Queries.READALLORDERITEMS.getDescription();
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet resultSet = statement.executeQuery(query);) {
@@ -110,12 +105,7 @@ public class OrderDAO implements Dao<Order> {
 	}
 
 	public Order read(Long id, boolean item) {
-		String query = "";
-		if (item) {
-			query = Queries.READORDER.getDescription();
-		} else {
-			query = Queries.READORDERITEM.getDescription();
-		}
+		String query = item ? Queries.READORDER.getDescription() : Queries.READORDERITEM.getDescription();
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection.prepareStatement(query);) {
 			statement.setLong(1, id);
@@ -134,23 +124,19 @@ public class OrderDAO implements Dao<Order> {
 		}
 		return null;
 	}
-
-	public Order createUpdate(Order order, boolean item) {
-		String query = "";
-		if (item) {
-			query = Queries.CREATEORDER.getDescription();
-		} else {
-			query = Queries.UPDATEORDER.getDescription();
-		}
+	
+	/**
+	 * Creates or updates an order. TRUE for create, FALSE for update.
+	 * */
+	public Order createUpdateOrder(Order order, boolean create) {
+		String query = create ? Queries.CREATEORDER.getDescription() : Queries.UPDATEORDER.getDescription();
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection.prepareStatement(query);) {
 			statement.setLong(1, order.getCustomer_id());
 			statement.executeUpdate();
-			if (item) {
-				return readLatestItem(false);
-			} else {
-				return readLatestItem(true);
-			}
+
+			return readLatestItem(false);
+
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
@@ -158,27 +144,22 @@ public class OrderDAO implements Dao<Order> {
 		return null;
 	}
 
-	public Order createItem(Order order, boolean item) {
-		String query = "";
-		if (item) {
-			query = Queries.CREATEORDERITEM.getDescription();
-		} else {
-			query = Queries.UPDATEORDERITEM.getDescription();
-		}
+	public Order createUpdateItem(Order order, boolean create) {
+		String query = create ? Queries.CREATEORDERITEM.getDescription() : Queries.UPDATEORDERITEM.getDescription();
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection.prepareStatement(query);) {
 			statement.setLong(1, order.getItem_id());
 			statement.setLong(2, order.getOrder_id());
 			statement.setLong(3, order.getQuantity());
 			statement.executeUpdate();
-			return readLatestItem(true);
+			return readLatestItem(false);
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
 		}
 		return null;
 	}
-	
+
 	@Override
 	public int delete(long id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -247,8 +228,6 @@ public class OrderDAO implements Dao<Order> {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	
 
 //	public Order readItem(Long id) {
 //	try (Connection connection = DBUtils.getInstance().getConnection();

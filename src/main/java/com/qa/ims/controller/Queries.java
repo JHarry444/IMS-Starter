@@ -19,9 +19,9 @@ public enum Queries {
 	READLATESTORDER("SELECT * FROM orders ORDER BY order_id DESC LIMIT 1"),
 	READORDERITEM("SELECT * FROM orders_items WHERE order_id = ?"),
 	READORDER("SELECT * FROM orders WHERE order_id = ?"),
-	READSPECIFICORDERITEM("SELECT c.first_name, c.surname, oi.order_id, oi.item_id, oi.quantity, i.item_name, i.item_cost, SUM(item_cost * quantity) as TotalCost"
-								+ ", i.item_desc from orders_items oi left join items i on i.item_id=oi.item_id left join orders o on o.order_id=oi.order_id left join customers"
-								+ " c on c.id=o.cust_id group by oi.order_item_id HAVING oi.order_id = ?"),
+	READSPECIFICORDERITEM("SELECT c.first_name, c.surname, oi.order_id, oi.item_id, oi.quantity, i.item_name, i.item_cost, SUM(item_cost * quantity) as TotalCost\r\n"
+			+ "								, i.item_desc from orders_items oi left join items i on i.item_id=oi.item_id left join orders o on o.order_id=oi.order_id left join customers\r\n"
+			+ "								c on c.id=o.cust_id group by oi.order_item_id HAVING oi.order_id = ?;"),
 	CREATEORDER("INSERT INTO orders (cust_id) VALUES (?)"),
 	CREATEORDERITEM("INSERT INTO orders_items(item_id, order_id, quantity) VALUES (?, ?, ?)"),
 	UPDATEORDER("UPDATE orders SET cust_id WHERE order_id = ?"),
