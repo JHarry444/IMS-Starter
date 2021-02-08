@@ -100,9 +100,9 @@ public class ItemDAO implements Dao<Item>{
 	@Override
 	public int delete(long item_id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
-				PreparedStatement statement = connection.prepareStatement("DELETE FROM items WHERE item_id = ?");) {
-			statement.setLong(1, item_id);
-			return statement.executeUpdate();
+				Statement statement = connection.createStatement();){
+			statement.executeUpdate("DELETE FROM order_item  WHERE item_id ="+item_id);
+			return statement.executeUpdate("DELETE FROM items WHERE item_id =" + item_id);
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());

@@ -8,7 +8,7 @@ public class Order {
 	private long order_price;
 	public Order(long order_id, long item_id, long customer_id, long order_items_id) {
 		super();
-		this.order_id = order_id;
+		this.order_id = order_id; 
 		this.item_id = item_id;
 		this.customer_id = customer_id;
 		this.order_items_id = order_items_id;
@@ -18,7 +18,7 @@ public class Order {
 		this.setCustomer_id(customer_id);
 		this.setItem_id(item_id);
 	}
-	public Order(long order_id, long item_id, long customer_id, long order_items_id, long order_price) {
+	public Order(long order_id, long customer_id, long item_id,  long order_items_id, long order_price) {
 		super();
 		this.order_id = order_id;
 		this.item_id = item_id;
@@ -85,10 +85,11 @@ public class Order {
 			return false;
 		return true;
 	}
+	
 	@Override
 	public String toString() {
-		return "Order " + order_id + " [order_id=" + order_id + ", item_id=" + item_id + ", customer_id=" + customer_id
-				+ ", order_items_id=" + order_items_id + "]";
+		return "Order [order_id=" + order_id + ", item_id=" + item_id + ", customer_id=" + customer_id
+				+ ", order_items_id=" + order_items_id + ", order_price=" + order_price + "]";
 	}
 	public long getOrder_price() {
 		return order_price;

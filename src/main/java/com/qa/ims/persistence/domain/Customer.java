@@ -14,7 +14,7 @@ public class Customer {
 	public Customer(Long id, String firstName, String surname) {
 		this.setId(id);
 		this.setFirstName(firstName);
-		this.setSurname(surname);
+		this.setSurname(surname); 
 	}
 
 	public Long getId() {

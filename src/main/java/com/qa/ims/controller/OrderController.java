@@ -2,6 +2,7 @@ package com.qa.ims.controller;
 
 import java.sql.Connection;
 
+
 import java.sql.PreparedStatement;
 import java.util.List;
 
@@ -61,8 +62,8 @@ public class OrderController implements CrudController<Order> {
 	@Override
 	public int delete() {
 		LOGGER.info("Delete item or order?");
-		String deleteType = utils.getString();
-		if (deleteType == "ORDER") {
+		String deleteType = utils.getString().toUpperCase();
+		if (deleteType.equals("ORDER")) {
 			LOGGER.info("Please enter the id of the order you wish to delete");
 			Long order_id = utils.getLong();
 			LOGGER.info("Order with id " + order_id + " has been deleted");
