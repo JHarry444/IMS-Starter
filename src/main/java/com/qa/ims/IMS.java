@@ -8,18 +8,18 @@ import com.qa.ims.controller.CrudController;
 import com.qa.ims.controller.CustomerController;
 import com.qa.ims.controller.ItemController;
 import com.qa.ims.controller.OrderController;
-import com.qa.ims.controller.OrderItemsController;
+
 import com.qa.ims.persistence.dao.CustomerDAO;
 import com.qa.ims.persistence.dao.ItemDAO;
 import com.qa.ims.persistence.dao.OrderDAO;
-import com.qa.ims.persistence.dao.OrderItemsDAO;
+
 import com.qa.ims.persistence.domain.Domain;
 import com.qa.ims.utils.DBUtils;
 import com.qa.ims.utils.Utils;
 
 public class IMS {
 
-	public static final Logger LOGGER = LogManager.getLogger();
+	public static final Logger LOGGER = LogManager.getLogger(); 
 
 	private final CustomerController customers;
 	private final ItemController items;
