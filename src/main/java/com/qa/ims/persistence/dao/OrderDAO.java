@@ -171,7 +171,7 @@ public class OrderDAO implements Dao<Order> {
 	 * @param create
 	 * @return
 	 */
-	public Order createUpdateItem(Order order, boolean create) {
+	public Order createUpdateOrderItem(Order order, boolean create) {
 		String query = create ? Queries.CREATEORDERITEM.getDescription() : Queries.UPDATEORDERITEM.getDescription();
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection.prepareStatement(query);) {
@@ -186,7 +186,7 @@ public class OrderDAO implements Dao<Order> {
 		}
 		return null;
 	}
-	
+	 
 	/**
 	 * Deletes an order from the order table.
 	 * @param id

@@ -83,6 +83,11 @@ public class OrderController implements CrudController<Order> {
 		return order;
 	}
 
+	/**
+	 * Displays information to user. Calls orderDOA.createUpdateITem();
+	 * @param order_id
+	 * @return
+	 */
 	public Order createOrderItem(Long order_id) {
 		Long item_id = 0L;
 		Long quantity = 0L;
@@ -91,7 +96,7 @@ public class OrderController implements CrudController<Order> {
 		item_id = utils.getLong();
 		LOGGER.info("Please enter the quantity");
 		quantity = utils.getLong();
-		Order order = orderDAO.createUpdateItem(new Order(item_id, order_id, quantity), true);
+		Order order = orderDAO.createUpdateOrderItem(new Order(item_id, order_id, quantity), true);
 		return order;
 	}
 
