@@ -13,7 +13,7 @@ import org.junit.Test;
 
 import com.qa.ims.persistence.domain.Customer;
 import com.qa.ims.utils.DBUtils;
-
+ 
 public class CustomerDAOTest {
 
 	private final CustomerDAO custDAO = new CustomerDAO();
@@ -34,7 +34,7 @@ public class CustomerDAOTest {
 		thrown.expect(Exception.class);
 		assertEquals(created, custDAO.create(created));
 		
-	}	
+	}	  
 
 	@Test
 	public void testReadAll() {		
