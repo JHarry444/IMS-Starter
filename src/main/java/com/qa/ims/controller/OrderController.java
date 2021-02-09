@@ -49,7 +49,7 @@ public class OrderController implements CrudController<Order> {
 			LOGGER.info(order.toString());
 		}
 		LOGGER.info("Would you like to read ALL orders or by an ID?");
-		String choice = utils.getString();
+		String choice = utils.getString(); 
 
 		if (choice.equalsIgnoreCase("ALL")) {
 			List<Order> orderItems = orderDAO.readAllItems(true);
