@@ -1,7 +1,5 @@
 package com.qa.ims.persistence.domain;
 
-
-
 public class Item {
 
 	private Long id;
@@ -9,20 +7,18 @@ public class Item {
 	private Double cost;
 	private String description;
 
-
 	public Item(Long id, String name, Double cost, String description) {
 		this.setId(id);
 		this.setName(name);
 		this.setCost(cost);
 		this.setDescription(description);
 	}
-	
+
 	public Item(String name, Double cost, String description) {
 		this.setName(name);
 		this.setCost(cost);
 		this.setDescription(description);
 	}
-	
 
 	public long getId() {
 		return id;
@@ -58,7 +54,7 @@ public class Item {
 
 	@Override
 	public String toString() {
-		return String.format("id: " + id + " Name: " + name + " Cost: " + cost + " Description: " + description);
+		return String.format("id: %d Name:%s  Cost:%d  Description:%s ", id, name, cost, description);
 	}
 
 	@Override
@@ -103,7 +99,7 @@ public class Item {
 			return false;
 		return true;
 	}
+	}
 
-	
 
 }

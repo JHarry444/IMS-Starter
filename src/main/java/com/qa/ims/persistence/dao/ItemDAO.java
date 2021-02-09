@@ -106,7 +106,7 @@ public class ItemDAO implements Dao<Item> {
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
-		}
+		} 
 		return null;
 	}
 
