@@ -41,7 +41,12 @@ public class OrderDAO implements Dao<Order> {
 		return new Order(order_id, customer_id);
 	}
 
-	public List<Order> readAllTwo(boolean allItems) {
+	/**
+	 * Reads in either all orders or all orderitems.
+	 * @param allItems
+	 * @return
+	 */
+	public List<Order> readAllItems(boolean allItems) {
 		String query = null;
 		if (allItems) {
 			query = Queries.READALLORDERITEMS.getDescription();
@@ -66,7 +71,11 @@ public class OrderDAO implements Dao<Order> {
 		}
 		return new ArrayList<>();
 	}
-
+	/**
+	 * Reads a specific row in from the joined table.
+	 * @param id
+	 * @return
+	 */
 	public List<Order> readSpecific(Long id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection
@@ -85,7 +94,11 @@ public class OrderDAO implements Dao<Order> {
 		}
 		return null;
 	}
-
+	/**
+	 * Reads in the latest order or orderitem. TRUE = order. FALSE = orderitem.
+	 * @param item
+	 * @return
+	 */
 	public Order readLatestItem(boolean item) {
 		String query = item ? Queries.READLATESTORDER.getDescription() : Queries.READALLORDERITEMS.getDescription();
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -103,7 +116,12 @@ public class OrderDAO implements Dao<Order> {
 		}
 		return null;
 	}
-
+	/**
+	 * Reads in one row from order table.
+	 * @param id
+	 * @param item
+	 * @return
+	 */
 	public Order read(Long id, boolean item) {
 		String query = item ? Queries.READORDER.getDescription() : Queries.READORDERITEM.getDescription();
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -126,8 +144,11 @@ public class OrderDAO implements Dao<Order> {
 	}
 	
 	/**
-	 * Creates or updates an order. TRUE for create, FALSE for update.
-	 * */
+	 * Creates or updates an order. TRUE = create. FALSE = update.
+	 * @param order
+	 * @param create
+	 * @return
+	 */
 	public Order createUpdateOrder(Order order, boolean create) {
 		String query = create ? Queries.CREATEORDER.getDescription() : Queries.UPDATEORDER.getDescription();
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -144,6 +165,12 @@ public class OrderDAO implements Dao<Order> {
 		return null;
 	}
 
+	/**
+	 * Creates or updates an orderitem. TRUE = create. FALSE = update.
+	 * @param order
+	 * @param create
+	 * @return
+	 */
 	public Order createUpdateItem(Order order, boolean create) {
 		String query = create ? Queries.CREATEORDERITEM.getDescription() : Queries.UPDATEORDERITEM.getDescription();
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -159,12 +186,16 @@ public class OrderDAO implements Dao<Order> {
 		}
 		return null;
 	}
-
+	
+	/**
+	 * Deletes an order from the order table.
+	 * @param id
+	 */
 	@Override
-	public int delete(long id) {
+	public int delete(long order_id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection.prepareStatement(Queries.DELETEORDER.getDescription());) {
-			statement.setLong(1, id);
+			statement.setLong(1, order_id);
 			return statement.executeUpdate();
 		} catch (Exception e) {
 			LOGGER.debug(e);
@@ -173,6 +204,12 @@ public class OrderDAO implements Dao<Order> {
 		return 0;
 	}
 
+	/**
+	 * Deletes an orderitem from the orderitem table.
+	 * @param order_id
+	 * @param item_id
+	 * @return
+	 */
 	public int deleteOrderItem(long order_id, long item_id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection.prepareStatement(Queries.DELETEORDERITEM.getDescription());) {
@@ -185,7 +222,10 @@ public class OrderDAO implements Dao<Order> {
 		}
 		return 0;
 	}
-
+	/**
+	 * Deletes null orders - orders without any items.
+	 * @return
+	 */
 	public int deleteNullOrders() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
@@ -197,6 +237,11 @@ public class OrderDAO implements Dao<Order> {
 		return 0;
 	}
 
+	/**
+	 * 
+	 * @param oi
+	 * @return
+	 */
 	public Double calculateCost(List<Order> oi) {
 		Double sum = 0.0;
 		for (Order o : oi) {

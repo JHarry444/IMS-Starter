@@ -44,7 +44,7 @@ public class OrderController implements CrudController<Order> {
 //			readSpecific();
 //		}
 
-		List<Order> orders = orderDAO.readAllTwo(false);
+		List<Order> orders = orderDAO.readAllItems(false);
 		for (Order order : orders) {
 			LOGGER.info(order.toString());
 		}
@@ -52,11 +52,10 @@ public class OrderController implements CrudController<Order> {
 		String choice = utils.getString();
 
 		if (choice.equalsIgnoreCase("ALL")) {
-			List<Order> orderItems = orderDAO.readAllTwo(true);
+			List<Order> orderItems = orderDAO.readAllItems(true);
 			for (Order orderItem : orderItems) {
 				LOGGER.info(orderItem.itemsToString());
 			}
-			//LOGGER.info(calculateCost(orderItems));
 			return orderItems;
 		} else if (choice.equalsIgnoreCase("ID")) {
 			readSpecific();
@@ -72,7 +71,7 @@ public class OrderController implements CrudController<Order> {
 		Long cust_id = utils.getLong();
 		Order order = orderDAO.createUpdateOrder(new Order(cust_id),true);
 		do {
-			LOGGER.info("Would you like to order another item? Y/N");
+			LOGGER.info("Would you like to order another item? Yes (Y)/No (N)");
 			choice = utils.getString();
 			if (choice.equalsIgnoreCase("Y")) {
 				createOrderItem(order.getOrder_id());
