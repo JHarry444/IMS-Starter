@@ -1,7 +1,6 @@
 package com.qa.ims.persistence.dao;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
 import org.junit.rules.ExpectedException;
 
 import java.sql.SQLException;
@@ -17,10 +16,11 @@ import com.qa.ims.utils.DBUtils;
 
 public class CustomerDAOTest {
 
-	private final CustomerDAO DAO = new CustomerDAO();
+	private final CustomerDAO custDAO = new CustomerDAO();
+	
 	
 	@Rule
-	public ExpectedException thrown = ExpectedException.none();
+	public ExpectedException thrown = ExpectedException.none(); 
 
 	@Before
 	public void setup() {
@@ -31,41 +31,51 @@ public class CustomerDAOTest {
 	@Test
 	public void testCreate() {
 		final Customer created = new Customer(2L, "chris", "perrins");
-		assertEquals(created, DAO.create(created));
+		thrown.expect(Exception.class);
+		assertEquals(created, custDAO.create(created));
+		
 	}	
 
 	@Test
-	public void testReadAll() {
-		
-		
+	public void testReadAll() {		
 		thrown.expect(SQLException.class);
+		
 		List<Customer> expected = new ArrayList<>();
 		expected.add(new Customer(1L, "jordan", "harrison"));
-		assertEquals(expected, DAO.readAll());
+		assertEquals(expected, custDAO.readAll());
 	}
-
+	
 	@Test
 	public void testReadLatest() {
-		thrown.expect(Exception.class);
-		assertEquals(new Customer(1L, "jordan", "harrison"), DAO.readLatest());
+		
+		assertEquals(new Customer(1L, "jordan", "harrison"), custDAO.readLatest());
 	}
 
 	@Test
 	public void testRead() {
 		final long ID = 1L;
-		assertEquals(new Customer(ID, "jordan", "harrison"), DAO.read(ID));
+		
+		assertEquals(new Customer(ID, "jordan", "harrison"), custDAO.read(ID));
 	}
 
 	@Test
 	public void testUpdate() {
 		final Customer updated = new Customer(1L, "chris", "perrins");
-		assertEquals(updated, DAO.update(updated));
+	
+		assertEquals(updated, custDAO.update(updated));
 
 	}
 	
+	@Test
+	public void testExceptions() {
+		thrown.expect(Exception.class);
+		thrown.expect(SQLException.class);
+		Exception e = new SQLException();
+		
+	}
 	
 	@Test
 	public void testDelete() {
-		assertEquals(1, DAO.delete(1));
+		assertEquals(1, custDAO.delete(1));
 	}
 }
