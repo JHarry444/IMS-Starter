@@ -25,24 +25,24 @@ public class OrderDAO implements Dao<Order> {
 	public Order modelFromResultSet(ResultSet resultSet) throws SQLException {
 		String fname = resultSet.getString("first_name");
 		String sname = resultSet.getString("surname");
-		Long order_id = resultSet.getLong("order_id");
-		Long item_id = resultSet.getLong("item_id");
+		Long orderId = resultSet.getLong("orderId");
+		Long itemId = resultSet.getLong("itemId");
 		Long quantity = resultSet.getLong("quantity");
-		String item_name = resultSet.getString("item_name");
-		Double item_cost = resultSet.getDouble("item_cost");
-		Double total_cost = resultSet.getDouble("TotalCost");
-		String item_desc = resultSet.getString("item_desc");
-		return new Order(order_id, fname, sname, item_id, quantity, item_name, item_cost, item_desc, total_cost);
+		String itemName = resultSet.getString("item_name");
+		Double itemCost = resultSet.getDouble("item_cost");
+		Double totalCost = resultSet.getDouble("TotalCost");
+		String itemDesc = resultSet.getString("item_desc");
+		return new Order(orderId, fname, sname, itemId, quantity, itemName, itemCost, itemDesc, totalCost);
 	}
 
 	public Order modelFromResultSetBeforeJoin(ResultSet resultSet) throws SQLException {
-		Long order_id = resultSet.getLong("order_id");
-		Long customer_id = resultSet.getLong("cust_id");
-		return new Order(order_id, customer_id);
+		Long orderId = resultSet.getLong("orderId");
+		Long customerId = resultSet.getLong("custId");
+		return new Order(orderId, customerId);
 	}
 
 	/**
-	 * Reads in either all orders or all orderitems.
+	 * Reads in either all orders or all orderItems.
 	 * @param allItems
 	 * @return
 	 */
@@ -92,10 +92,10 @@ public class OrderDAO implements Dao<Order> {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
 		}
-		return null;
+		return new ArrayList<>();
 	}
 	/**
-	 * Reads in the latest order or orderitem. TRUE = order. FALSE = orderitem.
+	 * Reads in the latest order or orderItem. TRUE = order. FALSE = orderItem.
 	 * @param item
 	 * @return
 	 */
@@ -153,7 +153,7 @@ public class OrderDAO implements Dao<Order> {
 		String query = create ? Queries.CREATEORDER.getDescription() : Queries.UPDATEORDER.getDescription();
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection.prepareStatement(query);) {
-			statement.setLong(1, order.getCustomer_id());
+			statement.setLong(1, order.getCustomerId());
 			statement.executeUpdate();
 
 			return readLatestItem(false);
@@ -166,7 +166,7 @@ public class OrderDAO implements Dao<Order> {
 	}
 
 	/**
-	 * Creates or updates an orderitem. TRUE = create. FALSE = update.
+	 * Creates or updates an orderItem. TRUE = create. FALSE = update.
 	 * @param order
 	 * @param create
 	 * @return
@@ -175,8 +175,8 @@ public class OrderDAO implements Dao<Order> {
 		String query = create ? Queries.CREATEORDERITEM.getDescription() : Queries.UPDATEORDERITEM.getDescription();
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection.prepareStatement(query);) {
-			statement.setLong(1, order.getItem_id());
-			statement.setLong(2, order.getOrder_id());
+			statement.setLong(1, order.getItemId());
+			statement.setLong(2, order.getOrderId());
 			statement.setLong(3, order.getQuantity());
 			statement.executeUpdate();
 			return readLatestItem(false);
@@ -192,10 +192,10 @@ public class OrderDAO implements Dao<Order> {
 	 * @param id
 	 */
 	@Override
-	public int delete(long order_id) {
+	public int delete(long orderId) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection.prepareStatement(Queries.DELETEORDER.getDescription());) {
-			statement.setLong(1, order_id);
+			statement.setLong(1, orderId);
 			return statement.executeUpdate();
 		} catch (Exception e) {
 			LOGGER.debug(e);
@@ -205,16 +205,16 @@ public class OrderDAO implements Dao<Order> {
 	}
 
 	/**
-	 * Deletes an orderitem from the orderitem table.
-	 * @param order_id
-	 * @param item_id
+	 * Deletes an orderItem from the orderItem table.
+	 * @param orderId
+	 * @param itemId
 	 * @return
 	 */
-	public int deleteOrderItem(long order_id, long item_id) {
+	public int deleteOrderItem(long orderId, long itemId) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection.prepareStatement(Queries.DELETEORDERITEM.getDescription());) {
-			statement.setLong(1, order_id);
-			statement.setLong(2, item_id);
+			statement.setLong(1, orderId);
+			statement.setLong(2, itemId);
 			return statement.executeUpdate();
 		} catch (Exception e) {
 			LOGGER.debug(e);
@@ -230,6 +230,7 @@ public class OrderDAO implements Dao<Order> {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet resultSet = statement.executeQuery(Queries.DELETENULLORDERS.getDescription());) {
+			
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
@@ -245,7 +246,7 @@ public class OrderDAO implements Dao<Order> {
 	public Double calculateCost(List<Order> oi) {
 		Double sum = 0.0;
 		for (Order o : oi) {
-			sum += o.getTotal_cost();
+			sum += o.getTotalCost();
 		}
 		return sum;
 	}
@@ -273,112 +274,5 @@ public class OrderDAO implements Dao<Order> {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-//	public Order readItem(Long id) {
-//	try (Connection connection = DBUtils.getInstance().getConnection();
-//			PreparedStatement statement = connection
-//					.prepareStatement(Queries.READORDERITEM.getDescription());) {
-//		statement.setLong(1, id);
-//		try (ResultSet resultSet = statement.executeQuery();) {
-//			resultSet.next();
-//			return modelFromResultSetBeforeJoin(resultSet);
-//		}
-//	} catch (Exception e) {
-//		LOGGER.debug(e);
-//		LOGGER.error(e.getMessage());
-//	}
-//
-//	return null;
-//
-//}
-
-//public Order readLatestItem() {
-//try (Connection connection = DBUtils.getInstance().getConnection();
-//		Statement statement = connection.createStatement();
-//		ResultSet resultSet = statement
-//				.executeQuery(Queries.READLATESTORDERITEM.getDescription());) {
-//	resultSet.next();
-//	return modelFromResultSet(resultSet);
-//} catch (Exception e) {
-//	LOGGER.debug(e);
-//	LOGGER.error(e.getMessage());
-//}
-//return null;
-//}
-
-//@Override
-//public List<Order> readAll() {
-//	try (Connection connection = DBUtils.getInstance().getConnection();
-//			Statement statement = connection.createStatement();
-//			ResultSet resultSet = statement.executeQuery("SELECT * FROM orders");) {
-//		List<Order> orders = new ArrayList<>();
-//		while (resultSet.next()) {
-//			orders.add(modelFromResultSetBeforeJoin(resultSet));
-//		}
-//
-//		return orders;
-//	} catch (SQLException e) {
-//		LOGGER.debug(e);
-//		LOGGER.error(e.getMessage());
-//	}
-//	return new ArrayList<>();
-//}
-//
-//public List<Order> readAllItems() {
-//	try (Connection connection = DBUtils.getInstance().getConnection();
-//			Statement statement = connection.createStatement();
-//			ResultSet resultSet = statement.executeQuery(
-//					"SELECT c.first_name, c.surname, oi.order_id, oi.item_id, oi.quantity, i.item_name, i.item_cost, SUM(item_cost * quantity) as TotalCost, i.item_desc from orders_items oi left join items i on i.item_id=oi.item_id left join orders o on o.order_id=oi.order_id left join customers c on c.id=o.cust_id group by oi.order_item_id;");) {
-//		List<Order> orderItems = new ArrayList<>();
-//		while (resultSet.next()) {
-//			orderItems.add(modelFromResultSet(resultSet));
-//		}
-//		return orderItems;
-//	} catch (SQLException e) {
-//		LOGGER.debug(e);
-//		LOGGER.error(e.getMessage());
-//	}
-//	return new ArrayList<>();
-//}
-
-//	public Order update(Order order) {
-//	try (Connection connection = DBUtils.getInstance().getConnection();
-//			PreparedStatement statement = connection.prepareStatement(Queries.UPDATEORDER.getDescription());) {
-//		statement.setLong(1, order.getCustomer_id());
-//		statement.executeUpdate();
-//		return read(order.getCustomer_id(), false);
-//	} catch (Exception e) {
-//		LOGGER.debug(e);
-//		LOGGER.error(e.getMessage());
-//	}
-//	return null;
-//}
-
-//  	public Order updateItem(Order o) {
-//		try (Connection connection = DBUtils.getInstance().getConnection();
-//				PreparedStatement statement = connection.prepareStatement(Queries.UPDATEORDERITEM.getDescription());) {
-//			statement.setLong(1, o.getQuantity());
-//			statement.setLong(2, o.getItem_id());
-//			statement.setLong(3, o.getOrder_id());
-//			statement.executeUpdate();
-//			return read(o.getOrder_id());
-//		} catch (Exception e) {
-//			LOGGER.debug(e);
-//			LOGGER.error(e.getMessage());
-//		}
-//		return null;
-//	}
-
-//	public int deleteItem(long id) {
-//		try (Connection connection = DBUtils.getInstance().getConnection();
-//				PreparedStatement statement = connection.prepareStatement(Queries.DELETEORDERITEM.getDescription());) {
-//			statement.setLong(1, id);
-//			return statement.executeUpdate();
-//		} catch (Exception e) {
-//			LOGGER.debug(e);
-//			LOGGER.error(e.getMessage());
-//		}
-//		return 0;
-//	}
 
 }
