@@ -28,7 +28,7 @@ public class ItemController implements CrudController<Item> {
 			LOGGER.info(item);
 		}
 		return items; 
-	}
+	} 
 
 	@Override
 	public Item create() { 
