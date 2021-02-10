@@ -28,7 +28,7 @@ public class ItemController implements CrudController<Item> {
 			LOGGER.info(item);
 		}
 		return items; 
-	} 
+	}  
  
 	@Override
 	public Item create() { 
@@ -40,7 +40,7 @@ public class ItemController implements CrudController<Item> {
 		String description = utils.getString();
 		Item item = itemDAO.create(new Item(name,cost,description));
 		LOGGER.info("Item created");
-		return item;
+		return item; 
 	}
 
 	@Override

@@ -41,7 +41,7 @@ public enum Queries {
 	READITEM("SELECT * FROM items WHERE item_id = ?"),
 	UPDATEITEM("UPDATE items SET item_name = ?, item_cost = ?, item_desc = ? WHERE item_id = ?"),
 	DELETEITEM("DELETE FROM items WHERE item_id = ?")
-	
+	 
 	;
 
 	public static final Logger LOGGER = LogManager.getLogger();

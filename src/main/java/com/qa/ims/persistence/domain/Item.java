@@ -54,7 +54,7 @@ public class Item {
 
 	@Override
 	public String toString() {
-		return String.format("id: %d Name:%s  Cost:%d  Description:%s ", id, name, cost, description);
+		return String.format("id: %d Name: %s Cost: %.2f Description: %s", id, name, cost, description);
 	}
 
 	@Override
@@ -99,7 +99,7 @@ public class Item {
 			return false;
 		return true;
 	}
-	}
+	
 
 
 }

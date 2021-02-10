@@ -33,6 +33,16 @@ public class Order {
 		this.setQuantity(quantity);
 	} 
 	
+	public Order(Long orderId, Long customerId) {
+		this.setOrderId(orderId);
+		this.setCustomerId(customerId);
+	}
+
+	public Order(Long customerId) {
+		this.setCustomerId(customerId);
+	}
+	
+	
 	public String getFname() {
 		return fname;
 	}
@@ -93,14 +103,7 @@ public class Order {
 		this.itemDesc = itemDesc;
 	}
 
-	public Order(Long orderId, Long customerId) {
-		this.setOrderId(orderId);
-		this.setCustomerId(customerId);
-	}
-
-	public Order(Long customerId) {
-		this.setCustomerId(customerId);
-	}
+	
 
 	public Long getOrderId() {
 		return orderId;
