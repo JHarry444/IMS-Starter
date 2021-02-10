@@ -13,14 +13,17 @@ public class ItemTest {
 	
 	@Test
 	public void testEquals() {
-		
+		EqualsVerifier.simple().forClass(Item.class).verify();
 	}
 	
 	@Test
 	public void testConstructor() {
-		
+		Item iTest = new Item("Charlie", 18.5, "Tall man");
+		Double testCost = iTest.getCost();
+		assertEquals(18.5, testCost,1);
+		assertEquals("Tall man", iTest.getDescription());
 	}
-	
+	 
 	@Test
 	public void testGetId() {
 		i.setId(123L);
@@ -34,10 +37,10 @@ public class ItemTest {
 		assertEquals("Mouse", i.getName());
 	}
 	
-	@Ignore
+
 	@Test
 	public void testToString(){
-		assertEquals("id: 12345 Name: toothbrush Cost: 15.0 Description: Teeth scrubber", i.toString());
-	}
+		assertEquals("id: 12345 Name: toothbrush Cost: 15.00 Description: Teeth scrubber", i.toString());
+	} 
 
 }

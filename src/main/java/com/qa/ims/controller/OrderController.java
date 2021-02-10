@@ -35,7 +35,7 @@ public class OrderController implements CrudController<Order> {
 			List<Order> orderItems = orderDAO.readAllItems(true);
 			for (Order orderItem : orderItems) {
 				LOGGER.info(orderItem.itemsToString());
-			}
+			} 
 			return orderItems;
 		} else if (choice.equalsIgnoreCase("ID")) {
 			readSpecific();
@@ -44,24 +44,24 @@ public class OrderController implements CrudController<Order> {
 	}
 
 	@Override
-	public Order create() {
+	public Order create() { 
 		boolean complete = false;
 		String choice;
 		LOGGER.info("Enter your customer id");
 		Long custId = utils.getLong();
 		Order order = orderDAO.createUpdateOrder(new Order(custId),true);
+		System.out.println("order" + order); 
 		do {
 			LOGGER.info("Would you like to order another item? Yes (Y)/No (N)");
 			choice = utils.getString();
 			if (choice.equalsIgnoreCase("Y")) {
 				createOrderItem(order.getOrderId());
-			} else {
+			} else { 
 				complete = true;
-			}
+			} 
 		} while (!complete);
-		LOGGER.info("Order created");
-		return order;
-	}
+		return order;    
+	}   
 
 	/**
 	 * Displays information to user. Calls orderDOA.createUpdateITem();
@@ -86,9 +86,9 @@ public class OrderController implements CrudController<Order> {
 		LOGGER.info("Please enter the quantity: ");
 		Long quantity = utils.getLong();
 		return orderDAO.createUpdateOrder(new Order(itemId, orderId, quantity), false);
-	}
+	} 
 
-	@Override
+	@Override 
 	public int delete() {
 		LOGGER.info("Please enter the id of the order you want to delete");
 		Long orderId = utils.getLong();
@@ -98,7 +98,7 @@ public class OrderController implements CrudController<Order> {
 			return orderDAO.delete(orderId);
 		} else if (choice.equalsIgnoreCase("Item")) {
 			deleteItem(orderId);
-			return 0;
+			return 0; 
 		} else {
 			LOGGER.info("Incorrect selection. Please choose - Order | Item");
 		}

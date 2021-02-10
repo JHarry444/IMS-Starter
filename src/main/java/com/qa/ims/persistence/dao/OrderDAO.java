@@ -25,8 +25,8 @@ public class OrderDAO implements Dao<Order> {
 	public Order modelFromResultSet(ResultSet resultSet) throws SQLException {
 		String fname = resultSet.getString("first_name");
 		String sname = resultSet.getString("surname");
-		Long orderId = resultSet.getLong("orderId");
-		Long itemId = resultSet.getLong("itemId");
+		Long orderId = resultSet.getLong("order_id");
+		Long itemId = resultSet.getLong("item_id");
 		Long quantity = resultSet.getLong("quantity");
 		String itemName = resultSet.getString("item_name");
 		Double itemCost = resultSet.getDouble("item_cost");
@@ -36,8 +36,8 @@ public class OrderDAO implements Dao<Order> {
 	}
 
 	public Order modelFromResultSetBeforeJoin(ResultSet resultSet) throws SQLException {
-		Long orderId = resultSet.getLong("orderId");
-		Long customerId = resultSet.getLong("custId");
+		Long orderId = resultSet.getLong("order_id");
+		Long customerId = resultSet.getLong("cust_id");
 		return new Order(orderId, customerId);
 	}
 
@@ -99,13 +99,13 @@ public class OrderDAO implements Dao<Order> {
 	 * @param item
 	 * @return
 	 */
-	public Order readLatestItem(boolean item) {
-		String query = item ? Queries.READLATESTORDER.getDescription() : Queries.READALLORDERITEMS.getDescription();
+	public Order readLatestItem(boolean order) {
+		String query = order ? Queries.READLATESTORDER.getDescription() : Queries.READALLORDERITEMS.getDescription();
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet resultSet = statement.executeQuery(query);) {
 			resultSet.next();
-			if (item) {
+			if (order) {
 				return modelFromResultSetBeforeJoin(resultSet);
 			} else {
 				return modelFromResultSet(resultSet);
@@ -113,7 +113,7 @@ public class OrderDAO implements Dao<Order> {
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
-		}
+		} 
 		return null;
 	}
 	/**
@@ -148,7 +148,7 @@ public class OrderDAO implements Dao<Order> {
 	 * @param order
 	 * @param create
 	 * @return
-	 */
+	 */ 
 	public Order createUpdateOrder(Order order, boolean create) {
 		String query = create ? Queries.CREATEORDER.getDescription() : Queries.UPDATEORDER.getDescription();
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -156,14 +156,14 @@ public class OrderDAO implements Dao<Order> {
 			statement.setLong(1, order.getCustomerId());
 			statement.executeUpdate();
 
-			return readLatestItem(false);
+			return readLatestItem(true);
 
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
 		}
 		return null;
-	}
+	} 
 
 	/**
 	 * Creates or updates an orderItem. TRUE = create. FALSE = update.
@@ -200,7 +200,7 @@ public class OrderDAO implements Dao<Order> {
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
-		}
+		} 
 		return 0;
 	}
 
