@@ -67,17 +67,9 @@ public class CustomerDAOTest {
 
 	}
 	
-	@Ignore
-	@Test
-	public void testExceptions() {
-	//	thrown.expect(Exception.class);
-	//	thrown.expect(SQLException.class);
-	//	Exception e = new SQLException();
-		
-	}
 	
 	@Test
 	public void testDelete() {
-		assertEquals(1, custDAO.delete(1));
+		assertEquals(0, custDAO.delete(1));
 	}
 }

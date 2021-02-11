@@ -103,4 +103,5 @@ public class OrderTest {
 		String expected = "---------------------------------------------------------------------------------------------------------------------------------------------------------------------------\nName: Charlie Herriott | Order ID: 1 | Item ID: 1 | Qty: 1 | Item: Tooth Brush | Item Cost: £0.0 | Description: Brusher | Total Cost: £0.0";
 		assertEquals(expected, orderOne.itemsToString());
 	}
+
 }

@@ -129,9 +129,7 @@ public class Order {
 		return "Customer ID: " + customerId + " Order ID: " + orderId;
 	}
 	
-	public String toStringOrderItems() {
-		return "Item ID: " + itemId + " Order ID:" + orderId + " Quantity: " + quantity;
-	}
+	
 
 
 	public String itemsToString() {
