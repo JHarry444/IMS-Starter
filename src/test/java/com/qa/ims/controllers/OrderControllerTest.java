@@ -134,7 +134,7 @@ public class OrderControllerTest {
 		
 		// RULES
 		Mockito.when(orderDAO.readAllItems(false)).thenReturn(orders);
-		Mockito.when(orderDAO.readAllItems(true)).thenReturn(orders);
+	//	Mockito.when(orderDAO.readAllItems(true)).thenReturn(orders);
 		Mockito.when(utils.getString()).thenReturn(choice);
 		
 		// ACTIONS
