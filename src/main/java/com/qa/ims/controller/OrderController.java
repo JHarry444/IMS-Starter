@@ -21,7 +21,7 @@ public class OrderController implements CrudController<Order> {
 		this.orderDAO = orderDAO;
 		this.utils = utils;
 	}
-
+ 
 	@Override
 	public List<Order> readAll() {
 		List<Order> orders = orderDAO.readAllItems(false);

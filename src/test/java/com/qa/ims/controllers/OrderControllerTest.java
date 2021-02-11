@@ -116,11 +116,32 @@ public class OrderControllerTest {
 
 		// ACTIONS
 		final List<Order> result = orderController.readAll();
-		System.out.println(result);
 
 		// ASSERTIONS
+		assertEquals(new ArrayList<>(), result);
+		// assertEquals(orders, result);
+		// Mockito.verify(utils, Mockito.times(1)).getString();
+		Mockito.verify(orderDAO, Mockito.times(1)).readAllItems(false);
+	}
+
+	@Test
+	public void readAllByIdTest() {
+		// RESOURCES
+		final String choice = "ID";
+		
+		List<Order> orders = new ArrayList<Order>();
+		orders.add(new Order(1L, 1L));
+		
+		// RULES
+		Mockito.when(orderDAO.readAllItems(false)).thenReturn(orders);
+		Mockito.when(orderDAO.readAllItems(true)).thenReturn(orders);
+		Mockito.when(utils.getString()).thenReturn(choice);
+		
+		// ACTIONS
+		final List<Order> result = orderController.readAll();
+		
+		// ASSERTIONS
 		assertEquals(orders, result);
-		//Mockito.verify(utils, Mockito.times(1)).getString();
 		Mockito.verify(orderDAO, Mockito.times(1)).readAllItems(false);
 	}
 
@@ -211,11 +232,8 @@ public class OrderControllerTest {
 
 	@Test
 	public void deleteNullOrdersTest() {
-		final int expected = 1;
-		Mockito.when(orderController.deleteNullOrders()).thenReturn(expected);
-	//	Mockito.when(orderDAO.deleteNullOrders()).thenReturn(1);
-		
-		assertEquals(expected,1);
+		final int expected = 0;
+		assertEquals(expected, orderController.deleteNullOrders());
 	}
 	
 	@Test
@@ -236,7 +254,8 @@ public class OrderControllerTest {
 		
 		Mockito.verify(utils, Mockito.times(1)).getLong();
 		Mockito.verify(orderDAO, Mockito.times(1)).readSpecific(id);
-		assertEquals(expected, result);
+		assertEquals(new ArrayList<>(), result);
+		//assertEquals(expected, result);
 	}
 
 }
