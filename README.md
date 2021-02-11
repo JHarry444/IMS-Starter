@@ -1,7 +1,7 @@
 Coverage: 34%
-# Project Title
+IMS - Starter
 
-One Paragraph of project description goes here
+A program that can add, update and delete information for a commerce business that handles customers, items and orders.
 
 ## Getting Started
 
@@ -9,11 +9,11 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
-
-```
-Give examples
-```
+ - Java
+ - SQL
+ - Eclipse
+ - Git
+ - Maven
 
 ### Installing
 
@@ -21,48 +21,30 @@ A step by step series of examples that tell you how to get a development env run
 
 Say what the step will be
 
-```
-Give the example
-```
+- Fork repository
+- Clone repository
+- Open project in eclipse
+- Run Runner.java as a Java application
 
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
+- Type CUSTOMER
+- Type CREATE
+- Type a first name
+- Type a last name
+- The customer is then added
+- Type RETURN
+- Type Stop
+- You have now added a customer to the system.
 
 ## Running the tests
 
-Explain how to run the automated tests for this system. Break down into which tests and what they do
+Using JUnit we run tests for each of the 3 sections of the program, Customers, Items and Orders.
+In eclipse when you look in src/test/java there are a large group of test files that when run as a JUnit Test.
 
-### Unit Tests 
-
-Explain what these tests test, why and how to run them
-
-```
-Give an example
-```
-
-### Integration Tests 
-Explain what these tests test, why and how to run them
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
+These tests are also run is you use Maven to package the program into an executable java file.
 
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
+To run this program on the command line you will need to package it using Maven. In a Git Bash terminal if you type mvn clean any unused classes will be discarded from the executable. Once that has finished if you type mvn package in it will create the java executable which can be run from either the git bash terminal or the regular command line.
 
 ## Built With
 
@@ -75,6 +57,7 @@ We use [SemVer](http://semver.org/) for versioning.
 ## Authors
 
 * **Chris Perrins** - *Initial work* - [christophperrins](https://github.com/christophperrins)
+Harry Brown
 
 ## License
 
@@ -84,6 +67,4 @@ This project is licensed under the MIT license - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+Pawel for the help.
