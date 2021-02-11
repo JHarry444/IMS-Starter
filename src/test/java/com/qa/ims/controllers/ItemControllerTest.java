@@ -58,8 +58,8 @@ public class ItemControllerTest {
 		assertEquals(items, controller.readAll());
 		
 		Mockito.verify(itemDAO, Mockito.times(1)).readAll();
-	}
-	 
+	}  
+	   
 
 	@Test
 	public void updateTest() {

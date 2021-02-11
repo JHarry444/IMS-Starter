@@ -21,7 +21,7 @@ public class OrderDAO implements Dao<Order> {
 
 	public static final Logger LOGGER = LogManager.getLogger();
 
-	@Override
+	@Override 
 	public Order modelFromResultSet(ResultSet resultSet) throws SQLException {
 		String fname = resultSet.getString("first_name");
 		String sname = resultSet.getString("surname");
@@ -47,12 +47,7 @@ public class OrderDAO implements Dao<Order> {
 	 * @return
 	 */
 	public List<Order> readAllItems(boolean allItems) {
-		String query = null;
-		if (allItems) {
-			query = Queries.READALLORDERITEMS.getDescription();
-		} else {
-			query = Queries.READALL.specifyTable("orders");
-		}
+		String query = allItems ? query = Queries.READALLORDERITEMS.getDescription() : Queries.READALL.specifyTable("orders");
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet resultSet = statement.executeQuery(query);) {
@@ -100,15 +95,15 @@ public class OrderDAO implements Dao<Order> {
 	 * @return
 	 */
 	public Order readLatestItem(boolean order) {
-		String query = order ? Queries.READLATESTORDER.getDescription() : Queries.READALLORDERITEMS.getDescription();
+		String query = order ? Queries.READLATESTORDERITEM.getDescription() : Queries.READLATESTORDER.getDescription();
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet resultSet = statement.executeQuery(query);) {
 			resultSet.next();
 			if (order) {
-				return modelFromResultSetBeforeJoin(resultSet);
-			} else {
 				return modelFromResultSet(resultSet);
+			} else {
+				return modelFromResultSetBeforeJoin(resultSet);
 			}
 		} catch (Exception e) {
 			LOGGER.debug(e);
@@ -156,13 +151,13 @@ public class OrderDAO implements Dao<Order> {
 			statement.setLong(1, order.getCustomerId());
 			statement.executeUpdate();
 
-			return readLatestItem(true);
+			return readLatestItem(false); 
 
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
 		}
-		return null;
+		return null; 
 	} 
 
 	/**
