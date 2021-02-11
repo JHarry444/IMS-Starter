@@ -6,13 +6,6 @@ public class Order {
 	private long customer_id;
 	private long order_items_id;
 	private long order_price;
-	public Order(long order_id, long item_id, long customer_id, long order_items_id) {
-		super();
-		this.order_id = order_id; 
-		this.item_id = item_id;
-		this.customer_id = customer_id;
-		this.order_items_id = order_items_id;
-	}
 	public Order(long customer_id, long item_id) {
 		// TODO Auto-generated constructor stub
 		this.setCustomer_id(customer_id);
@@ -50,12 +43,6 @@ public class Order {
 	public void setCustomer_id(long customer_id) {
 		this.customer_id = customer_id;
 	}
-	public long getOrder_items_id() {
-		return order_items_id;
-	}
-	public void setOrder_items_id(long order_items_id) {
-		this.order_items_id = order_items_id;
-	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -64,7 +51,21 @@ public class Order {
 		result = prime * result + (int) (item_id ^ (item_id >>> 32));
 		result = prime * result + (int) (order_id ^ (order_id >>> 32));
 		result = prime * result + (int) (order_items_id ^ (order_items_id >>> 32));
+		result = prime * result + (int) (order_price ^ (order_price >>> 32));
 		return result;
+	}
+	
+	
+	@Override
+	public String toString() {
+		return "Order [order_id=" + order_id + ", item_id=" + item_id + ", customer_id=" + customer_id
+				+ ", order_items_id=" + order_items_id + ", order_price=" + order_price + "]";
+	}
+	public long getOrder_price() {
+		return order_price;
+	}
+	public void setOrder_price(long order_price) {
+		this.order_price = order_price;
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -83,19 +84,10 @@ public class Order {
 			return false;
 		if (order_items_id != other.order_items_id)
 			return false;
+		if (order_price != other.order_price)
+			return false;
 		return true;
 	}
-	
-	@Override
-	public String toString() {
-		return "Order [order_id=" + order_id + ", item_id=" + item_id + ", customer_id=" + customer_id
-				+ ", order_items_id=" + order_items_id + ", order_price=" + order_price + "]";
-	}
-	public long getOrder_price() {
-		return order_price;
-	}
-	public void setOrder_price(long order_price) {
-		this.order_price = order_price;
-	}
+
 	
 }

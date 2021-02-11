@@ -21,10 +21,6 @@ public class Item {
 		return item_id;
 	}
 
-	public void setItem_id(long item_id) {
-		this.item_id = item_id;
-	}
-
 	public String getItem_name() {
 		return item_name;
 	}

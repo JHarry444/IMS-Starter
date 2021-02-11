@@ -2,7 +2,7 @@ package com.qa.ims.persistence.dao;
 
 import static org.junit.Assert.assertEquals;
 
-
+import java.rmi.ServerRuntimeException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.qa.ims.persistence.domain.Item;
+import com.qa.ims.persistence.domain.Order;
 import com.qa.ims.utils.DBUtils;
 
 public class ItemDAOTest {
@@ -49,5 +50,20 @@ public class ItemDAOTest {
 	public void testRead() {
 		final long ID = 1L;
 		assertEquals(new Item(ID, "Pizza", 10), DAO.read(ID));
+	}
+	@Test
+	public void testReadException() {
+		final long ID = 10L;
+		assertEquals(null,DAO.read(ID));
+	}
+	@Test
+	public void testUpdateException() {
+		final Item ID = new Item(100L,"Pizza",10);
+		assertEquals(null,DAO.update(ID));
+	}
+	@Test
+	public void testCreateException() {
+		final Item created = new Item(2L,"Pizza",100);
+		assertEquals(created, DAO.create(created));
 	}
 }
