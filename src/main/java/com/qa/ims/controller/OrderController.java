@@ -54,7 +54,9 @@ public class OrderController implements CrudController<Order> {
 		long orderID = utils.getLong();
 		LOGGER.info("Please enter an item id");
 		long itemID = utils.getLong();
-		Order order = orderDAO.update(new Order(orderID, itemID, 0));
+		LOGGER.info("Please enter a customer id");
+		long customerID = utils.getLong();
+		Order order = orderDAO.update(new Order(orderID, itemID, customerID));
 		LOGGER.info("Item successfully added to order");
 		return order;
 	}
@@ -77,11 +79,6 @@ public class OrderController implements CrudController<Order> {
 			return orderDAO.deleteItem(order_id,item_id);
 			
 		}
-	}
-
-	@Override
-	public String toString() {
-		return "OrderController";
 	}
 
 }

@@ -3,16 +3,20 @@ package com.qa.ims.persistence.dao;
 import static org.junit.Assert.assertEquals;
 
 
+
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import com.qa.ims.persistence.domain.Customer;
 import com.qa.ims.persistence.domain.Order;
 import com.qa.ims.utils.DBUtils;
+import com.qa.ims.utils.Utils;
 public class OrderDAOTest {
+	private Utils utils;
 
 	private final OrderDAO DAO = new OrderDAO();
 	
@@ -29,22 +33,22 @@ public class OrderDAOTest {
 	@Test
 	public void testReadAll() {
 		List<Order> expected = new ArrayList<>();
-		expected.add(new Order(1L, 1, 1,1L,100));
+		expected.add(new Order(1L, 1, 1,1L,0));
 		assertEquals(expected, DAO.readAll());
 	}
 	@Test
 	public void testReadLatest() {
-		assertEquals(new Order(1L, 1,1,1L,100), DAO.readLatest());
+		assertEquals(new Order(1L, 1,1,1L,0), DAO.readLatest());
 	}
 	@Test
 	public void testRead() {
 		final long ID = 1L;
-		assertEquals(new Order(1L,1,1,1L,100), DAO.read(ID));
+		assertEquals(new Order(1L,1,1,1L,0), DAO.read(ID));
 	}
 	@Test
 	public void testUpdate() {
-		final Order updated = new Order(1L,1,1,1L,100);
-		assertEquals(updated, DAO.update(updated));
+		final Order update = new Order(1L,1,1,1L,10);
+		assertEquals(update,DAO.update(update));
 
 	}
 
@@ -59,4 +63,14 @@ public class OrderDAOTest {
 		DAO.create(delete);
 		assertEquals(1, DAO.deleteItem(2 , 1));
 	} 
+	@Test
+	public void testReadException() {
+		final long ID = 10L;
+		assertEquals(null,DAO.read(ID));
+	}
+	@Test
+	public void testUpdateException() {
+		final Order ID = new Order(100L,1,1,1L,10);
+		assertEquals(null,DAO.update(ID));
+	}
 }
