@@ -1,7 +1,7 @@
 Coverage: 34%
-# Project Title
+# Inventory Management system (IMS)
 
-One Paragraph of project description goes here
+This project is developed as a simple inventory mangemenet system with the ability to manage orders,products and customers.
 
 ## Getting Started
 
