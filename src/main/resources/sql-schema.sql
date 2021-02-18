@@ -16,14 +16,23 @@ CREATE TABLE IF NOT EXISTS `ims`.`items` (
 	`name` VARCHAR(40) DEFAULT NULL,
 	`price` FLOAT(20) DEFAULT NOT NULL,
 	PRIMARY KEY (`id`)
-);
+); 
 
 CREATE TABLE IF NOT EXISTS `ims`.`orders` (
-	`orderid` INT(11) NOT NULL AUTO_INCREMENT,
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
 	`customerid` INT(11) NOT NULL,
 	`itemid` INT(11) NOT NULL,
-	`quantity` INT(15) NOT NULL,
-	PRIMARY KEY(orderid),
-	FOREIGN KEY(customerid) REFERENCES customers(id),
-	FOREIGN KEY(itemid) REFERENCES items(id)
+	PRIMARY KEY(`id`),
+	FOREIGN KEY(`customerid`) REFERENCES customers(`id`),
+	FOREIGN KEY(`itemid`) REFERENCES items(`id`)
 ); 
+
+CREATE TABLE IF NOT EXISTS `ims`.`orderdetails` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`orderid` INT(11) NOT NULL,
+	`itemid` INT(11) NOT NULL,
+	`quantity` INT(15) NOT NULL,
+	PRIMARY KEY(`id`),
+	FOREIGN KEY(`orderid`) REFERENCES orders(`id`),
+	FOREIGN KEY(`itemid`) REFERENCES items(`id`)
+);
