@@ -6,28 +6,28 @@ public class Item {
 
 	private Long itemid;
 	private String product;
-	private Float price;
+	private Double price;
 	
 	
-	public Item(String product, Float price) {
+	public Item(String product, Double price) {
 		this.setProduct(product);
 		this.setPrice(price);
 		
 	}
 	
-	public Item(Long itemid, String product, Float price) {
+	public Item(Long itemid, String product, Double price) {
 		
-		this.setitemid(itemid);
+		this.setItemId(itemid);
 		this.setProduct(product);
 		this.setPrice(price);
 		
 	}
 	
-	public Long getitemid() {
+	public Long getItemId() {
 		return itemid;
 	}
 	
-	public void setitemid(Long itemid) {
+	public void setItemId(Long itemid) {
 		this.itemid = itemid;
 	}
 	
@@ -39,24 +39,30 @@ public class Item {
 		this.product = product;
 	}
 	
-	public Float getPrice() {
+	public Double getPrice() {
 		return price;
 	}
 	
-	public void setPrice(Float price) {
+	public void setPrice(Double price) {
 		this.price = price;
 	}
 	
 	@Override
 	public String toString() {
-		return "itemid: " + itemid + " product:" + product + " price:" + price;
+		return "itemid: " + itemid + " product: " + product + " price: " + price;
 	}
+	
 	
 	@Override
 	public int hashCode() {
-	return Objects.hash(itemid, product, price);
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((itemid == null) ? 0 : itemid.hashCode());
+		result = prime * result + ((price == null) ? 0 : price.hashCode());
+		result = prime * result + ((product == null) ? 0 : product.hashCode());
+		return result;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -66,11 +72,6 @@ public class Item {
 		if (getClass() != obj.getClass())
 			return false;
 		Item other = (Item) obj;
-		if (getProduct() == null) {
-			if (other.getProduct() != null)
-				return false;
-		} else if (!getProduct().equals(other.getProduct()))
-			return false;
 		if (itemid == null) {
 			if (other.itemid != null)
 				return false;
@@ -80,6 +81,11 @@ public class Item {
 			if (other.price != null)
 				return false;
 		} else if (!price.equals(other.price))
+			return false;
+		if (product == null) {
+			if (other.product != null)
+				return false;
+		} else if (!product.equals(other.product))
 			return false;
 		return true;
 	}
