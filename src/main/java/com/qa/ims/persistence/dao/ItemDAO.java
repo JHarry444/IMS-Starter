@@ -36,4 +36,8 @@ public class ItemDAO implements Dao<Item>{
     public Item modelFromResultSet(ResultSet resultSet) throws SQLException {
         return null;
     }
+
+    public Item readLatest() {
+        return null;
+    }
 }
