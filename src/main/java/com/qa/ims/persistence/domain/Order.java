@@ -8,17 +8,14 @@ public class Order {
 
 	private Long id;
 	private Long custID;
-	private List<Item> items;
 
-	public Order(Long custID, List<Item> items) {
+	public Order(Long custID) {
 		this.setCustID(custID);
-		this.setItems(items);
 	}
 
-	public Order(Long id, Long custID, List<Item> items) {
+	public Order(Long id, Long custID) {
 		this.setId(id);
 		this.setCustID(custID);
-		this.setItems(items);
 	}
 
 	public Long getId() {
@@ -37,17 +34,9 @@ public class Order {
         this.custID = custID;
     }
 
-    public List<Item> getItems() {
-        return this.items;
-    }
-
-    public void setItems(List<Item> items) {
-        this.items = items;
-    }
-
     @Override
 	public String toString() {
-		return "id:" + id + " customer ID:" + custID + " items:" + String.join(", ", items.stream().map(x -> x.getName()).collect(Collectors.toList()));
+		return "id:" + id + " customer ID:" + custID;
 	}
 
 	@Override
@@ -56,7 +45,6 @@ public class Order {
 		int result = 1;
 		result = prime * result + ((custID == null) ? 0 : custID.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((items == null) ? 0 : items.hashCode());
 		return result;
 	}
 
@@ -78,11 +66,6 @@ public class Order {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
-			return false;
-		if (getItems() == null) {
-			if (other.getItems() != null)
-				return false;
-		} else if (!getItems().equals(other.getItems()))
 			return false;
 		return true;
 	}

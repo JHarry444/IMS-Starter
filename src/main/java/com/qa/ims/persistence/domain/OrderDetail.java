@@ -7,15 +7,15 @@ public class OrderDetail {
 	private Long id;
 	private Long orderID;
 	private Long itemID;
-    private Integer quantity;
+    private Double quantity;
 
-	public OrderDetail(Long orderID, Long itemID, Integer quantity) {
+	public OrderDetail(Long orderID, Long itemID, Double quantity) {
 		this.setOrderID(orderID);
 		this.setItemID(itemID);
         this.setQuantity(quantity);
 	}
 
-	public OrderDetail(Long id, Long orderID, Long itemID, Integer quantity) {
+	public OrderDetail(Long id, Long orderID, Long itemID, Double quantity) {
         this.setID(id);
 		this.setOrderID(orderID);
 		this.setItemID(itemID);
@@ -46,11 +46,11 @@ public class OrderDetail {
         this.itemID = itemID;
     }
 
-    public Integer getQuantity() {
+    public Double getQuantity() {
         return this.quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(Double quantity) {
         this.quantity = quantity;
     }
   
