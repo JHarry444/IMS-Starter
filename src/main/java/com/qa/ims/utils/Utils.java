@@ -26,6 +26,9 @@ public class Utils {
 		do {
 			try {
 				input = getString();
+				if (input.equals("!")) {
+					return null;
+				}
 				longInput = Long.parseLong(input);
 			} catch (NumberFormatException nfe) {
 				LOGGER.info("Error - Please enter a number");
@@ -44,6 +47,9 @@ public class Utils {
 		do {
 			try {
 				input = getString();
+				if (input.equals("!")) {
+					return null;
+				}
 				doubleInput = Double.parseDouble(input);
 			} catch (NumberFormatException nfe) {
 				LOGGER.info("Error - Please enter a number");
