@@ -1,5 +1,7 @@
 package com.qa.ims;
 
+import com.qa.ims.controller.ItemController;
+import com.qa.ims.persistence.dao.ItemDAO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,19 +18,23 @@ public class IMS {
 	public static final Logger LOGGER = LogManager.getLogger();
 
 	private final CustomerController customers;
+	private final ItemController items;
 	private final Utils utils;
 
 	public IMS() {
 		this.utils = new Utils();
 		final CustomerDAO custDAO = new CustomerDAO();
 		this.customers = new CustomerController(custDAO, utils);
+
+		final ItemDAO itemDAO= new ItemDAO();
+		this.items = new ItemController(itemDAO,utils);
 	}
 
 	public void imsSystem() {
 		LOGGER.info("Welcome to the Inventory Management System!");
 		DBUtils.connect();
 
-		Domain domain = null;
+		Domain domain;
 		do {
 			LOGGER.info("Which entity would you like to use?");
 			Domain.printDomains();
@@ -50,6 +56,7 @@ public class IMS {
 				active = this.customers;
 				break;
 			case ITEM:
+				active = this.items;
 				break;
 			case ORDER:
 				break;
