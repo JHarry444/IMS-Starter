@@ -27,7 +27,7 @@ public class Utils {
 			try {
 				input = getString();
 				if (input.equals("!")) {
-					return null;
+					return (long) -1;
 				}
 				longInput = Long.parseLong(input);
 			} catch (NumberFormatException nfe) {
@@ -48,7 +48,7 @@ public class Utils {
 			try {
 				input = getString();
 				if (input.equals("!")) {
-					return null;
+					return (double) -1;
 				}
 				doubleInput = Double.parseDouble(input);
 			} catch (NumberFormatException nfe) {

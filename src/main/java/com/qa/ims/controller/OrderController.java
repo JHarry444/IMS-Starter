@@ -1,6 +1,5 @@
 package com.qa.ims.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -51,12 +50,12 @@ public class OrderController implements CrudController<Order> {
 		LOGGER.info("Please enter a customer ID");
 		Long custID = utils.getLong();
         Order order = orderDAO.create(new Order(custID));
-		LOGGER.info("Please enter a list of items IDs to add to the order, with their quantity\nEnter nothing to stop");
+		LOGGER.info("Please enter a list of items IDs to add to the order, with their quantity\nEnter ! to stop");
         Long itemID = utils.getLong();
         LOGGER.info("Please enter quantity");
         Double quantity = utils.getDouble();
-        while (!itemID.equals(null)) {
-            OrderDetail orderDetail = orderDetailDAO.create(new OrderDetail(order.getId(), itemID, quantity));
+        while (!itemID.equals((long) -1)) {
+            orderDetailDAO.create(new OrderDetail(order.getId(), itemID, quantity));
 		    LOGGER.info("Item added, enter next ID");
             itemID = utils.getLong();
             LOGGER.info("Please enter quantity");
@@ -75,12 +74,12 @@ public class OrderController implements CrudController<Order> {
 		LOGGER.info("Please enter a new customer ID");
 		Long custID = utils.getLong();
 		Order order = orderDAO.update(new Order(id, custID));
-		LOGGER.info("Please enter a list of items IDs to add to the order, with their quantity\nIf the item is already in the order, it will be deleted\nEnter nothing to stop");
+		LOGGER.info("Please enter a list of items IDs to add to the order, with their quantity\nIf the item is already in the order, it will be deleted\nEnter ! to stop");
         Long itemID = utils.getLong();
         LOGGER.info("Please enter quantity");
         Double quantity = utils.getDouble();
-		while (!itemID.equals(null)) {
-            OrderDetail orderDetail = orderDetailDAO.update(new OrderDetail(order.getId(), itemID, quantity));
+		while (!itemID.equals((long) -1)) {
+            orderDetailDAO.update(new OrderDetail(order.getId(), itemID, quantity));
 		    LOGGER.info("Item added, enter next ID");
             itemID = utils.getLong();
             LOGGER.info("Please enter quantity");
