@@ -2,6 +2,7 @@ package com.qa.ims.persistence.domain;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import com.qa.ims.persistence.domain.OrderDetail;
 
 public class Order {
 
