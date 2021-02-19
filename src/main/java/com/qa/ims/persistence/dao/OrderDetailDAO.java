@@ -100,13 +100,16 @@ public class OrderDetailDAO implements Dao<OrderDetail> {
 		return null;
 	}
 
-	public OrderDetail readOrder(Long orderID) {
+	public List<OrderDetail> readOrder(Long orderID) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection.prepareStatement("SELECT * FROM orderdetails where orderid = ?");) {
 			statement.setLong(1, orderID);
 			try (ResultSet resultSet = statement.executeQuery();) {
-				resultSet.next();
-				return modelFromResultSet(resultSet);
+				List<OrderDetail> orderdetails = new ArrayList<>();
+				while (resultSet.next()) {
+					orderdetails.add(modelFromResultSet(resultSet));
+				}
+				return orderdetails;
 			}			
 		} catch (Exception e) {
 			LOGGER.debug(e);
