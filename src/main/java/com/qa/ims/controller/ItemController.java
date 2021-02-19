@@ -2,6 +2,7 @@ package com.qa.ims.controller;
 
 import com.qa.ims.persistence.dao.CustomerDAO;
 import com.qa.ims.persistence.dao.ItemDAO;
+import com.qa.ims.persistence.domain.Customer;
 import com.qa.ims.persistence.domain.Item;
 import com.qa.ims.utils.Utils;
 import org.apache.logging.log4j.LogManager;
@@ -30,7 +31,13 @@ public class ItemController implements CrudController<Item>{
 
     @Override
     public Item create() {
-        return null;
+        LOGGER.info("Please enter an item name");
+        String name = utils.getString();
+        LOGGER.info("Please enter the price for "+name);
+        double price = utils.getDouble();
+        Item item = itemDAO.create(new Item(name, price));
+        LOGGER.info("item created");
+        return item;
     }
 
     @Override
