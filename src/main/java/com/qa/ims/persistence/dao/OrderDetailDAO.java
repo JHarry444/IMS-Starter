@@ -23,7 +23,7 @@ public class OrderDetailDAO implements Dao<OrderDetail> {
 		Long id = resultSet.getLong("id");
 		Long orderID = resultSet.getLong("orderid");
 		Long itemID = resultSet.getLong("itemid");
-        Double quantity = resultSet.getInt("quantity");
+        Double quantity = resultSet.getDouble("quantity");
 		return new OrderDetail(id, orderID, itemID, quantity);
 	}
 
