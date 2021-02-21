@@ -1,21 +1,21 @@
 package com.qa.ims.persistence.domain;
 
-public class order {
+public class Order {
 
 	private Long orderid;
-	private int id;
-	private Double total;
+	private Long id;
+	private Long orderlineid;
 	
-	public order(int id, Double total) {
+	public Order(Long id, Long orderlineid ) {
 		this.setId(id);
-		this.setTotal(total);
+		this.setOrderLineId(orderlineid);
 		
 	}
 	
-	public order(Long orderid, int id, Double total) {
+	public Order(Long orderid, Long id, Long orderlineid) {
 		this.setOrderId(orderid);
 		this.setId(id);
-		this.setTotal(total);
+		this.setOrderLineId(orderlineid);
 		
 	}
 
@@ -27,29 +27,29 @@ public class order {
 		this.orderid = orderid;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public Double getTotal() {
-		return total;
+	public Long getOrderLineId() {
+		return orderlineid;
 	}
 
-	public void setTotal(Double total) {
-		this.total = total;
+	public void setOrderLineId(Long orderlineid) {
+		this.orderlineid = orderlineid;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + id;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((orderid == null) ? 0 : orderid.hashCode());
-		result = prime * result + ((total == null) ? 0 : total.hashCode());
+		result = prime * result + ((orderlineid == null) ? 0 : orderlineid.hashCode());
 		return result;
 	}
 
@@ -61,7 +61,7 @@ public class order {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		order other = (order) obj;
+		Order other = (Order) obj;
 		if (id != other.id)
 			return false;
 		if (orderid == null) {
@@ -69,10 +69,10 @@ public class order {
 				return false;
 		} else if (!orderid.equals(other.orderid))
 			return false;
-		if (total == null) {
-			if (other.total != null)
+		if (orderlineid == null) {
+			if (other.orderlineid != null)
 				return false;
-		} else if (!total.equals(other.total))
+		} else if (!orderlineid.equals(other.orderlineid))
 			return false;
 		return true;
 	}
