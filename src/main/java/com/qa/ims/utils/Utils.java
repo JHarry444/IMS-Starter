@@ -57,4 +57,8 @@ public class Utils {
 		
 	}
 
+	public int getInt() {
+		return scanner.nextInt();
+	}
+
 }

@@ -20,18 +20,15 @@ CREATE TABLE IF NOT EXISTS `items` (
 CREATE TABLE IF NOT EXISTS `orders` (
 	`order_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `cust_id` INT NOT NULL,
-    `item_id` INT NOT NULL,
-    `quantity` INT NOT NULL,
     `subtotal` FLOAT NOT NULL,
-    `date_placed` DATE NOT NULL,
-    FOREIGN KEY (`cust_id`) REFERENCES `customers` (`id`),
-    FOREIGN KEY (`item_id`) REFERENCES `items` (`item_id`)
+    FOREIGN KEY (`cust_id`) REFERENCES `customers` (`id`)
 );
 
-CREATE TABLE IF NOT EXISTS `customer_orders` (
-	`customer_order_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `customer_id` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS `order_items` (
+	`order_items_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `item_id` INT NOT NULL,
+	`quantity` INT NOT NULL,
     `order_id` INT NOT NULL,
-    FOREIGN KEY (`customer_id`) REFERENCES `orders` (`cust_id`),
-    FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`)
+     FOREIGN KEY (`item_id`) REFERENCES `items` (`item_id`),
+     FOREIGN KEY (`order_id`) REFERENCES `orders`(`order_id`)
 );
