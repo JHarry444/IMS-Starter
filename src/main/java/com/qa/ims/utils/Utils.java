@@ -27,7 +27,10 @@ public class Utils {
 			try {
 				input = getString();
 				if (input.equals("!")) {
-					return (long) -1;
+					return -1l;
+				}
+				if (input.equals("*")) {
+					return -2l;
 				}
 				longInput = Long.parseLong(input);
 			} catch (NumberFormatException nfe) {
@@ -48,7 +51,10 @@ public class Utils {
 			try {
 				input = getString();
 				if (input.equals("!")) {
-					return (double) -1;
+					return -1d;
+				}
+				if (input.equals("*")) {
+					return -2d;
 				}
 				doubleInput = Double.parseDouble(input);
 			} catch (NumberFormatException nfe) {

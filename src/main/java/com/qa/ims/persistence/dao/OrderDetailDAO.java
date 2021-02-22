@@ -177,4 +177,20 @@ public class OrderDetailDAO implements Dao<OrderDetail> {
 		return 0;
 	}
 
+	public OrderDetail readOrderItem(Long orderID, Long itemID) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				PreparedStatement statement = connection.prepareStatement("SELECT * FROM orderdetails WHERE orderid = ? and itemid = ?");) {
+			statement.setLong(1, orderID);
+			statement.setLong(2, itemID);
+			try (ResultSet resultSet = statement.executeQuery();) {
+				resultSet.next();
+				return modelFromResultSet(resultSet);
+			}
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return null;
+	} 
+
 }
