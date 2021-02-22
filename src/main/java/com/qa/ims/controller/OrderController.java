@@ -57,9 +57,13 @@ public class OrderController implements CrudController<Order> {
         Long itemID = utils.getLong();
         while (!itemID.equals((long) -1)) {
 			LOGGER.info("Please enter quantity");
-            Double quantity = utils.getDouble(); 
-            orderDetailDAO.create(new OrderDetail(order.getId(), itemID, quantity));
-		    LOGGER.info("Item added, enter next ID");
+            Double quantity = utils.getDouble();
+			if (orderDetailDAO.readOrderItem(order.getId(), itemID) == null) {
+				orderDetailDAO.create(new OrderDetail(order.getId(), itemID, quantity));
+				LOGGER.info("Item added, enter next ID");
+			} else {
+				LOGGER.info("This item already exists in this order, use update to change it\nEnter new ID:");
+			}
             itemID = utils.getLong();
         }
 		return order;
