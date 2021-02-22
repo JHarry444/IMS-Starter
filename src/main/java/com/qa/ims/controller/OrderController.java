@@ -38,6 +38,9 @@ public class OrderController implements CrudController<Order> {
 		List<Order> orders = orderDAO.readAll();
 		for (Order order : orders) {
 			LOGGER.info(order);
+			for (OrderDetail orderDetail : orderDetailDAO.readOrder(order.getId())) {
+				LOGGER.info(orderDetail);
+			}
 		}
 		return orders;
 	}
@@ -93,8 +96,11 @@ public class OrderController implements CrudController<Order> {
 	 */
 	@Override
 	public int delete() {
-		LOGGER.info("Please enter the id of the order you would like to delete");
+		LOGGER.info("Please enter the id of the order you would like to delete items from");
 		Long id = utils.getLong();
+		LOGGER.info("Please enter the item ids you would like to delete from the order. Deleting all items will delete the order. Entering * will delete all items\nEnter ! to stop");
+		Long itemID = utils.getLong();
+		while (itemID)
 		for (OrderDetail orderDetail : orderDetailDAO.readOrder(id)) {
 			orderDetailDAO.delete(orderDetail.getID());
 		}

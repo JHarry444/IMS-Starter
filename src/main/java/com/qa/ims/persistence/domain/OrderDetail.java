@@ -6,6 +6,7 @@ public class OrderDetail {
 	private Long orderID;
 	private Long itemID;
     private Double quantity;
+	private Double price;
 
 	public OrderDetail(Long orderID, Long itemID, Double quantity) {
 		this.setOrderID(orderID);
@@ -18,6 +19,14 @@ public class OrderDetail {
 		this.setOrderID(orderID);
 		this.setItemID(itemID);
         this.setQuantity(quantity);
+	}
+
+	public OrderDetail(Long id, Long orderID, Long itemID, Double quantity, Double price) {
+        this.setID(id);
+		this.setOrderID(orderID);
+		this.setItemID(itemID);
+        this.setQuantity(quantity);
+		this.setPrice(price);
 	}
 
 	public Long getID() {
@@ -51,10 +60,18 @@ public class OrderDetail {
     public void setQuantity(Double quantity) {
         this.quantity = quantity;
     }
+
+	public Double getPrice() {
+		return this.price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
+	}
   
     @Override
 	public String toString() {
-		return "id:" + id + " order ID:" + orderID + " item ID:" + itemID + " quantity:" + quantity;
+		return "id:" + id + " order ID:" + orderID + " item ID:" + itemID + " quantity:" + quantity + " price:" + price;
 	}
 
 	@Override
@@ -65,6 +82,7 @@ public class OrderDetail {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((itemID == null) ? 0 : itemID.hashCode());
         result = prime * result + ((quantity == null) ? 0 : quantity.hashCode());
+		result = prime * result + ((price == null) ? 0 : price.hashCode());
 		return result;
 	}
 

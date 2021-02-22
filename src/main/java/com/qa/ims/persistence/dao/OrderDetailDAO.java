@@ -24,7 +24,8 @@ public class OrderDetailDAO implements Dao<OrderDetail> {
 		Long orderID = resultSet.getLong("orderid");
 		Long itemID = resultSet.getLong("itemid");
         Double quantity = resultSet.getDouble("quantity");
-		return new OrderDetail(id, orderID, itemID, quantity);
+		Double price = getPrice(itemID) * quantity;
+		return new OrderDetail(id, orderID, itemID, quantity, price);
 	}
 
 	/**
@@ -154,6 +155,21 @@ public class OrderDetailDAO implements Dao<OrderDetail> {
 				PreparedStatement statement = connection.prepareStatement("DELETE FROM orderdetails WHERE id = ?");) {
 			statement.setLong(1, id);
 			return statement.executeUpdate();
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return 0;
+	}
+
+	public double getPrice(long itemID) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				PreparedStatement statement = connection.prepareStatement("SELECT price FROM items WHERE id = ?");) {
+			statement.setLong(1, itemID);
+			try (ResultSet resultset = statement.executeQuery();) {
+				resultset.next();
+				return resultset.getDouble("price");
+			}
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
