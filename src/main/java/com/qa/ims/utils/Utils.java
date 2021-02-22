@@ -41,7 +41,11 @@ public class Utils {
 	}
 
 	public String getString() {
-		return scanner.nextLine();
+		String input = scanner.nextLine();
+		while (input.equals("")) {
+			LOGGER.info("Error - Please enter a non-blank input");
+		}
+		return input;
 	}
 
 	public Double getDouble() {
