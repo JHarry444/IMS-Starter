@@ -52,14 +52,12 @@ public class OrderController implements CrudController<Order> {
         Order order = orderDAO.create(new Order(custID));
 		LOGGER.info("Please enter a list of items IDs to add to the order, with their quantity\nEnter ! to stop");
         Long itemID = utils.getLong();
-        LOGGER.info("Please enter quantity");
-        Double quantity = utils.getDouble();
         while (!itemID.equals((long) -1)) {
+			LOGGER.info("Please enter quantity");
+            Double quantity = utils.getDouble(); 
             orderDetailDAO.create(new OrderDetail(order.getId(), itemID, quantity));
 		    LOGGER.info("Item added, enter next ID");
             itemID = utils.getLong();
-            LOGGER.info("Please enter quantity");
-            quantity = utils.getDouble();    
         }
 		return order;
 	}

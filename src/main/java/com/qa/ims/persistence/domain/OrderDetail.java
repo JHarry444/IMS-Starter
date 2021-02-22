@@ -1,7 +1,5 @@
 package com.qa.ims.persistence.domain;
 
-import java.util.List;
-
 public class OrderDetail {
 
 	private Long id;
