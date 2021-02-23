@@ -5,23 +5,23 @@ public class OrderDetail {
 	private Long id;
 	private Long orderID;
 	private Long itemID;
-    private Double quantity;
+    private Long quantity;
 	private Double price;
 
-	public OrderDetail(Long orderID, Long itemID, Double quantity) {
+	public OrderDetail(Long orderID, Long itemID, Long quantity) {
 		this.setOrderID(orderID);
 		this.setItemID(itemID);
         this.setQuantity(quantity);
 	}
 
-	public OrderDetail(Long id, Long orderID, Long itemID, Double quantity) {
+	public OrderDetail(Long id, Long orderID, Long itemID, Long quantity) {
         this.setID(id);
 		this.setOrderID(orderID);
 		this.setItemID(itemID);
         this.setQuantity(quantity);
 	}
 
-	public OrderDetail(Long id, Long orderID, Long itemID, Double quantity, Double price) {
+	public OrderDetail(Long id, Long orderID, Long itemID, Long quantity, Double price) {
         this.setID(id);
 		this.setOrderID(orderID);
 		this.setItemID(itemID);
@@ -53,11 +53,11 @@ public class OrderDetail {
         this.itemID = itemID;
     }
 
-    public Double getQuantity() {
+    public Long getQuantity() {
         return this.quantity;
     }
 
-    public void setQuantity(Double quantity) {
+    public void setQuantity(Long quantity) {
         this.quantity = quantity;
     }
 

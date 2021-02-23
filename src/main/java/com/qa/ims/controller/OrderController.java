@@ -55,9 +55,13 @@ public class OrderController implements CrudController<Order> {
         Order order = orderDAO.create(new Order(custID));
 		LOGGER.info("Please enter a list of items IDs to add to the order, with their quantity\nEnter ! to stop");
         Long itemID = utils.getLong();
-        while (!itemID.equals((long) -1)) {
+		Long quantity;
+        while (!itemID.equals(-1l)) {
 			LOGGER.info("Please enter the quantity:");
-            Double quantity = utils.getDouble();
+            quantity = utils.getLong();
+			if (quantity.equals(-1l)) { 
+				break; 
+			}
 			if (orderDetailDAO.readOrderItem(order.getId(), itemID) == null) {
 				orderDetailDAO.create(new OrderDetail(order.getId(), itemID, quantity));
 				LOGGER.info("Item added, enter next ID:");
@@ -81,14 +85,15 @@ public class OrderController implements CrudController<Order> {
 		Order order = orderDAO.update(new Order(id, custID));
 		LOGGER.info("Please enter a list of items IDs to add to the order, with their quantity\nIf the item is already in the order, it will be deleted\nEnter ! to stop");
         Long itemID = utils.getLong();
-        LOGGER.info("Please enter the quantity:");
-        Double quantity = utils.getDouble();
-		while (!itemID.equals((long) -1)) {
+		while (!itemID.equals(-1l)) {
+			LOGGER.info("Please enter the quantity:");
+			Long quantity = utils.getLong();	
+			if (quantity.equals(-1l)) { 
+				break; 
+			}
             orderDetailDAO.update(new OrderDetail(order.getId(), itemID, quantity));
 		    LOGGER.info("Item added, enter next ID:");
             itemID = utils.getLong();
-            LOGGER.info("Please enter the quantity:");
-            quantity = utils.getDouble();    
         }
 		return order;
 	}
@@ -106,11 +111,15 @@ public class OrderController implements CrudController<Order> {
 		Long itemID = utils.getLong();
 		while (!itemID.equals(-1l)) {
 			if (itemID.equals(-2l)) {
-				LOGGER.info("Deleting all items:");
-				for (OrderDetail orderDetail : orderDetailDAO.readOrder(orderID)) {
-					orderDetailDAO.delete(orderDetail.getID());
+				LOGGER.info(String.format("Are you sure you want to delete all items in order %d? This will delete all items in the order%nY for Yes, N for No", orderID));
+				String input = utils.getString();
+				if (input.strip().equalsIgnoreCase("Y")) {		
+					LOGGER.info("Deleting all items:");
+					for (OrderDetail orderDetail : orderDetailDAO.readOrder(orderID)) {
+						orderDetailDAO.delete(orderDetail.getID());
+					}
+					return orderDAO.delete(orderID);
 				}
-				return orderDAO.delete(orderID);
 			}
 			orderDetailDAO.delete(orderDetailDAO.readOrderItem(orderID, itemID).getID());
 			LOGGER.info("Item deleted");
