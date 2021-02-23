@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
+
+  <CustomLevels>
+    <CustomLevel name="INPUT" intLevel="750" />
+  </CustomLevels>
+
   <Appenders>
     <File name="FILEOUT" fileName="errors.log" append="false">
       <PatternLayout>
@@ -10,12 +15,19 @@
     <Console name="STDOUT" target="SYSTEM_OUT">
       <PatternLayout pattern="%m%n"/>
     </Console>
+
+    <Console name="INPUTS" target="SYSTEM_OUT">
+      <PatternLayout pattern="%m" />
+    </Console>
   </Appenders>
 
   <Loggers>
+    <Logger name="inputlogger" level="input">
+      <AppenderRef ref="INPUTS"/>
+    </Logger>
     <Root level="debug">
       <AppenderRef ref="FILEOUT" level="debug"/>
       <AppenderRef ref="STDOUT" level="info"/>
     </Root>
   </Loggers>
-  </Configuration>
+</Configuration>
