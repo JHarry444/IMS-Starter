@@ -76,7 +76,7 @@ public class ItemDAO {
 	// reads item, passing in the item id
 	public Item read(Long item_id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
-				PreparedStatement statement = connection.prepareStatement("SELECT * FROM items WHERE id = ?");) {
+				PreparedStatement statement = connection.prepareStatement("SELECT * FROM items WHERE item_id = ?");) {
 			statement.setLong(1, item_id);
 			try (ResultSet resultSet = statement.executeQuery();) {
 				resultSet.next();

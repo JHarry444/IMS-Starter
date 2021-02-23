@@ -14,6 +14,11 @@ public class Order {
 		this.setQuantity(quantity);
 	}
 	
+	public Order(Long item_id, int quantity) {
+		this.setItem_id(item_id);
+		this.setQuantity(quantity);
+	}
+	
 	public Order(Long item_id, int quantity, float total_cost) {
 		this.setItem_id(item_id);
 		this.setQuantity(quantity);
@@ -71,7 +76,7 @@ public class Order {
 
 	@Override
 	public String toString() {
-		return "Customer with customer id:" + cust_id + " purchases item_id: " + item_id + " of quantity: " + quantity + " and the total_cost is: "+ total_cost;
+		return "Customer with customer id:" + cust_id + "|| purchases item_id: " + item_id + "|| of quantity: " + quantity + "|| and the total_cost is: "+ total_cost;
 	}
 
 }
