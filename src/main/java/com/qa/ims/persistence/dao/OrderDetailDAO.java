@@ -23,7 +23,7 @@ public class OrderDetailDAO implements Dao<OrderDetail> {
 		Long id = resultSet.getLong("id");
 		Long orderID = resultSet.getLong("orderid");
 		Long itemID = resultSet.getLong("itemid");
-        Double quantity = resultSet.getDouble("quantity");
+        Long quantity = resultSet.getLong("quantity");
 		Double price = getPrice(itemID) * quantity;
 		return new OrderDetail(id, orderID, itemID, quantity, price);
 	}
@@ -75,7 +75,7 @@ public class OrderDetailDAO implements Dao<OrderDetail> {
 						.prepareStatement("INSERT INTO orderdetails(orderid, itemid, quantity) VALUES (?, ?, ?)");) {
 			statement.setLong(1, orderdetail.getOrderID());
 			statement.setLong(2, orderdetail.getItemID());
-			statement.setDouble(3, orderdetail.getQuantity());
+			statement.setLong(3, orderdetail.getQuantity());
 			statement.executeUpdate();
 			return readLatest();
 		} catch (Exception e) {
@@ -133,7 +133,7 @@ public class OrderDetailDAO implements Dao<OrderDetail> {
 						.prepareStatement("UPDATE orderdetails SET orderid = ?, itemid = ?, quantity = ? WHERE id = ?");) {
 			statement.setLong(1, orderdetail.getOrderID());
 			statement.setLong(2, orderdetail.getItemID());
-			statement.setDouble(3, orderdetail.getQuantity());
+			statement.setLong(3, orderdetail.getQuantity());
 			statement.setLong(4, orderdetail.getID());
 			statement.executeUpdate();
 			return read(orderdetail.getID());

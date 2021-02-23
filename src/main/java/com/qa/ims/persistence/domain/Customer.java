@@ -46,6 +46,10 @@ public class Customer {
 		return "id:" + id + " first name:" + firstName + " surname:" + surname;
 	}
 
+	public String formattedString() {
+		return "ID: " + id + ", First Name: " + firstName + ", Surname: " + surname;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

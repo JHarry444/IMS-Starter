@@ -4,10 +4,12 @@ import java.util.Scanner;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Level;
 
 public class Utils {
-	
+
 	private static final Logger LOGGER = LogManager.getLogger();
+	private static final Logger INPUTS = LogManager.getLogger("inputlogger");
 
 	private final Scanner scanner;
 
@@ -41,7 +43,8 @@ public class Utils {
 	}
 
 	public String getString() {
-		String input = scanner.nextLine();
+		INPUTS.log(Level.getLevel("INPUT"), "> ");
+		String input = scanner.nextLine().strip().replaceAll("^\\s+", "").replaceAll("\\b\\s{2,}\\b", " ");
 		while (input.equals("")) {
 			LOGGER.info("Error - Please enter a non-blank input");
 		}

@@ -1,5 +1,6 @@
 package com.qa.ims.controller;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -32,9 +33,13 @@ public class ItemController implements CrudController<Item> {
 	@Override
 	public List<Item> readAll() {
 		List<Item> items = itemDAO.readAll();
-		for (Item item : items) {
-			LOGGER.info(item);
-		}
+		if (items.isEmpty()) {
+			LOGGER.info("There are no items in the database.");
+		} else {
+			for (Item item : items) {
+				LOGGER.info(item.formattedString());
+			}
+		}	
 		return items;
 	}
 
@@ -43,12 +48,12 @@ public class ItemController implements CrudController<Item> {
 	 */
 	@Override
 	public Item create() {
-		LOGGER.info("Please enter a name");
+		LOGGER.info("Please enter the item's name:");
 		String name = utils.getString();
-		LOGGER.info("Please enter a price");
+		LOGGER.info("Please enter the item's price:");
 		double price = utils.getDouble();
 		Item item = itemDAO.create(new Item(name, price));
-		LOGGER.info("item created");
+		LOGGER.info(String.format("Item %s created, for %s%nThis item's ID is: %d", item.getName(), item.getFormattedPrice(), item.getId()));
 		return item;
 	}
 
@@ -57,14 +62,14 @@ public class ItemController implements CrudController<Item> {
 	 */
 	@Override
 	public Item update() {
-		LOGGER.info("Please enter the id of the item you would like to update");
+		LOGGER.info("Please enter the ID of the item you would like to update:");
 		Long id = utils.getLong();
-		LOGGER.info("Please enter a name");
+		LOGGER.info("Please enter the item's new name:");
 		String name = utils.getString();
-		LOGGER.info("Please enter a price");
-		Double price = utils.getDouble();
+		LOGGER.info("Please enter the item's new price:");
+		double price = utils.getDouble();
 		Item item = itemDAO.update(new Item(id, name, price));
-		LOGGER.info("Item Updated");
+		LOGGER.info(String.format("Item %s updated, for %s%nThis item's ID is: %d", item.getName(), item.getFormattedPrice(), item.getId()));
 		return item;
 	}
 
@@ -75,9 +80,18 @@ public class ItemController implements CrudController<Item> {
 	 */
 	@Override
 	public int delete() {
-		LOGGER.info("Please enter the id of the item you would like to delete");
+		LOGGER.info("Please enter the ID of the item you would like to delete:");
 		Long id = utils.getLong();
-		return itemDAO.delete(id);
+		Item item = itemDAO.read(id);
+		LOGGER.info(String.format("Are you sure you want to delete %s?%nY for Yes, N for No", item.getName()));
+		String input = utils.getString();
+		if (input.strip().equalsIgnoreCase("Y")) {
+			LOGGER.info("Item deleted.");
+			return itemDAO.delete(id);
+		} else {
+			LOGGER.info("Deletion canceled.");
+		}
+		return 0;
 	}
 
 }

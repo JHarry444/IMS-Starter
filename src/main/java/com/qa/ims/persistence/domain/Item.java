@@ -1,10 +1,13 @@
 package com.qa.ims.persistence.domain;
 
+import java.text.DecimalFormat;
+
 public class Item {
 
 	private Long id;
 	private String name;
 	private Double price;
+	private DecimalFormat decim = new DecimalFormat("0.00");
 
 	public Item(String name, Double price) {
 		this.setName(name);
@@ -41,9 +44,17 @@ public class Item {
 		this.price = price;
 	}
 
+	public String getFormattedPrice() {
+		return decim.format(price);
+	}
+
 	@Override
 	public String toString() {
 		return "id:" + id + " name:" + name + " price:" + price;
+	}
+
+	public String formattedString() {
+		return "ID: " + id + ", Name: " + name + ", Price: " + getFormattedPrice();
 	}
 
 	@Override
