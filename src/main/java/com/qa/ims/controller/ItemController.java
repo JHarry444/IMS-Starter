@@ -1,5 +1,6 @@
 package com.qa.ims.controller;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -16,6 +17,7 @@ import com.qa.ims.utils.Utils;
 public class ItemController implements CrudController<Item> {
 
 	public static final Logger LOGGER = LogManager.getLogger();
+	DecimalFormat decim = new DecimalFormat("0.00");
 
 	private ItemDAO itemDAO;
 	private Utils utils;
@@ -48,7 +50,7 @@ public class ItemController implements CrudController<Item> {
 		LOGGER.info("Please enter the item's price:");
 		double price = utils.getDouble();
 		Item item = itemDAO.create(new Item(name, price));
-		LOGGER.info(String.format("Item %s created, for %f%nThis item's ID is: %d", item.getName(), item.getPrice(), item.getId()));
+		LOGGER.info(String.format("Item %s created, for %s%nThis item's ID is: %d", item.getName(), decim.format(item.getPrice()), item.getId()));
 		return item;
 	}
 
@@ -64,7 +66,7 @@ public class ItemController implements CrudController<Item> {
 		LOGGER.info("Please enter the item's new price:");
 		double price = utils.getDouble();
 		Item item = itemDAO.update(new Item(id, name, price));
-		LOGGER.info(String.format("Item %s updated, for %f%nThis item's ID is: %d", item.getName(), item.getPrice(), item.getId()));
+		LOGGER.info(String.format("Item %s updated, for %s%nThis item's ID is: %d", item.getName(), decim.format(item.getPrice()), item.getId()));
 		return item;
 	}
 
