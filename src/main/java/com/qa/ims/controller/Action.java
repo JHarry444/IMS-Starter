@@ -49,7 +49,7 @@ public enum Action {
 		Action action = null;
 		do {
 			try {
-				action = Action.valueOf(utils.getString().toUpperCase());
+				action = Action.valueOf(utils.getString().strip().toUpperCase());
 			} catch (IllegalArgumentException e) {
 				LOGGER.error("You entered an invalid selection, please try again\n");
 			}

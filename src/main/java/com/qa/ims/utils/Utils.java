@@ -44,7 +44,7 @@ public class Utils {
 
 	public String getString() {
 		INPUTS.log(Level.getLevel("INPUT"), "> ");
-		String input = scanner.nextLine();
+		String input = scanner.nextLine().strip().replaceAll("^\\s+", "").replaceAll("\\b\\s{2,}\\b", " ");
 		while (input.equals("")) {
 			LOGGER.info("Error - Please enter a non-blank input");
 		}
