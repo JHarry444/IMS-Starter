@@ -1,5 +1,7 @@
 package com.qa.ims.persistence.domain;
 
+import java.text.DecimalFormat;
+
 public class OrderDetail {
 
 	private Long id;
@@ -7,6 +9,8 @@ public class OrderDetail {
 	private Long itemID;
     private Long quantity;
 	private Double price;
+	private DecimalFormat decim = new DecimalFormat("0.00");
+
 
 	public OrderDetail(Long orderID, Long itemID, Long quantity) {
 		this.setOrderID(orderID);
@@ -68,10 +72,18 @@ public class OrderDetail {
 	public void setPrice(Double price) {
 		this.price = price;
 	}
+
+	public String getFormattedPrice() {
+		return decim.format(price);
+	}
   
     @Override
 	public String toString() {
 		return "id:" + id + " order ID:" + orderID + " item ID:" + itemID + " quantity:" + quantity + " price:" + price;
+	}
+
+	public String formattedString() {
+		return "-> Item ID: " + itemID + ", Quantity: " + quantity + ", Price: " + getFormattedPrice();
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package com.qa.ims.controller;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -18,6 +19,7 @@ import com.qa.ims.utils.Utils;
 public class OrderController implements CrudController<Order> {
 
 	public static final Logger LOGGER = LogManager.getLogger();
+	private DecimalFormat decim = new DecimalFormat("0.00");
 
 	private OrderDAO orderDAO;
     private OrderDetailDAO orderDetailDAO;
@@ -36,11 +38,15 @@ public class OrderController implements CrudController<Order> {
 	@Override
 	public List<Order> readAll() {
 		List<Order> orders = orderDAO.readAll();
+		Double totalCost;
 		for (Order order : orders) {
-			LOGGER.info(order);
+			totalCost = 0d;
+			LOGGER.info(order.formattedString());
 			for (OrderDetail orderDetail : orderDetailDAO.readOrder(order.getId())) {
-				LOGGER.info(orderDetail);
+				LOGGER.info(orderDetail.formattedString());
+				totalCost += orderDetail.getPrice();
 			}
+			LOGGER.info(String.format("Total Cost for Order %s: %s%n", order.getId(), decim.format(totalCost)));
 		}
 		return orders;
 	}
