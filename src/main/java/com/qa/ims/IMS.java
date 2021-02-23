@@ -41,7 +41,7 @@ public class IMS {
 	}
 
 	public void imsSystem() {
-		LOGGER.info("Welcome to the Inventory Management System!");
+		LOGGER.info("-----------------------------------------------\n| Welcome to the Inventory Management System! |\n-----------------------------------------------");
 		DBUtils.connect();
 
 		Domain domain = null;
@@ -59,7 +59,6 @@ public class IMS {
 	private void domainAction(Domain domain) {
 		boolean changeDomain = false;
 		do {
-
 			CrudController<?> active = null;
 			switch (domain) {
 			case CUSTOMER:
@@ -77,7 +76,7 @@ public class IMS {
 				break;
 			}
 
-			LOGGER.info(() ->"What would you like to do with " + domain.name().toLowerCase() + ":");
+			LOGGER.info(() -> "-----------------------------------------------\nWhat would you like to do with " + domain.name().toLowerCase() + ":");
 
 			Action.printActions();
 			Action action = Action.getAction(utils);
