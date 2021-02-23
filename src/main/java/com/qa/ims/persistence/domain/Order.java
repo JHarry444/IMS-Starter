@@ -3,24 +3,30 @@ package com.qa.ims.persistence.domain;
 public class Order {
 
 	private Long order_id;
-	private Long cust_id;
-	private float subtotal;
-
-	public Order(Long cust_id, float subtotal) {
+	private int cust_id;
+	private Long item_id;
+	private int quantity;
+	private float total_cost;
+	
+	public Order(int cust_id, Long item_id, int quantity) {
 		this.setCust_id(cust_id);
-		this.setSubtotal(subtotal);
+		this.setItem_id(item_id);
+		this.setQuantity(quantity);
 	}
-
-	public Order(Long order_id, Long cust_id) {
-		this.setOrder_id(order_id);
-		this.setCust_id(cust_id);
+	
+	public Order(Long item_id, int quantity, float total_cost) {
+		this.setItem_id(item_id);
+		this.setQuantity(quantity);
+		this.setTotal_price(total_cost);
 	}
-
-	public Order(Long order_id, Long cust_id, float subtotal) {
+	
+	public Order(Long order_id, int cust_id, Long item_id, int quantity, float total_cost) {
 		super();
 		this.order_id = order_id;
 		this.cust_id = cust_id;
-		this.subtotal = subtotal;
+		this.item_id = item_id;
+		this.quantity = quantity;
+		this.total_cost = total_cost;
 	}
 
 	public Long getOrder_id() {
@@ -31,25 +37,41 @@ public class Order {
 		this.order_id = order_id;
 	}
 
-	public Long getCust_id() {
+	public int getCust_id() {
 		return cust_id;
 	}
 
-	public void setCust_id(Long cust_id) {
+	public void setCust_id(int cust_id) {
 		this.cust_id = cust_id;
 	}
 
-	public float getSubtotal() {
-		return subtotal;
+	public Long getItem_id() {
+		return item_id;
 	}
 
-	public void setSubtotal(float subtotal) {
-		this.subtotal = subtotal;
+	public void setItem_id(Long item_id) {
+		this.item_id = item_id;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	public float getTotal_cost() {
+		return total_cost;
+	}
+
+	public void setTotal_price(float total_cost) {
+		this.total_cost = total_cost;
 	}
 
 	@Override
 	public String toString() {
-		return "order_id:" + order_id + "cust_id" + cust_id + "subtotal" + subtotal;
-	}	
+		return "Customer with customer id:" + cust_id + " purchases item_id: " + item_id + " of quantity: " + quantity + " and the total_cost is: "+ total_cost;
+	}
 
 }

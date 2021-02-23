@@ -21,7 +21,8 @@ public class ItemController implements CrudController<Item> {
 		this.itemDAO = itemDAO;
 		this.utils = utils;
 	}
-
+	
+	// creates item
 	@Override
 	public Item create() {
 		LOGGER.info("Please enter a title");
@@ -32,7 +33,8 @@ public class ItemController implements CrudController<Item> {
 		LOGGER.info("Item created");
 		return item;
 	}
-
+	
+	// updates item
 	@Override
 	public Item update() {
 		LOGGER.info("Please enter the id of the item you would like to update");
@@ -45,14 +47,17 @@ public class ItemController implements CrudController<Item> {
 		LOGGER.info("Item Updated");
 		return item;
 	}
-
+	
+	// delete items
 	@Override
 	public int delete() {
 		LOGGER.info("Please enter the id of the item you would like to delete");
 		Long item_id = utils.getLong();
 		return itemDAO.delete(item_id);
 	}
-
+	
+	
+	// reads all items
 	@Override
 	public List<Item> readAll() {
 		List<Item> item = itemDAO.readAll();

@@ -20,16 +20,21 @@ public class OrderDAO {
 
 	public Order modelFromResultSet(ResultSet resultSet) throws SQLException {
 		Long order_id = resultSet.getLong("order_id");
-		Long cust_id = resultSet.getLong("cust_id");
-		Float subtotal = resultSet.getFloat("subtotal");
-		return new Order(order_id, cust_id, subtotal);
+		int cust_id = resultSet.getInt("cust_id");
+		Long item_id = resultSet.getLong("item_id");
+		int quantity = resultSet.getInt("quantity");
+		float total_cost = resultSet.getFloat("total_cost");
+		return new Order(order_id, cust_id, item_id, quantity, total_cost);
 
 	}
 
 	public List<Order> readAll() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("SELECT * FROM orders");) {
+				ResultSet resultSet = statement.executeQuery("select *, round((items.value * orders.quantity),2) as \"total_cost\"\r\n"
+						+ "from customers, items, orders\r\n"
+						+ "where orders.item_id = items.item_id\r\n"
+						+ "and orders.cust_id =  customers.id");) {
 			List<Order> orders = new ArrayList<>();
 			while (resultSet.next()) {
 				orders.add(modelFromResultSet(resultSet));
@@ -58,9 +63,10 @@ public class OrderDAO {
 	public Order create(Order order) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection
-						.prepareStatement("INSERT INTO orders(order_id, customer_id, subtotal) VALUES (?,?,0)");) {
+						.prepareStatement("INSERT INTO orders(cust_id, item_id, quantity) VALUES (?,?,?)");) {
 			statement.setLong(1, order.getCust_id());
-			statement.setFloat(2, order.getSubtotal());
+			statement.setFloat(2, order.getItem_id());
+			statement.setInt(3, order.getQuantity());
 			statement.executeUpdate();
 			return readLatest();
 		} catch (Exception e) {
@@ -72,7 +78,7 @@ public class OrderDAO {
 
 	public Order read(Long order_id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
-				PreparedStatement statement = connection.prepareStatement("SELECT * FROM orders WHERE id = ?");) {
+				PreparedStatement statement = connection.prepareStatement("SELECT * FROM orders WHERE order_id = ?");) {
 			statement.setLong(1, order_id);
 			try (ResultSet resultSet = statement.executeQuery();) {
 				resultSet.next();
@@ -88,9 +94,9 @@ public class OrderDAO {
 	public Order update(Order order) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection
-						.prepareStatement("UPDATE orders SET cust_id = ?, subtotal = ? WHERE id = ?");) {
-			statement.setLong(1, order.getCust_id());
-			statement.setFloat(2, order.getSubtotal());
+						.prepareStatement("UPDATE orders SET item_id = ?, quantity = ? WHERE order_id = ?");) {
+			statement.setLong(1, order.getItem_id());
+			statement.setInt(3, order.getQuantity());
 			statement.executeUpdate();
 			return read(order.getOrder_id());
 		} catch (Exception e) {

@@ -25,7 +25,8 @@ public class ItemDAO {
 		Float value = resultSet.getFloat("value");
 		return new Item(item_id, title, value);
 	}
-
+	
+	//reads all the items
 	public List<Item> readAll() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
@@ -41,7 +42,8 @@ public class ItemDAO {
 		}
 		return new ArrayList<>();
 	}
-
+	
+	// reads the last entry 
 	public Item readLatest() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
@@ -54,7 +56,8 @@ public class ItemDAO {
 		}
 		return null;
 	}
-
+	
+	//creates an item
 	public Item create(Item item) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection
@@ -69,7 +72,8 @@ public class ItemDAO {
 		}
 		return null;
 	}
-
+	
+	// reads item, passing in the item id
 	public Item read(Long item_id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection.prepareStatement("SELECT * FROM items WHERE id = ?");) {
@@ -84,7 +88,8 @@ public class ItemDAO {
 		}
 		return null;
 	}
-
+	
+	//updates item 
 	public Item update(Item item) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection
@@ -100,7 +105,8 @@ public class ItemDAO {
 		}
 		return null;
 	}
-
+	
+	//deletes item
 	public int delete(long item_id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection.prepareStatement("DELETE FROM items WHERE item_id = ?");) {

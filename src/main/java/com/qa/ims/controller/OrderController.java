@@ -1,12 +1,15 @@
 package com.qa.ims.controller;
 
+
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.qa.ims.persistence.dao.OrderDAO;
+
 import com.qa.ims.persistence.domain.Order;
+
 import com.qa.ims.utils.Utils;
 
 public class OrderController implements CrudController<Order> {
@@ -24,11 +27,13 @@ public class OrderController implements CrudController<Order> {
 
 	@Override
 	public Order create() {
-		LOGGER.info("Please enter an order_id");
-		Long order_id = utils.getLong();
-		LOGGER.info("Please enter a customer_id");
-		Long cust_id = utils.getLong();
-		Order order = orderDAO.create(new Order(order_id, cust_id));
+		LOGGER.info("Please enter a customer id");
+		int cust_id = utils.getInt();
+		LOGGER.info("Please enter an item id");
+		Long item_id = utils.getLong();
+		LOGGER.info("Please enter quantity");
+		int quantity = utils.getInt();
+		Order order = orderDAO.create(new Order(cust_id, item_id, quantity));
 		LOGGER.info("Order created");
 		return order;
 	}
@@ -37,7 +42,7 @@ public class OrderController implements CrudController<Order> {
 	public List<Order> readAll() {
 		List<Order> order = orderDAO.readAll();
 		for (Order order1 : order) {
-			LOGGER.info(order.toString());
+			LOGGER.info(order1.toString());
 		}
 		return order;
 	}
@@ -51,7 +56,15 @@ public class OrderController implements CrudController<Order> {
 
 	@Override
 	public Order update() {
-		return null;
+		LOGGER.info("Please enter a customer id");
+		int cust_id = utils.getInt();
+		LOGGER.info("Please enter the id of the item you would like to update");
+		Long item_id = utils.getLong();
+		LOGGER.info("Please enter new quantity");
+		int quantity = utils.getInt();
+		Order order = orderDAO.create(new Order(cust_id, item_id, quantity));
+		LOGGER.info("Order updated");
+		return order;
 	}
 
 }
