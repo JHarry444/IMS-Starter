@@ -33,9 +33,13 @@ public class ItemController implements CrudController<Item> {
 	@Override
 	public List<Item> readAll() {
 		List<Item> items = itemDAO.readAll();
-		for (Item item : items) {
-			LOGGER.info(item.formattedString());
-		}
+		if (items.isEmpty()) {
+			LOGGER.info("There are no items in the database.");
+		} else {
+			for (Item item : items) {
+				LOGGER.info(item.formattedString());
+			}
+		}	
 		return items;
 	}
 

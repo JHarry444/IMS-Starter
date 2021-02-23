@@ -38,15 +38,19 @@ public class OrderController implements CrudController<Order> {
 	@Override
 	public List<Order> readAll() {
 		List<Order> orders = orderDAO.readAll();
-		Double totalCost;
-		for (Order order : orders) {
-			totalCost = 0d;
-			LOGGER.info(order.formattedString());
-			for (OrderDetail orderDetail : orderDetailDAO.readOrder(order.getId())) {
-				LOGGER.info(orderDetail.formattedString());
-				totalCost += orderDetail.getPrice();
+		if (orders.isEmpty()) {
+			LOGGER.info("There are no orders in the database.");
+		} else {
+			Double totalCost;
+			for (Order order : orders) {
+				totalCost = 0d;
+				LOGGER.info(order.formattedString());
+				for (OrderDetail orderDetail : orderDetailDAO.readOrder(order.getId())) {
+					LOGGER.info(orderDetail.formattedString());
+					totalCost += orderDetail.getPrice();
+				}
+				LOGGER.info(String.format("Total Cost for Order %s: %s%n", order.getId(), decim.format(totalCost)));
 			}
-			LOGGER.info(String.format("Total Cost for Order %s: %s%n", order.getId(), decim.format(totalCost)));
 		}
 		return orders;
 	}

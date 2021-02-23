@@ -32,8 +32,12 @@ public class CustomerController implements CrudController<Customer> {
 	@Override
 	public List<Customer> readAll() {
 		List<Customer> customers = customerDAO.readAll();
-		for (Customer customer : customers) {
-			LOGGER.info(customer.formattedString());
+		if (customers.isEmpty()) {
+			LOGGER.info("There are no customers in the database.");
+		} else {
+			for (Customer customer : customers) {
+				LOGGER.info(customer.formattedString());
+			}
 		}
 		return customers;
 	}
