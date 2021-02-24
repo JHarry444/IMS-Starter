@@ -1,12 +1,12 @@
 package com.qa.ims.controllers;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -17,7 +17,7 @@ import com.qa.ims.persistence.dao.CustomerDAO;
 import com.qa.ims.persistence.domain.Customer;
 import com.qa.ims.utils.Utils;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoJUnitRunner.class)
 public class CustomerControllerTest {
 
 	@Mock
