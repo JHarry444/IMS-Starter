@@ -1,6 +1,8 @@
 package com.qa.ims.exceptions;
 
-public class ItemNotInOrderException extends RuntimeException {
+import java.sql.SQLException;
+
+public class ItemNotInOrderException extends SQLException {
 
     /**
      *

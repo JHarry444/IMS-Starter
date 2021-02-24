@@ -1,6 +1,7 @@
 package com.qa.ims.exceptions;
 
-public class ItemNotFoundException extends RuntimeException {
+import java.sql.SQLException;
+public class ItemNotFoundException extends SQLException {
 
     /**
      *

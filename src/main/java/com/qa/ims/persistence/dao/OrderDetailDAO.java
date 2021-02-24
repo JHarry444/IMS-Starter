@@ -10,6 +10,7 @@ import java.util.List;
 
 import com.qa.ims.persistence.domain.OrderDetail;
 import com.qa.ims.utils.DBUtils;
+import com.qa.ims.exceptions.ExceptionController;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -112,9 +113,10 @@ public class OrderDetailDAO implements Dao<OrderDetail> {
 				}
 				return orderdetails;
 			}			
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
+			LOGGER.debug(e.getSQLState());
 		}
 		return null;
 	}
