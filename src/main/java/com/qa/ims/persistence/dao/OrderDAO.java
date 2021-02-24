@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.qa.ims.persistence.domain.Order;
+import com.qa.ims.exceptions.CustomerNotFound;
 import com.qa.ims.utils.DBUtils;
 
 import org.apache.logging.log4j.LogManager;
@@ -74,7 +75,7 @@ public class OrderDAO implements Dao<Order> {
 			statement.setLong(1, order.getCustID());
 			statement.executeUpdate();
 			return readLatest();
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
 		}
@@ -93,6 +94,7 @@ public class OrderDAO implements Dao<Order> {
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
+			
 		}
 		return null;
 	}

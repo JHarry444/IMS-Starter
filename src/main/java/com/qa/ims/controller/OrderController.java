@@ -60,9 +60,16 @@ public class OrderController implements CrudController<Order> {
 	 */
 	@Override
 	public Order create() {
-		LOGGER.info("Please enter a customer ID:");
-		Long custID = utils.getLong();
-        Order order = orderDAO.create(new Order(custID));
+		Long custID;
+		Order order = null;
+		while (order == null) {
+			LOGGER.info("Please enter a customer ID:");
+			custID = utils.getLong();
+        	order = orderDAO.create(new Order(custID));
+			if (order == null) {
+				LOGGER.info("Customer doesn't exist");
+			}
+		}
 		LOGGER.info("Please enter a list of items IDs to add to the order, with their quantity\nEnter ! to stop");
         Long itemID = utils.getLong();
 		Long quantity;
