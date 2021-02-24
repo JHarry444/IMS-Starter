@@ -16,7 +16,7 @@ public class CustomerDAOTest {
 	private final CustomerDAO DAO = new CustomerDAO();
 
 	@BeforeAll
-	public void setup() {
+	public static void setup() {
 		DBUtils.connect();
 		DBUtils.getInstance().init("src/test/resources/sql-schema.sql", "src/test/resources/sql-data.sql");
 	}
@@ -47,7 +47,7 @@ public class CustomerDAOTest {
 
 	@Test
 	public void testUpdate() {
-		final Customer updated = new Customer(1L, "chris", "perrins");
+		final Customer updated = new Customer(2L, "ali", "hamza");
 		assertEquals(updated, DAO.update(updated));
 
 	}
