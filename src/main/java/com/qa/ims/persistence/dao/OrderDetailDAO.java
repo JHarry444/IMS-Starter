@@ -44,7 +44,7 @@ public class OrderDetailDAO implements Dao<OrderDetail> {
 			}
 			return orderdetails;
 		} catch (SQLException e) {
-			LOGGER.error(e.getMessage());
+			LOGGER.debug(e.getMessage());
 		}
 		return new ArrayList<>();
 	}
@@ -56,7 +56,7 @@ public class OrderDetailDAO implements Dao<OrderDetail> {
 			resultSet.next();
 			return modelFromResultSet(resultSet);
 		} catch (SQLException e) {
-			LOGGER.error(e.getMessage());
+			LOGGER.debug(e.getMessage());
 		}
 		return null;
 	}
@@ -77,7 +77,7 @@ public class OrderDetailDAO implements Dao<OrderDetail> {
 			statement.executeUpdate();
 			return readLatest();
 		} catch (SQLException e) {
-			LOGGER.error(e.getMessage());
+			LOGGER.debug(e.getMessage());
 		}
 		return null;
 	}
@@ -92,7 +92,7 @@ public class OrderDetailDAO implements Dao<OrderDetail> {
 				return modelFromResultSet(resultSet);
 			}
 		} catch (SQLException e) {
-			LOGGER.error(e.getMessage());
+			LOGGER.debug(e.getMessage());
 		}
 		return null;
 	}
@@ -109,7 +109,7 @@ public class OrderDetailDAO implements Dao<OrderDetail> {
 				return orderdetails;
 			}			
 		} catch (SQLException e) {
-			LOGGER.error(e.getMessage());
+			LOGGER.debug(e.getMessage());
 		}
 		return null;
 	}
@@ -133,7 +133,7 @@ public class OrderDetailDAO implements Dao<OrderDetail> {
 			statement.executeUpdate();
 			return read(orderdetail.getID());
 		} catch (SQLException e) {
-			LOGGER.error(e.getMessage());
+			LOGGER.debug(e.getMessage());
 		}
 		return null;
 	}
@@ -150,7 +150,7 @@ public class OrderDetailDAO implements Dao<OrderDetail> {
 			statement.setLong(1, id);
 			return statement.executeUpdate();
 		} catch (SQLException e) {
-			LOGGER.error(e.getMessage());
+			LOGGER.debug(e.getMessage());
 		}
 		return 0;
 	}
@@ -164,7 +164,7 @@ public class OrderDetailDAO implements Dao<OrderDetail> {
 				return resultset.getDouble("price");
 			}
 		} catch (SQLException e) {
-			LOGGER.error(e.getMessage());
+			LOGGER.debug(e.getMessage());
 		}
 		return 0;
 	}
@@ -179,7 +179,7 @@ public class OrderDetailDAO implements Dao<OrderDetail> {
 				return modelFromResultSet(resultSet);
 			}
 		} catch (SQLException e) {
-			LOGGER.error(e.getMessage());
+			LOGGER.debug(e.getMessage());
 		}
 		return null;
 	} 
