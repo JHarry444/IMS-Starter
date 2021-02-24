@@ -75,6 +75,7 @@ public class CustomerControllerTest {
 		final long ID = 1L;
 
 		Mockito.when(utils.getLong()).thenReturn(ID);
+		Mockito.when(utils.getString()).thenReturn("Y");
 		Mockito.when(dao.delete(ID)).thenReturn(1);
 
 		assertEquals(1L, this.controller.delete());

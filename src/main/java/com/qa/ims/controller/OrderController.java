@@ -158,7 +158,7 @@ public class OrderController implements CrudController<Order> {
 		Long itemID = utils.getLong();
 		while (!itemID.equals(-1l)) {
 			if (itemID.equals(-2l)) {
-				LOGGER.info(String.format("Are you sure you want to delete all items in order %d? This will delete all items in the order%nY for Yes, N for No", orderID));
+				LOGGER.info("Are you sure you want to delete all items in order %d? This will delete all items in this order?\nY for Yes, N for No");
 				String input = utils.getString();
 				if (input.strip().equalsIgnoreCase("Y")) {		
 					LOGGER.info("Deleting all items:");
