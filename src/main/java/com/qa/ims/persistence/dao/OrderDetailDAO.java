@@ -44,8 +44,7 @@ public class OrderDetailDAO implements Dao<OrderDetail> {
 			}
 			return orderdetails;
 		} catch (SQLException e) {
-			LOGGER.debug(e);
-			LOGGER.error(e.getMessage());
+			LOGGER.debug(e.getMessage());
 		}
 		return new ArrayList<>();
 	}
@@ -56,9 +55,8 @@ public class OrderDetailDAO implements Dao<OrderDetail> {
 				ResultSet resultSet = statement.executeQuery("SELECT * FROM orderdetails ORDER BY id DESC LIMIT 1");) {
 			resultSet.next();
 			return modelFromResultSet(resultSet);
-		} catch (Exception e) {
-			LOGGER.debug(e);
-			LOGGER.error(e.getMessage());
+		} catch (SQLException e) {
+			LOGGER.debug(e.getMessage());
 		}
 		return null;
 	}
@@ -78,9 +76,8 @@ public class OrderDetailDAO implements Dao<OrderDetail> {
 			statement.setLong(3, orderdetail.getQuantity());
 			statement.executeUpdate();
 			return readLatest();
-		} catch (Exception e) {
-			LOGGER.debug(e);
-			LOGGER.error(e.getMessage());
+		} catch (SQLException e) {
+			LOGGER.debug(e.getMessage());
 		}
 		return null;
 	}
@@ -94,9 +91,8 @@ public class OrderDetailDAO implements Dao<OrderDetail> {
 				resultSet.next();
 				return modelFromResultSet(resultSet);
 			}
-		} catch (Exception e) {
-			LOGGER.debug(e);
-			LOGGER.error(e.getMessage());
+		} catch (SQLException e) {
+			LOGGER.debug(e.getMessage());
 		}
 		return null;
 	}
@@ -112,9 +108,8 @@ public class OrderDetailDAO implements Dao<OrderDetail> {
 				}
 				return orderdetails;
 			}			
-		} catch (Exception e) {
-			LOGGER.debug(e);
-			LOGGER.error(e.getMessage());
+		} catch (SQLException e) {
+			LOGGER.debug(e.getMessage());
 		}
 		return null;
 	}
@@ -137,9 +132,8 @@ public class OrderDetailDAO implements Dao<OrderDetail> {
 			statement.setLong(4, orderdetail.getID());
 			statement.executeUpdate();
 			return read(orderdetail.getID());
-		} catch (Exception e) {
-			LOGGER.debug(e);
-			LOGGER.error(e.getMessage());
+		} catch (SQLException e) {
+			LOGGER.debug(e.getMessage());
 		}
 		return null;
 	}
@@ -155,9 +149,8 @@ public class OrderDetailDAO implements Dao<OrderDetail> {
 				PreparedStatement statement = connection.prepareStatement("DELETE FROM orderdetails WHERE id = ?");) {
 			statement.setLong(1, id);
 			return statement.executeUpdate();
-		} catch (Exception e) {
-			LOGGER.debug(e);
-			LOGGER.error(e.getMessage());
+		} catch (SQLException e) {
+			LOGGER.debug(e.getMessage());
 		}
 		return 0;
 	}
@@ -170,9 +163,8 @@ public class OrderDetailDAO implements Dao<OrderDetail> {
 				resultset.next();
 				return resultset.getDouble("price");
 			}
-		} catch (Exception e) {
-			LOGGER.debug(e);
-			LOGGER.error(e.getMessage());
+		} catch (SQLException e) {
+			LOGGER.debug(e.getMessage());
 		}
 		return 0;
 	}
@@ -186,9 +178,8 @@ public class OrderDetailDAO implements Dao<OrderDetail> {
 				resultSet.next();
 				return modelFromResultSet(resultSet);
 			}
-		} catch (Exception e) {
-			LOGGER.debug(e);
-			LOGGER.error(e.getMessage());
+		} catch (SQLException e) {
+			LOGGER.debug(e.getMessage());
 		}
 		return null;
 	} 

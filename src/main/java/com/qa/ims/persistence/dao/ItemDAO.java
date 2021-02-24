@@ -42,8 +42,7 @@ public class ItemDAO implements Dao<Item> {
 			}
 			return items;
 		} catch (SQLException e) {
-			LOGGER.debug(e);
-			LOGGER.error(e.getMessage());
+			LOGGER.debug(e.getMessage());
 		}
 		return new ArrayList<>();
 	}
@@ -55,8 +54,7 @@ public class ItemDAO implements Dao<Item> {
 			resultSet.next();
 			return modelFromResultSet(resultSet);
 		} catch (Exception e) {
-			LOGGER.debug(e);
-			LOGGER.error(e.getMessage());
+			LOGGER.debug(e.getMessage());
 		}
 		return null;
 	}
@@ -76,8 +74,7 @@ public class ItemDAO implements Dao<Item> {
 			statement.executeUpdate();
 			return readLatest();
 		} catch (Exception e) {
-			LOGGER.debug(e);
-			LOGGER.error(e.getMessage());
+			LOGGER.debug(e.getMessage());
 		}
 		return null;
 	}
@@ -92,8 +89,7 @@ public class ItemDAO implements Dao<Item> {
 				return modelFromResultSet(resultSet);
 			}
 		} catch (Exception e) {
-			LOGGER.debug(e);
-			LOGGER.error(e.getMessage());
+			LOGGER.debug(e.getMessage());
 		}
 		return null;
 	}
@@ -116,8 +112,7 @@ public class ItemDAO implements Dao<Item> {
 			statement.executeUpdate();
 			return read(item.getId());
 		} catch (Exception e) {
-			LOGGER.debug(e);
-			LOGGER.error(e.getMessage());
+			LOGGER.debug(e.getMessage());
 		}
 		return null;
 	}
@@ -134,8 +129,7 @@ public class ItemDAO implements Dao<Item> {
 			statement.setLong(1, id);
 			return statement.executeUpdate();
 		} catch (Exception e) {
-			LOGGER.debug(e);
-			LOGGER.error(e.getMessage());
+			LOGGER.debug(e.getMessage());
 		}
 		return 0;
 	}

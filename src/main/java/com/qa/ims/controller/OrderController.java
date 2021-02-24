@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.qa.ims.persistence.dao.ItemDAO;
 import com.qa.ims.persistence.dao.OrderDAO;
 import com.qa.ims.persistence.dao.OrderDetailDAO;
 import com.qa.ims.persistence.domain.Order;
@@ -23,12 +24,14 @@ public class OrderController implements CrudController<Order> {
 
 	private OrderDAO orderDAO;
     private OrderDetailDAO orderDetailDAO;
+	private ItemDAO itemDAO;
 	private Utils utils;
 
-	public OrderController(OrderDAO orderDAO, OrderDetailDAO orderDetailDAO, Utils utils) {
+	public OrderController(OrderDAO orderDAO, OrderDetailDAO orderDetailDAO, ItemDAO itemDAO, Utils utils) {
 		super();
 		this.orderDAO = orderDAO;
         this.orderDetailDAO = orderDetailDAO;
+		this.itemDAO = itemDAO;
 		this.utils = utils;
 	}
 
@@ -60,23 +63,38 @@ public class OrderController implements CrudController<Order> {
 	 */
 	@Override
 	public Order create() {
-		LOGGER.info("Please enter a customer ID:");
-		Long custID = utils.getLong();
-        Order order = orderDAO.create(new Order(custID));
+		Long custID;
+		Order order = null;
+		while (order == null) {
+			LOGGER.info("Please enter a customer ID:");
+			custID = utils.getLong();
+        	order = orderDAO.create(new Order(custID));
+			if (order == null) {
+				LOGGER.info("Customer doesn't exist, please create one before adding it to an order\n");
+			}
+		}
 		LOGGER.info("Please enter a list of items IDs to add to the order, with their quantity\nEnter ! to stop");
         Long itemID = utils.getLong();
 		Long quantity;
         while (!itemID.equals(-1l)) {
-			LOGGER.info("Please enter the quantity:");
-            quantity = utils.getLong();
-			if (quantity.equals(-1l)) { 
-				break; 
-			}
-			if (orderDetailDAO.readOrderItem(order.getId(), itemID) == null) {
-				orderDetailDAO.create(new OrderDetail(order.getId(), itemID, quantity));
-				LOGGER.info("Item added, enter next ID:");
+			if (itemDAO.read(itemID) == null) {
+				LOGGER.info("That item doesn't exist, please create it before adding it to an order\nAdd another ID:");
 			} else {
-				LOGGER.info("This item already exists in this order, use update to change it\nEnter new ID:");
+				LOGGER.info("Please enter the quantity:");
+            	quantity = utils.getLong();
+				if (quantity.equals(-1l)) { 
+					break; 
+				}
+				if (quantity.equals(0l)) {
+					LOGGER.info("Quantity can't be 0\n");
+					continue;
+				}
+				if (orderDetailDAO.readOrderItem(order.getId(), itemID) == null) {
+					orderDetailDAO.create(new OrderDetail(order.getId(), itemID, quantity));
+					LOGGER.info("Item added, enter next ID:");
+				} else {
+					LOGGER.info("This item already exists in this order, use update to change it\nEnter new ID:");
+				}
 			}
             itemID = utils.getLong();
         }
@@ -90,19 +108,34 @@ public class OrderController implements CrudController<Order> {
 	public Order update() {
 		LOGGER.info("Please enter the id of the order you would like to update:");
 		Long id = utils.getLong();
-		LOGGER.info("Please enter a new customer ID:");
-		Long custID = utils.getLong();
-		Order order = orderDAO.update(new Order(id, custID));
+		Long custID;
+		Order order = null;
+		while (order == null) {
+			LOGGER.info("Please enter a new customer ID:");
+			custID = utils.getLong();
+        	order = orderDAO.update(new Order(id, custID));
+			if (order == null) {
+				LOGGER.info("Customer doesn't exist, please create one before adding it to an order\n");
+			}
+		}
 		LOGGER.info("Please enter a list of items IDs to add to the order, with their quantity\nIf the item is already in the order, it will be deleted\nEnter ! to stop");
         Long itemID = utils.getLong();
 		while (!itemID.equals(-1l)) {
-			LOGGER.info("Please enter the quantity:");
-			Long quantity = utils.getLong();	
-			if (quantity.equals(-1l)) { 
-				break; 
+			if (itemDAO.read(itemID) == null) {
+				LOGGER.info("That item doesn't exist, please create it before adding it to an order\nAdd another ID:");
+			} else {
+				LOGGER.info("Please enter the quantity:");
+				Long quantity = utils.getLong();	
+				if (quantity.equals(-1l)) { 
+					break; 
+				}
+				if (quantity.equals(0l)) {
+					LOGGER.info("Quantity can't be 0\n");
+					continue;
+				}
+            	orderDetailDAO.update(new OrderDetail(order.getId(), itemID, quantity));
+		    	LOGGER.info("Item added, enter next ID:");
 			}
-            orderDetailDAO.update(new OrderDetail(order.getId(), itemID, quantity));
-		    LOGGER.info("Item added, enter next ID:");
             itemID = utils.getLong();
         }
 		return order;
@@ -117,6 +150,10 @@ public class OrderController implements CrudController<Order> {
 	public int delete() {
 		LOGGER.info("Please enter the id of the order you would like to delete items from:");
 		Long orderID = utils.getLong();
+		if (orderDetailDAO.readOrder(orderID).isEmpty()) {
+			LOGGER.info("This order doesn't contain any items, it will be deleted.\nTo add items to this order, re-create it.");
+			return orderDAO.delete(orderID);
+		}
 		LOGGER.info("Please enter the item ids you would like to delete from the order. Deleting all items will delete the order. Entering * will delete all items\nEnter ! to stop");
 		Long itemID = utils.getLong();
 		while (!itemID.equals(-1l)) {
