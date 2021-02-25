@@ -14,4 +14,5 @@ CREATE TABLE IF NOT EXISTS `orders` (
 	`customerid` INT(11) NOT NULL,
 	PRIMARY KEY(`id`),
 	FOREIGN KEY(`customerid`) REFERENCES customers(`id`)
+        ON DELETE CASCADE
 ); 

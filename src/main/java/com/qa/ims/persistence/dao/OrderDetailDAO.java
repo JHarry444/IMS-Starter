@@ -176,6 +176,7 @@ public class OrderDetailDAO implements Dao<OrderDetail> {
 			statement.setLong(2, itemID);
 			try (ResultSet resultSet = statement.executeQuery();) {
 				resultSet.next();
+				LOGGER.debug(resultSet);
 				return modelFromResultSet(resultSet);
 			}
 		} catch (SQLException e) {

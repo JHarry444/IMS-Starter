@@ -23,7 +23,7 @@ public class OrderDetailsDAOTest {
 
 	@Test
 	public void testCreate() {
-		final OrderDetail created = new OrderDetail(2L, 1L, 2L, 10L);
+		final OrderDetail created = new OrderDetail(2L, 2L, 2L, 10L);
 		assertEquals(created, DAO.create(created));
 	}
 
@@ -45,9 +45,27 @@ public class OrderDetailsDAOTest {
 		assertEquals(new OrderDetail(1L, 1L, 1L, 2L), DAO.read(ID));
 	}
 
+    @Test
+    public void testReadOrder() {
+        List<OrderDetail> expected = new ArrayList<>();
+		expected.add(new OrderDetail(1L, 1L, 1L, 2L));
+		assertEquals(expected, DAO.readOrder(1L));
+    }
+
+    @Test
+    public void testReadOrderItem() {
+		final OrderDetail expected = new OrderDetail(1L, 1L, 1L, 2L);
+        assertEquals(expected, DAO.readOrderItem(1L, 1L));
+    }
+
+    @Test
+    public void testGetPrice() {
+        assertEquals(2.75D, DAO.getPrice(1L));
+    }
+
 	@Test
 	public void testUpdate() {
-		final OrderDetail updated = new OrderDetail(2L, 1L, 2L, 20L);
+		final OrderDetail updated = new OrderDetail(2L, 2L, 2L, 20L);
 		assertEquals(updated, DAO.update(updated));
 	}
 
