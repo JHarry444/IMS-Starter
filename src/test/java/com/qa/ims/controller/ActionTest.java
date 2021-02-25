@@ -1,4 +1,4 @@
-package com.qa.ims.controllers;
+package com.qa.ims.controller;
 
 public class ActionTest {
     
