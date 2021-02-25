@@ -1,5 +1,7 @@
 package com.qa.ims.persistence.domain;
 
+import java.text.DecimalFormat;
+
 public class Item {
 
 	private Long id;
@@ -41,9 +43,18 @@ public class Item {
 		this.price = price;
 	}
 
+	public String getFormattedPrice() {
+		DecimalFormat decim = new DecimalFormat("0.00");
+		return decim.format(price);
+	}
+
 	@Override
 	public String toString() {
 		return "id:" + id + " name:" + name + " price:" + price;
+	}
+
+	public String formattedString() {
+		return "ID: " + id + ", Name: " + name + ", Price: " + getFormattedPrice();
 	}
 
 	@Override

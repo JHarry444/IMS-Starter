@@ -23,7 +23,7 @@ public class OrderDetailDAO implements Dao<OrderDetail> {
 		Long id = resultSet.getLong("id");
 		Long orderID = resultSet.getLong("orderid");
 		Long itemID = resultSet.getLong("itemid");
-        Double quantity = resultSet.getDouble("quantity");
+        Long quantity = resultSet.getLong("quantity");
 		Double price = getPrice(itemID) * quantity;
 		return new OrderDetail(id, orderID, itemID, quantity, price);
 	}
@@ -44,8 +44,7 @@ public class OrderDetailDAO implements Dao<OrderDetail> {
 			}
 			return orderdetails;
 		} catch (SQLException e) {
-			LOGGER.debug(e);
-			LOGGER.error(e.getMessage());
+			LOGGER.debug(e.getMessage());
 		}
 		return new ArrayList<>();
 	}
@@ -56,9 +55,8 @@ public class OrderDetailDAO implements Dao<OrderDetail> {
 				ResultSet resultSet = statement.executeQuery("SELECT * FROM orderdetails ORDER BY id DESC LIMIT 1");) {
 			resultSet.next();
 			return modelFromResultSet(resultSet);
-		} catch (Exception e) {
-			LOGGER.debug(e);
-			LOGGER.error(e.getMessage());
+		} catch (SQLException e) {
+			LOGGER.debug(e.getMessage());
 		}
 		return null;
 	}
@@ -75,12 +73,11 @@ public class OrderDetailDAO implements Dao<OrderDetail> {
 						.prepareStatement("INSERT INTO orderdetails(orderid, itemid, quantity) VALUES (?, ?, ?)");) {
 			statement.setLong(1, orderdetail.getOrderID());
 			statement.setLong(2, orderdetail.getItemID());
-			statement.setDouble(3, orderdetail.getQuantity());
+			statement.setLong(3, orderdetail.getQuantity());
 			statement.executeUpdate();
 			return readLatest();
-		} catch (Exception e) {
-			LOGGER.debug(e);
-			LOGGER.error(e.getMessage());
+		} catch (SQLException e) {
+			LOGGER.debug(e.getMessage());
 		}
 		return null;
 	}
@@ -94,9 +91,8 @@ public class OrderDetailDAO implements Dao<OrderDetail> {
 				resultSet.next();
 				return modelFromResultSet(resultSet);
 			}
-		} catch (Exception e) {
-			LOGGER.debug(e);
-			LOGGER.error(e.getMessage());
+		} catch (SQLException e) {
+			LOGGER.debug(e.getMessage());
 		}
 		return null;
 	}
@@ -112,9 +108,8 @@ public class OrderDetailDAO implements Dao<OrderDetail> {
 				}
 				return orderdetails;
 			}			
-		} catch (Exception e) {
-			LOGGER.debug(e);
-			LOGGER.error(e.getMessage());
+		} catch (SQLException e) {
+			LOGGER.debug(e.getMessage());
 		}
 		return null;
 	}
@@ -133,13 +128,12 @@ public class OrderDetailDAO implements Dao<OrderDetail> {
 						.prepareStatement("UPDATE orderdetails SET orderid = ?, itemid = ?, quantity = ? WHERE id = ?");) {
 			statement.setLong(1, orderdetail.getOrderID());
 			statement.setLong(2, orderdetail.getItemID());
-			statement.setDouble(3, orderdetail.getQuantity());
+			statement.setLong(3, orderdetail.getQuantity());
 			statement.setLong(4, orderdetail.getID());
 			statement.executeUpdate();
 			return read(orderdetail.getID());
-		} catch (Exception e) {
-			LOGGER.debug(e);
-			LOGGER.error(e.getMessage());
+		} catch (SQLException e) {
+			LOGGER.debug(e.getMessage());
 		}
 		return null;
 	}
@@ -155,9 +149,8 @@ public class OrderDetailDAO implements Dao<OrderDetail> {
 				PreparedStatement statement = connection.prepareStatement("DELETE FROM orderdetails WHERE id = ?");) {
 			statement.setLong(1, id);
 			return statement.executeUpdate();
-		} catch (Exception e) {
-			LOGGER.debug(e);
-			LOGGER.error(e.getMessage());
+		} catch (SQLException e) {
+			LOGGER.debug(e.getMessage());
 		}
 		return 0;
 	}
@@ -170,9 +163,8 @@ public class OrderDetailDAO implements Dao<OrderDetail> {
 				resultset.next();
 				return resultset.getDouble("price");
 			}
-		} catch (Exception e) {
-			LOGGER.debug(e);
-			LOGGER.error(e.getMessage());
+		} catch (SQLException e) {
+			LOGGER.debug(e.getMessage());
 		}
 		return 0;
 	}
@@ -184,11 +176,11 @@ public class OrderDetailDAO implements Dao<OrderDetail> {
 			statement.setLong(2, itemID);
 			try (ResultSet resultSet = statement.executeQuery();) {
 				resultSet.next();
+				LOGGER.debug(resultSet);
 				return modelFromResultSet(resultSet);
 			}
-		} catch (Exception e) {
-			LOGGER.debug(e);
-			LOGGER.error(e.getMessage());
+		} catch (SQLException e) {
+			LOGGER.debug(e.getMessage());
 		}
 		return null;
 	} 

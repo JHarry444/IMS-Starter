@@ -1,27 +1,29 @@
 package com.qa.ims.persistence.domain;
 
+import java.text.DecimalFormat;
+
 public class OrderDetail {
 
 	private Long id;
 	private Long orderID;
 	private Long itemID;
-    private Double quantity;
+    private Long quantity;
 	private Double price;
 
-	public OrderDetail(Long orderID, Long itemID, Double quantity) {
+	public OrderDetail(Long orderID, Long itemID, Long quantity) {
 		this.setOrderID(orderID);
 		this.setItemID(itemID);
         this.setQuantity(quantity);
 	}
 
-	public OrderDetail(Long id, Long orderID, Long itemID, Double quantity) {
+	public OrderDetail(Long id, Long orderID, Long itemID, Long quantity) {
         this.setID(id);
 		this.setOrderID(orderID);
 		this.setItemID(itemID);
         this.setQuantity(quantity);
 	}
 
-	public OrderDetail(Long id, Long orderID, Long itemID, Double quantity, Double price) {
+	public OrderDetail(Long id, Long orderID, Long itemID, Long quantity, Double price) {
         this.setID(id);
 		this.setOrderID(orderID);
 		this.setItemID(itemID);
@@ -53,11 +55,11 @@ public class OrderDetail {
         this.itemID = itemID;
     }
 
-    public Double getQuantity() {
+    public Long getQuantity() {
         return this.quantity;
     }
 
-    public void setQuantity(Double quantity) {
+    public void setQuantity(Long quantity) {
         this.quantity = quantity;
     }
 
@@ -68,10 +70,19 @@ public class OrderDetail {
 	public void setPrice(Double price) {
 		this.price = price;
 	}
+
+	public String getFormattedPrice() {
+		DecimalFormat decim = new DecimalFormat("0.00");
+		return decim.format(price);
+	}
   
     @Override
 	public String toString() {
-		return "id:" + id + " order ID:" + orderID + " item ID:" + itemID + " quantity:" + quantity + " price:" + price;
+		return "id:" + id + " order ID:" + orderID + " item ID:" + itemID + " quantity:" + quantity;
+	}
+
+	public String formattedString() {
+		return "-> Item ID: " + itemID + ", Quantity: " + quantity + ", Price: " + getFormattedPrice();
 	}
 
 	@Override
@@ -82,7 +93,6 @@ public class OrderDetail {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((itemID == null) ? 0 : itemID.hashCode());
         result = prime * result + ((quantity == null) ? 0 : quantity.hashCode());
-		result = prime * result + ((price == null) ? 0 : price.hashCode());
 		return result;
 	}
 
@@ -99,6 +109,16 @@ public class OrderDetail {
 			if (other.getOrderID() != null)
 				return false;
 		} else if (!getOrderID().equals(other.getOrderID()))
+			return false;
+		if (getItemID() == null) {
+			if (other.getItemID() != null)
+				return false;
+		} else if (!getItemID().equals(other.getItemID()))
+			return false;
+		if (getQuantity() == null) {
+			if (other.getQuantity() != null)
+				return false;
+		} else if (!getQuantity().equals(other.getQuantity()))
 			return false;
 		if (id == null) {
 			if (other.id != null)

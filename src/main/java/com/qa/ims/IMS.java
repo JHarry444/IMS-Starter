@@ -36,17 +36,17 @@ public class IMS {
 
 		final OrderDAO orderDAO = new OrderDAO();
 		final OrderDetailDAO orderDetailDAO = new OrderDetailDAO();
-		this.orders = new OrderController(orderDAO, orderDetailDAO, utils);
+		this.orders = new OrderController(orderDAO, orderDetailDAO, itemDAO, utils);
 		
 	}
 
 	public void imsSystem() {
-		LOGGER.info("Welcome to the Inventory Management System!");
+		LOGGER.info("-----------------------------------------------\n| Welcome to the Inventory Management System! |");
 		DBUtils.connect();
 
 		Domain domain = null;
 		do {
-			LOGGER.info("Which entity would you like to use?");
+			LOGGER.info("-----------------------------------------------\nWhich entity would you like to use?");
 			Domain.printDomains();
 
 			domain = Domain.getDomain(utils);
@@ -59,7 +59,6 @@ public class IMS {
 	private void domainAction(Domain domain) {
 		boolean changeDomain = false;
 		do {
-
 			CrudController<?> active = null;
 			switch (domain) {
 			case CUSTOMER:
@@ -77,7 +76,7 @@ public class IMS {
 				break;
 			}
 
-			LOGGER.info(() ->"What would you like to do with " + domain.name().toLowerCase() + ":");
+			LOGGER.info(() -> "-----------------------------------------------\nWhat would you like to do with " + domain.name().toLowerCase() + ":");
 
 			Action.printActions();
 			Action action = Action.getAction(utils);

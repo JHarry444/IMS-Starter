@@ -42,8 +42,7 @@ public class OrderDAO implements Dao<Order> {
 			}
 			return orders;
 		} catch (SQLException e) {
-			LOGGER.debug(e);
-			LOGGER.error(e.getMessage());
+			LOGGER.debug(e.getMessage());
 		}
 		return new ArrayList<>();
 	}
@@ -55,8 +54,7 @@ public class OrderDAO implements Dao<Order> {
 			resultSet.next();
 			return modelFromResultSet(resultSet);
 		} catch (Exception e) {
-			LOGGER.debug(e);
-			LOGGER.error(e.getMessage());
+			LOGGER.debug(e.getMessage());
 		}
 		return null;
 	}
@@ -74,9 +72,8 @@ public class OrderDAO implements Dao<Order> {
 			statement.setLong(1, order.getCustID());
 			statement.executeUpdate();
 			return readLatest();
-		} catch (Exception e) {
-			LOGGER.debug(e);
-			LOGGER.error(e.getMessage());
+		} catch (SQLException e) {
+			LOGGER.debug(e.getMessage());
 		}
 		return null;
 	}
@@ -91,8 +88,8 @@ public class OrderDAO implements Dao<Order> {
 				return modelFromResultSet(resultSet);
 			}
 		} catch (Exception e) {
-			LOGGER.debug(e);
-			LOGGER.error(e.getMessage());
+			LOGGER.debug(e.getMessage());
+			
 		}
 		return null;
 	}
@@ -110,11 +107,11 @@ public class OrderDAO implements Dao<Order> {
 				PreparedStatement statement = connection
 						.prepareStatement("UPDATE orders SET customerid = ? WHERE id = ?");) {
 			statement.setLong(1, order.getCustID());
+			statement.setLong(2, order.getId());
 			statement.executeUpdate();
 			return read(order.getId());
 		} catch (Exception e) {
-			LOGGER.debug(e);
-			LOGGER.error(e.getMessage());
+			LOGGER.debug(e.getMessage());
 		}
 		return null;
 	}
@@ -131,8 +128,7 @@ public class OrderDAO implements Dao<Order> {
 			statement.setLong(1, id);
 			return statement.executeUpdate();
 		} catch (Exception e) {
-			LOGGER.debug(e);
-			LOGGER.error(e.getMessage());
+			LOGGER.debug(e.getMessage());
 		}
 		return 0;
 	}
