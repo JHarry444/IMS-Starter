@@ -23,13 +23,16 @@ public class Order {
     	this.setItemquant(itemquant);
     }
 	public Order (Long id, Long orderid) {
-		this.setOrderid(id);
-		this.setId(orderid);
+		this.setId(id);	
+		this.setOrderid(orderid);
+				
 	}
+
 	
 	public Order (Long orderid, Long id, Long itemid, Long itemquant) {
 		this.setOrderid(orderid);
 		this.setId(id);
+		
 		this.setItemid(itemid);
 		this.setItemquant(itemquant);
 	}
