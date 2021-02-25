@@ -79,7 +79,7 @@ public class OrderDetail {
   
     @Override
 	public String toString() {
-		return "id:" + id + " order ID:" + orderID + " item ID:" + itemID + " quantity:" + quantity + " price:" + price;
+		return "id:" + id + " order ID:" + orderID + " item ID:" + itemID + " quantity:" + quantity;
 	}
 
 	public String formattedString() {
