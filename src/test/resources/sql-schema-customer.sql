@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS `orderdetails`;
+DROP TABLE IF EXISTS `orders`;
 DROP TABLE IF EXISTS `customers`;
 
 CREATE TABLE IF NOT EXISTS `customers` (
