@@ -83,7 +83,7 @@ public class ItemController implements CrudController<Item> {
 		LOGGER.info("Please enter the ID of the item you would like to delete:");
 		Long id = utils.getLong();
 		Item item = itemDAO.read(id);
-		LOGGER.info(String.format("Are you sure you want to delete %s?%nY for Yes, N for No", item.getName()));
+		LOGGER.info("Are you sure you want to delete this item?\nY for Yes, N for No");
 		String input = utils.getString();
 		if (input.strip().equalsIgnoreCase("Y")) {
 			LOGGER.info("Item deleted.");

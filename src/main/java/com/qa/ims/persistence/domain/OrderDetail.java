@@ -9,8 +9,6 @@ public class OrderDetail {
 	private Long itemID;
     private Long quantity;
 	private Double price;
-	private DecimalFormat decim = new DecimalFormat("0.00");
-
 
 	public OrderDetail(Long orderID, Long itemID, Long quantity) {
 		this.setOrderID(orderID);
@@ -74,12 +72,13 @@ public class OrderDetail {
 	}
 
 	public String getFormattedPrice() {
+		DecimalFormat decim = new DecimalFormat("0.00");
 		return decim.format(price);
 	}
   
     @Override
 	public String toString() {
-		return "id:" + id + " order ID:" + orderID + " item ID:" + itemID + " quantity:" + quantity + " price:" + price;
+		return "id:" + id + " order ID:" + orderID + " item ID:" + itemID + " quantity:" + quantity;
 	}
 
 	public String formattedString() {
@@ -94,7 +93,6 @@ public class OrderDetail {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((itemID == null) ? 0 : itemID.hashCode());
         result = prime * result + ((quantity == null) ? 0 : quantity.hashCode());
-		result = prime * result + ((price == null) ? 0 : price.hashCode());
 		return result;
 	}
 
@@ -111,6 +109,16 @@ public class OrderDetail {
 			if (other.getOrderID() != null)
 				return false;
 		} else if (!getOrderID().equals(other.getOrderID()))
+			return false;
+		if (getItemID() == null) {
+			if (other.getItemID() != null)
+				return false;
+		} else if (!getItemID().equals(other.getItemID()))
+			return false;
+		if (getQuantity() == null) {
+			if (other.getQuantity() != null)
+				return false;
+		} else if (!getQuantity().equals(other.getQuantity()))
 			return false;
 		if (id == null) {
 			if (other.id != null)

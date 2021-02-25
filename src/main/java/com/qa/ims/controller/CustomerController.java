@@ -82,7 +82,7 @@ public class CustomerController implements CrudController<Customer> {
 		LOGGER.info("Please enter the ID of the customer you would like to delete:");
 		Long id = utils.getLong();
 		Customer customer = customerDAO.read(id);
-		LOGGER.info(String.format("Are you sure you want to delete %s %s?%nY for Yes, N for No", customer.getFirstName(), customer.getSurname()));
+		LOGGER.info("Are you sure you want to delete this customer?\nY for Yes, N for No");
 		String input = utils.getString();
 		if (input.strip().equalsIgnoreCase("Y")) {
 			LOGGER.info("Customer deleted.");

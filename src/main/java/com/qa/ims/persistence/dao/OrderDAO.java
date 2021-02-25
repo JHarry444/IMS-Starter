@@ -107,6 +107,7 @@ public class OrderDAO implements Dao<Order> {
 				PreparedStatement statement = connection
 						.prepareStatement("UPDATE orders SET customerid = ? WHERE id = ?");) {
 			statement.setLong(1, order.getCustID());
+			statement.setLong(2, order.getId());
 			statement.executeUpdate();
 			return read(order.getId());
 		} catch (Exception e) {
