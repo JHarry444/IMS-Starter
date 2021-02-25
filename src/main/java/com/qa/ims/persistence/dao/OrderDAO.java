@@ -35,7 +35,19 @@ public String convertMapToString(Map<Long, Long> itemmap) {
 	public Order modelFromResultSet(ResultSet resultSet) throws SQLException {
 		Long id = resultSet.getLong("id");
 		Long orderid = resultSet.getLong("orderid");
+		
+		
 		return new Order (id, orderid);
+	}
+	@Override
+	public Order modelFromResultSetReadAll(ResultSet resultSetReadAll) throws SQLException {
+		Long orderid = resultSetReadAll.getLong("orderid");
+		Long id = resultSetReadAll.getLong("id");
+		
+		
+		Long itemid = resultSetReadAll.getLong("itemid");
+		Long itemquant = resultSetReadAll.getLong("itemquant");
+		return new Order (orderid, id, itemid, itemquant);
 	}
 	
 	
@@ -43,10 +55,10 @@ public String convertMapToString(Map<Long, Long> itemmap) {
 	public List<Order> readAll() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("SELECT * FROM orders INNER JOIN orderline ON orders.orderid = orderline.orderid;");) {
+				ResultSet resultSetReadAll = statement.executeQuery("SELECT * FROM orders INNER JOIN orderline ON orders.orderid = orderline.orderid;");) {
 			List<Order> orders = new ArrayList<>();
-			while (resultSet.next()) {
-				orders.add(modelFromResultSet(resultSet));
+			while (resultSetReadAll.next()) {
+				orders.add(modelFromResultSetReadAll(resultSetReadAll));
 			}
 			return orders;
 		} catch (SQLException e) {
@@ -93,25 +105,14 @@ public String convertMapToString(Map<Long, Long> itemmap) {
 
 	@Override
 	public Order update(Order orders) {
-		try (Connection connection = DBUtils.getInstance().getConnection();
-				PreparedStatement statement = connection.prepareStatement("INSERT INTO orders(id) VALUES (?);");) {
-
-				statement.setLong(1, orders.getId());
-				statement.executeUpdate();
-				return readLatest();
-			}
-			catch (Exception e) {
-				LOGGER.debug(e);
-				LOGGER.error(e.getMessage());
-			}
-
+	
 			return null;
 	}
 
 	@Override
 	public int delete(long orderid) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
-				PreparedStatement statement = connection.prepareStatement("DELETE FROM orders WHERE orderid  = ?; DELETE FROM orderline WHERE orderid = ?;");) {
+				PreparedStatement statement = connection.prepareStatement("DELETE FROM orders WHERE orderid  = ?;");) {
 			statement.setLong(1, orderid);
 			return statement.executeUpdate();
 		} catch (Exception e) {

@@ -19,8 +19,10 @@ public class OrderlineDAO implements Dao<Orderline> {
 	
 	@Override
 	public Orderline modelFromResultSet(ResultSet resultSet) throws SQLException {
-		Long id = resultSet.getLong("id");
+		Long id = resultSet.getLong("orderlineid");
 		Long orderid = resultSet.getLong("orderid");
+		
+		
 		Long itemid = resultSet.getLong("itemid");
 		Long itemquant = resultSet.getLong("itemquant");
 		
@@ -58,7 +60,7 @@ public class OrderlineDAO implements Dao<Orderline> {
 	public Orderline readLatest() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("SELECT * FROM orders ORDER BY orderid DESC LIMIT 1");) {
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM orderline ORDER BY orderid DESC LIMIT 1");) {
 			resultSet.next();
 			return modelFromResultSet(resultSet);
 		} catch (Exception e) {
@@ -75,24 +77,7 @@ public class OrderlineDAO implements Dao<Orderline> {
 
 	@Override
 	public Orderline update(Orderline orderline) {
-		try(Connection connection = DBUtils.getInstance().getConnection();
-				PreparedStatement statement = connection.prepareStatement("INSERT INTO orderline(orderid, itemid, itemquant) VALUES (?, ?, ?)");) {
-
-				statement.setLong(1, orderline.getOrderid());
-
-				statement.setLong(2, orderline.getItemid());
-
-				statement.setLong(3, orderline.getItemquant());
-
-				statement.executeUpdate();
-				
-				return readLatest();
-			}
-			catch (Exception e) {
-				LOGGER.debug(e);
-				LOGGER.error(e.getMessage());
-			}
-
+		
 			return null;
 	}
 
@@ -108,6 +93,12 @@ public class OrderlineDAO implements Dao<Orderline> {
 		}
 		return 0; 
 		
+	}
+
+	@Override
+	public Orderline modelFromResultSetReadAll(ResultSet resultSetReadAll) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	
