@@ -18,7 +18,7 @@ public class CustomerDAOTest {
 	@BeforeAll
 	public static void setup() {
 		DBUtils.connect();
-		DBUtils.getInstance().init("src/test/resources/sql-schema.sql", "src/test/resources/sql-data.sql");
+		DBUtils.getInstance().init("src/test/resources/sql-schema-customer.sql", "src/test/resources/sql-data-customer.sql");
 	}
 
 	@Test

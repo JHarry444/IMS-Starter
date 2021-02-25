@@ -18,7 +18,7 @@ public class ItemDAOTest {
 	@BeforeAll
 	public static void setup() {
 		DBUtils.connect();
-		DBUtils.getInstance().init("src/test/resources/sql-schema.sql", "src/test/resources/sql-data.sql");
+		DBUtils.getInstance().init("src/test/resources/sql-schema-item.sql", "src/test/resources/sql-data-item.sql");
 	}
 
 	@Test
