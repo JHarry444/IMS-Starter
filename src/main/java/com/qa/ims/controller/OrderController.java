@@ -61,10 +61,10 @@ public class OrderController implements CrudController<Order> {
 
 		Order order = orderDAO.create(new Order(id));
 		Long orderid = order.getOrderid();
-		System.out.println(orderid);
+		
 		for (Long itemid : itemmap.keySet()) {
 			Long itemquant = itemmap.get(itemid);
-			orderlineDAO.create(new Orderline(orderid, itemid, itemquant));
+			orderlineDAO.create(new Orderline(id, orderid, itemid, itemquant));
 		}
 
 		LOGGER.info("Order Created");
@@ -75,36 +75,9 @@ public class OrderController implements CrudController<Order> {
 
 	@Override
 	public Order update() {
-		LOGGER.info("Please enter the ID for the order you wish to update");
-		Long orderid = utils.getLong();
+		
 
-		Map<Long, Long> itemmap = new HashMap();
-
-		LOGGER.info("Would you like to add an item? (Yes or no)");
-		String answer = utils.getString();
-
-		while (answer.toLowerCase().equals("yes")) {
-
-			LOGGER.info("Please enter the Item ID for the order");
-			Long itemid = utils.getLong();
-			LOGGER.info("Please enter the quantity of the item");
-			Long itemquant = utils.getLong();
-			itemmap.put(itemid, itemquant);
-			LOGGER.info("Would you like to add another item?(Yes or no)");
-			answer = utils.getString();
-		}
-
-		Order order = orderDAO.create(new Order(orderid));
-		Long orderlineid = order.getOrderlineid();
-	
-		for (Long itemid : itemmap.keySet()) {
-			Long itemquant = itemmap.get(itemid);
-			orderlineDAO.create(new Orderline(orderid, itemid, itemquant));
-		}
-
-		LOGGER.info("Order Updated");
-
-		return order;
+		return null;
 
 	}
 
