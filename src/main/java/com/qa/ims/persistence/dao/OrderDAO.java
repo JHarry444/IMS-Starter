@@ -96,7 +96,8 @@ public class OrderDAO {
 				PreparedStatement statement = connection
 						.prepareStatement("UPDATE orders SET item_id = ?, quantity = ? WHERE order_id = ?");) {
 			statement.setLong(1, order.getItem_id());
-			statement.setInt(3, order.getQuantity());
+			statement.setInt(2, order.getQuantity());
+			statement.setLong(3, order.getOrder_id());
 			statement.executeUpdate();
 			return read(order.getOrder_id());
 		} catch (Exception e) {

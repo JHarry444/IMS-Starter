@@ -76,7 +76,7 @@ public class Order {
 
 	@Override
 	public String toString() {
-		return "Customer with customer id:" + cust_id + "|| purchases item_id: " + item_id + "|| of quantity: " + quantity + "|| and the total_cost is: "+ total_cost;
+		return "order_id: " + order_id  + " ||Customer with customer id:" + cust_id + "|| purchases item_id: " + item_id  + "|| of quantity: " + quantity + "|| and the total_cost is: "+ total_cost;
 	}
 
 }

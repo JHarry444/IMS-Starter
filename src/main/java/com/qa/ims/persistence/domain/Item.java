@@ -45,7 +45,7 @@ public class Item {
 	
 	@Override
 	public String toString() {
-		return "item_id:" + item_id + " title:" + title + " value:" + value;
+		return "item_id:" + item_id + " ||title:" + title + " ||value:" + value;
 	}
 
 }
