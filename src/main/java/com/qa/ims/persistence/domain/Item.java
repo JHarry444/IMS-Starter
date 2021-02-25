@@ -7,7 +7,6 @@ public class Item {
 	private Long id;
 	private String name;
 	private Double price;
-	private DecimalFormat decim = new DecimalFormat("0.00");
 
 	public Item(String name, Double price) {
 		this.setName(name);
@@ -45,6 +44,7 @@ public class Item {
 	}
 
 	public String getFormattedPrice() {
+		DecimalFormat decim = new DecimalFormat("0.00");
 		return decim.format(price);
 	}
 
