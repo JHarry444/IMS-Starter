@@ -1,32 +1,60 @@
 package com.qa.ims.persistence.domain;
 
+import java.util.Map;
+
 public class Order {
 
-	private Long orderid;
-	private Long id;
 	private Long orderlineid;
-	
-	public Order(Long id, Long orderlineid ) {
-		this.setId(id);
-		this.setOrderLineId(orderlineid);
-		
+	private Long orderid;
+    private Long id;
+	private Long itemid;
+	private Long itemquant;
+
+	public Order(Long orderid, Long itemid, Long itemquant) {
+		this.setOrderid(orderid);
+		this.setItemid(itemid);
+		this.setItemquant(itemquant);
+	}
+    public Order(Long orderlineid, Long id, Long orderid, Long itemid, Long itemquant) {
+    	this.setOrderlineid(orderlineid);
+    	this.setId(id);
+    	this.setOrderid(orderid);
+    	this.setItemid(itemid);
+    	this.setItemquant(itemquant);
+    }
+	public Order (Long id, Long orderid) {
+		this.setOrderid(id);
+		this.setId(orderid);
 	}
 	
-	public Order(Long orderid, Long id, Long orderlineid) {
-		this.setOrderId(orderid);
+	public Order (Long orderid, Long id, Long itemid, Long itemquant) {
+		this.setOrderid(orderid);
 		this.setId(id);
-		this.setOrderLineId(orderlineid);
-		
+		this.setItemid(itemid);
+		this.setItemquant(itemquant);
+	}
+	
+	
+	public Order(Long id) {
+		this.setId(id);
+	}
+	
+	public Long getOrderlineid() {
+		return orderlineid;
 	}
 
-	public Long getOrderId() {
+	public void setOrderlineid(Long orderlineid) {
+		this.orderlineid = orderlineid;
+	}
+
+	public Long getOrderid() {
 		return orderid;
 	}
 
-	public void setOrderId(Long orderid) {
+	public void setOrderid(Long orderid) {
 		this.orderid = orderid;
 	}
-
+	
 	public Long getId() {
 		return id;
 	}
@@ -34,14 +62,27 @@ public class Order {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-	public Long getOrderLineId() {
-		return orderlineid;
+	public Long getItemid() {
+		return itemid;
 	}
 
-	public void setOrderLineId(Long orderlineid) {
-		this.orderlineid = orderlineid;
+	public void setItemid(Long itemid) {
+		this.itemid = itemid;
 	}
+
+	public Long getItemquant() {
+		return itemquant;
+	}
+
+	public void setItemquant(Long itemquant) {
+		this.itemquant = itemquant;
+	}
+	
+	@Override
+    public String toString() {
+	return " Customer ID=" + id + "Order ID=" + orderid + ", Item ID=" + itemid
+			+ ", Item quantity=" + itemquant + "]"; 
+}
 
 	@Override
 	public int hashCode() {
@@ -49,7 +90,6 @@ public class Order {
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((orderid == null) ? 0 : orderid.hashCode());
-		result = prime * result + ((orderlineid == null) ? 0 : orderlineid.hashCode());
 		return result;
 	}
 
@@ -62,23 +102,19 @@ public class Order {
 		if (getClass() != obj.getClass())
 			return false;
 		Order other = (Order) obj;
-		if (id != other.id)
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
 			return false;
 		if (orderid == null) {
 			if (other.orderid != null)
 				return false;
 		} else if (!orderid.equals(other.orderid))
 			return false;
-		if (orderlineid == null) {
-			if (other.orderlineid != null)
-				return false;
-		} else if (!orderlineid.equals(other.orderlineid))
-			return false;
 		return true;
 	}
-	
-	
-	
+
 	
 	
 	
