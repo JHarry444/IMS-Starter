@@ -1,68 +1,37 @@
-Coverage: 34%
+Coverage: 55%
 # Project Title
+IMS 
 
-One Paragraph of project description goes here
+This is an Inventory Management System so businesses can create items, orders and customers.
+You are able to create, read, update and delete customers, items and orders.
 
 ## Getting Started
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+ Open a command line. Navigate into the IMS-Starter folder and then the target folder and write java -jar ims-0.0.1-jar-with-dependencies.jar to open the file.
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
 
-```
-Give examples
-```
+SQL and Java are needed. JUnit and Mockito to run the tests.
+
+
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
+Download the folder. Run "MVN Package" to allow it to work on a command line - then follow the above under "Getting Started".
 
-Say what the step will be
 
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system. Break down into which tests and what they do
 
 ### Unit Tests 
 
-Explain what these tests test, why and how to run them
-
-```
-Give an example
-```
+Unit tests test small parts of the source code at once. In this case all the constructors, crud functionality and integration with SQL are tested.
 
 ### Integration Tests 
-Explain what these tests test, why and how to run them
+Integration tests test bigger parts of the code than unit tests.
 
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
 
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
+Run the IMS with dependencies
 
 ## Built With
 
@@ -75,6 +44,7 @@ We use [SemVer](http://semver.org/) for versioning.
 ## Authors
 
 * **Chris Perrins** - *Initial work* - [christophperrins](https://github.com/christophperrins)
+* **Ifan Clarke** *Editor* (https://github.com/IfanClarke)
 
 ## License
 
@@ -84,6 +54,4 @@ This project is licensed under the MIT license - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+Thanks to Ed and Team 2 for helping me when I get stuck. Thanks to Chris Perrins for doing the intial work!
