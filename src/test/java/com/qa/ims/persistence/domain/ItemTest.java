@@ -7,9 +7,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
+
 public class ItemTest {
 	
 	private static Item testItem;
+	
+	@Test
+	public void testEquals() {
+		EqualsVerifier.simple().forClass(Item.class).verify();
+	}
 	
 	@Test
 	public void firstItemConstructorTest() {

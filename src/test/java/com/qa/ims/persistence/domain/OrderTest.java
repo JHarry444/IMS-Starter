@@ -6,9 +6,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
+
 public class OrderTest {
 
 	private static Order testOrder;
+	
+	@Test
+	public void testEquals() {
+		EqualsVerifier.simple().forClass(Order.class).verify();
+	}
 	
 	@Test
 	public void firstOrderConstructorTest() {
@@ -19,25 +26,31 @@ public class OrderTest {
 	
 	@Test
 	public void secondOrderConstructorTest() {
-		testOrder = new Order(1l, 2);
+		testOrder = new Order(1l, 2l, 3);
 		assertNotNull(testOrder);
 	}
 	
 	@Test
 	public void thirdOrderConstructorTest() {
-		testOrder = new Order(1l, 2, 5.50f);
+		testOrder = new Order(1l, 2);
 		assertNotNull(testOrder);
 	}
 	
 	@Test
 	public void forthOrderConstructorTest() {
+		testOrder = new Order(1l, 2, 5.50f);
+		assertNotNull(testOrder);
+	}
+	
+	@Test
+	public void fifthOrderConstructorTest() {
 		testOrder = new Order(1l, 2, 2l, 3, 6.50f);
 		assertNotNull(testOrder);
 	}
 	
 	@Test
 	public void getOrder_idTest() {
-		Order ord = new Order(1l, 2, 3);
+		Order ord = new Order(1l, 2l, 3);
 		assertEquals(1l, ord.getOrder_id());
 	}
 	

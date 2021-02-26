@@ -65,6 +65,30 @@ public class CustomerDAOTest {
 		Customer created = new Customer(1l, "nik", "pap");
 		DAO.create(created);
 		assertEquals(0, DAO.delete(1));
-		
+	}
+	
+	@Test
+	public void ExceptionHandlerTestTwo() {
+		DBUtils.connect("db.url=jdbc:h2:~/imttt");
+		final Customer updated = new Customer(1l, "nik", "pap");
+		assertEquals(updated, DAO.update(updated));
+	}
+	
+	@Test
+	public void ExceptionHandlerTestThree() {
+		DBUtils.connect("db.url=jdbc:h2:~/imfff");
+		assertEquals(new Customer(1l, "nik", "pap"), DAO.readAll());
+	}
+	
+	@Test
+	public void ExceptionHandlerTestForth() {
+		DBUtils.connect("db.url=jdbc:h2:~/imfff");
+		assertEquals(new Customer(1l, "nik", "pap"), DAO.read(null));
+	}
+	
+	@Test
+	public void ExceptionHandlerTestFifth() {
+		DBUtils.connect("db.url=jdbc:h2:~/imfff");
+		assertEquals(new Customer(1l, "nik", "pap"), DAO.readLatest());
 	}
 }

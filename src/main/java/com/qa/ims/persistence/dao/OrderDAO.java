@@ -25,7 +25,6 @@ public class OrderDAO {
 		int quantity = resultSet.getInt("quantity");
 		float total_cost = resultSet.getFloat("total_cost");
 		return new Order(order_id, cust_id, item_id, quantity, total_cost);
-
 	}
 
 	public List<Order> readAll() {

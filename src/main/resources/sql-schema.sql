@@ -4,7 +4,11 @@ CREATE SCHEMA IF NOT EXISTS `ims`;
 
 USE `ims` ;
 
-CREATE TABLE IF NOT EXISTS `ims`.`customers` (
+DROP TABLE `orders`;
+DROP TABLE `items`;
+DROP TABLE `customers`;
+
+CREATE TABLE IF NOT EXISTS `customers` (
     `id` INT(11) NOT NULL AUTO_INCREMENT,
     `first_name` VARCHAR(40) DEFAULT NULL,
     `surname` VARCHAR(40) DEFAULT NULL,
@@ -22,6 +26,6 @@ CREATE TABLE IF NOT EXISTS `orders` (
     `cust_id` INT(11) NOT NULL,
 	`item_id` INT(11) NOT NULL,
 	`quantity` INT(11) NOT NULL,
-    FOREIGN KEY (`cust_id`) REFERENCES `customers` (`id`),
-    FOREIGN KEY (`item_id`) REFERENCES `items` (`item_id`)
+    FOREIGN KEY (`cust_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE,
+	FOREIGN KEY (`item_id`) REFERENCES `items` (`item_id`) ON DELETE CASCADE
 );
