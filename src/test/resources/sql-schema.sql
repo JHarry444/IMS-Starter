@@ -1,7 +1,7 @@
-DROP TABLE IF EXISTS `orderline`;
-DROP TABLE IF EXISTS `orders`;
-DROP TABLE IF EXISTS `customers`;
-DROP TABLE IF EXISTS `items`;
+drop table `orderline`;
+drop table `orders`;
+drop table `customers`;
+drop table `items`; 
 
 CREATE TABLE IF NOT EXISTS `customers` (
     `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -9,7 +9,6 @@ CREATE TABLE IF NOT EXISTS `customers` (
     `surname` VARCHAR(40) DEFAULT NULL,
     PRIMARY KEY (`id`)
 );
-
 
 CREATE TABLE IF NOT EXISTS `items` (
 `itemid` INT(11) NOT NULL AUTO_INCREMENT,
@@ -31,7 +30,6 @@ CREATE TABLE IF NOT EXISTS `orderline`(
 `itemid` int(11),
 `itemquant` int(11),
 PRIMARY KEY(`orderlineid`),
-FOREIGN KEY (`orderid`) REFERENCES `orders`(`orderid`)
-ON DELETE CASCADE,
+
 FOREIGN KEY (`itemid`) REFERENCES `items` (`itemid`)
 );
