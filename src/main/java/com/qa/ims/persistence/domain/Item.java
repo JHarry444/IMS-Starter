@@ -92,11 +92,6 @@ public class Item {
 				return false;
 		} else if (!getCompany().equals(other.getCompany()))
 			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
 		if (product == null) {
 			if (other.product != null)
 				return false;
@@ -106,6 +101,11 @@ public class Item {
 			if (other.price != null)
 				return false;
 		} else if (!price.equals(other.price))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}
