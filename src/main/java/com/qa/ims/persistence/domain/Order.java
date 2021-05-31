@@ -2,7 +2,8 @@ package com.qa.ims.persistence.domain;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 public class Order {
@@ -10,17 +11,17 @@ public class Order {
 	private Long id;
 	private Long customerId;
 	private BigDecimal total;
-	private Date orderedOn;
+	private LocalDate orderedOn;
 	
 //	CONSTRUCTORS
-	public Order(Long id, Long customerId, double total, Date orderedOn) {
+	public Order(Long id, Long customerId, double total, LocalDate orderedOn) {
 		this.setId(id);
 		this.setCustomerId(customerId);
 		this.setTotal(total + "");
 		this.setOrderedOn(orderedOn);
 	}
 	
-	public Order(Long id, Long customerId, String total, Date orderedOn) {
+	public Order(Long id, Long customerId, String total, LocalDate orderedOn) {
 		this.setId(id);
 		this.setCustomerId(customerId);
 		this.setTotal(total);
@@ -45,8 +46,9 @@ public class Order {
 		return this.total.doubleValue();
 	}
 	
-	public Date getOrderedOn() {
-		return this.orderedOn;
+	public String getOrderedOn() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		return orderedOn.format(formatter);
 	}
 	
 //	SETTERS
@@ -68,7 +70,7 @@ public class Order {
 		this.total = nt;
 	}
 	
-	public void setOrderedOn(Date newOrderedOn) {
+	public void setOrderedOn(LocalDate newOrderedOn) {
 		this.orderedOn = newOrderedOn;
 	}
 	
