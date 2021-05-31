@@ -59,7 +59,7 @@ public class ItemTest {
 		assertEquals("$1.49", item.getPriceString());
 	}
 	
-//	TOSTRING
+//	OVERRIDES
 	@Test
 	public void toStringTest() {
 		Item item = new Item((long) 12, "Starlight", "Telescope", 999.99);
@@ -68,7 +68,6 @@ public class ItemTest {
 		assertNotEquals("id: 12, company: Starlight, product: Telescope, price: $999.99", s);
 	}
 	
-//	EQUALS
 	@Test
 	public void equalsTest() {
 		Item item = new Item((long) 1223, "Kleenex", "Tissue Box", 2.99);
