@@ -7,16 +7,23 @@ import java.util.Locale;
 public class Item {
 
 	private Long id;
-	private String name;
-	private String description;
+	private String company;
+	private String product;
 	private BigDecimal price;
 	
-//	CONSTRUCTOR
-	public Item(Long id, String name, String description, String price) {
+//	CONSTRUCTORS
+	public Item(Long id, String company, String product, String price) {
 		this.setId(id);
-		this.setName(name);
-		this.setDescription(description);
+		this.setCompany(company);
+		this.setProduct(product);
 		this.setPrice(price);
+	}
+	
+	public Item(Long id, String company, String product, double price) {
+		this.setId(id);
+		this.setCompany(company);
+		this.setProduct(product);
+		this.setPrice(price + "");
 	}
 	
 //	GETTERS
@@ -24,12 +31,12 @@ public class Item {
 		return this.id;
 	}
 	
-	public String getName() {
-		return this.name;
+	public String getCompany() {
+		return this.company;
 	}
 	
-	public String getDescription() {
-		return this.description;
+	public String getProduct() {
+		return this.product;
 	}
 	
 	public double getPriceDouble() {
@@ -46,12 +53,12 @@ public class Item {
 		this.id = newId;
 	}
 	
-	public void setName(String newName) {
-		this.name = newName;
+	public void setCompany(String newCompany) {
+		this.company = newCompany;
 	}
 	
-	public void setDescription(String newDescription) {
-		this.description = newDescription;
+	public void setProduct(String newProduct) {
+		this.product = newProduct;
 	}
 	
 	public void setPrice(String newPrice) {
@@ -67,7 +74,7 @@ public class Item {
 //	OVERRIDES
 	@Override
 	public String toString() {
-		return "id: " + this.id + ", name: " + this.name + ", description: " + this.description + ", price: " + this.price;
+		return "id: " + this.id + ", company: " + this.company + ", product: " + this.product + ", price: " + this.price;
 	}
 
 	@Override
@@ -80,20 +87,20 @@ public class Item {
 			return false;
 		
 		Item other = (Item) obj;
-		if (getName() == null) {
-			if (other.getName() != null)
+		if (getCompany() == null) {
+			if (other.getCompany() != null)
 				return false;
-		} else if (!getName().equals(other.getName()))
+		} else if (!getCompany().equals(other.getCompany()))
 			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (description == null) {
-			if (other.description != null)
+		if (product == null) {
+			if (other.product != null)
 				return false;
-		} else if (!description.equals(other.description))
+		} else if (!product.equals(other.product))
 			return false;
 		if (price == null) {
 			if (other.price != null)
