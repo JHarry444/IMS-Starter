@@ -1,6 +1,7 @@
 package com.qa.ims.persistence.domain;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -62,11 +63,13 @@ public class Order {
 	
 	public void setTotal(String newTotal) {
 		BigDecimal nt = new BigDecimal(newTotal);
+		nt = nt.setScale(2, RoundingMode.CEILING);
 		this.total = nt;
 	}
 	
 	public void setTotal(double newTotal) {
 		BigDecimal nt = new BigDecimal(newTotal + "");
+		nt = nt.setScale(2, RoundingMode.CEILING);
 		this.total = nt;
 	}
 	
