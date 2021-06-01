@@ -15,6 +15,18 @@ public class Order {
 	private LocalDate orderedOn;
 	
 //	CONSTRUCTORS
+	public Order(Long customerId, double total, LocalDate orderedOn) {
+		this.setCustomerId(customerId);
+		this.setTotal(total + "");
+		this.setOrderedOn(orderedOn);
+	}
+	
+	public Order(Long customerId, String total, LocalDate orderedOn) {
+		this.setCustomerId(customerId);
+		this.setTotal(total);
+		this.setOrderedOn(orderedOn);
+	}
+	
 	public Order(Long id, Long customerId, double total, LocalDate orderedOn) {
 		this.setId(id);
 		this.setCustomerId(customerId);
