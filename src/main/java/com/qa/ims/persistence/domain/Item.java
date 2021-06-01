@@ -1,6 +1,7 @@
 package com.qa.ims.persistence.domain;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.util.Locale;
 
@@ -12,6 +13,18 @@ public class Item {
 	private BigDecimal price;
 	
 //	CONSTRUCTORS
+	public Item(String company, String product, String price) {
+		this.setCompany(company);
+		this.setProduct(product);
+		this.setPrice(price);
+	}
+	
+	public Item(String company, String product, double price) {
+		this.setCompany(company);
+		this.setProduct(product);
+		this.setPrice(price);
+	}
+	
 	public Item(Long id, String company, String product, String price) {
 		this.setId(id);
 		this.setCompany(company);
@@ -62,13 +75,15 @@ public class Item {
 	}
 	
 	public void setPrice(String newPrice) {
-		BigDecimal np = new BigDecimal(newPrice);
-		this.price = np;
+		BigDecimal nt = new BigDecimal(newPrice);
+		nt = nt.setScale(2, RoundingMode.CEILING);
+		this.price = nt;
 	}
 	
 	public void setPrice(double newPrice) {
-		BigDecimal np = new BigDecimal(newPrice + "");
-		this.price = np;
+		BigDecimal nt = new BigDecimal(newPrice + "");
+		nt = nt.setScale(2, RoundingMode.CEILING);
+		this.price = nt;
 	}
 	
 //	OVERRIDES
