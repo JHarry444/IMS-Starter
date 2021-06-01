@@ -33,6 +33,9 @@ public class DBUtils {
 		this.dbUrl = dbProps.getProperty("db.url", "");
 		this.dbUser = dbProps.getProperty("db.user", "");
 		this.dbPassword = dbProps.getProperty("db.password", "");
+		System.out.println(dbProps.getProperty("db.url", ""));
+		System.out.println(dbProps.getProperty("db.user", ""));
+		System.out.println(dbProps.getProperty("db.password", ""));
 	}
 
 	public DBUtils() {

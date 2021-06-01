@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -61,11 +60,11 @@ public class ItemDAO implements Dao<Item> {
 	}
 	
 	@Override
-	public List<Item> readAll() {
+	public ArrayList<Item> readAll() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet resultSet = statement.executeQuery("SELECT * FROM items");) {
-			List<Item> items = new ArrayList<Item>();
+			ArrayList<Item> items = new ArrayList<Item>();
 			while (resultSet.next()) {
 				items.add(modelFromResultSet(resultSet));
 			}
