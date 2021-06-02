@@ -9,6 +9,7 @@ import com.qa.ims.utils.DBUtils;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -36,8 +37,11 @@ public class OrderDAOTest {
 	
 	@Test
 	public void createTest() {
-		LocalDate ld = LocalDate.of(2021, 4, 25);
-		Order o = new Order(added1.getId(), 25.99, ld);
+		Date date = new Date();
+		date.setYear(2021);
+		date.setMonth(3);
+		date.setDate(15);
+		Order o = new Order(added1.getId(), 25.99, date);
 		Order addedOrder = orderDAO.create(o);
 		o.setId(addedOrder.getId());
 		assertEquals(o, addedOrder);

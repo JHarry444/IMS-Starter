@@ -25,10 +25,9 @@ public class OrderDAO implements Dao<Order> {
 		Long customerId = resultSet.getLong("customer_id");
 		BigDecimal total = resultSet.getBigDecimal("total");
 		Date orderedOn = resultSet.getDate("ordered_on");
-		LocalDate ordOn = LocalDate.of(orderedOn.getYear(), orderedOn.getMonth(), orderedOn.getDay());
 		
 		
-		return new Order(id, customerId, total.doubleValue(), ordOn);
+		return new Order(id, customerId, total.doubleValue(), orderedOn);
 	}
 	
 	@Override
@@ -38,7 +37,7 @@ public class OrderDAO implements Dao<Order> {
 						.prepareStatement("INSERT INTO orders(customer_id, total, ordered_on) VALUES (?, ?, ?)");) {
 			statement.setString(1, order.getCustomerId() + "");
 			statement.setString(2, order.getTotalDouble() + "");
-			statement.setDate(3, order.getOrderedOn());
+			statement.setString(3, order.getOrderedOnString());
 			statement.executeUpdate();
 			return readLatest();
 		} catch (Exception e) {
@@ -101,7 +100,7 @@ public class OrderDAO implements Dao<Order> {
 						.prepareStatement("UPDATE orders SET customer_id = ?, total = ?, ordered_on = ? WHERE id = ?");) {
 			statement.setLong(1, order.getCustomerId());
 			statement.setString(2, order.getTotalDouble() + "");
-			statement.setString(3, order.getOrderedOn());
+			statement.setString(3, order.getOrderedOnString());
 			statement.setLong(4, order.getId());
 			statement.executeUpdate();
 			return read(order.getId());
