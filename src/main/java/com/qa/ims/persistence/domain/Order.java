@@ -60,7 +60,7 @@ public class Order {
 	}
 	
 	public String getOrderedOn() {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		return orderedOn.format(formatter);
 	}
 	

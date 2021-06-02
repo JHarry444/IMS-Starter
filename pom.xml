@@ -61,12 +61,18 @@
 			<version>5.7.2</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.mockito/mockito-junit-jupiter -->
+		<dependency>
+		    <groupId>org.mockito</groupId>
+		    <artifactId>mockito-junit-jupiter</artifactId>
+		    <version>3.10.0</version>
+		    <scope>test</scope>
+		</dependency>
+		
 	</dependencies>
 
 	<build>
 		<plugins>
-			<!-- Creates a jar for the code (does not contain other dependencies which 
-				are needed for the project to run out of the box) -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
@@ -80,6 +86,8 @@
 					</archive>
 				</configuration>
 			</plugin>
+
+			
 
 			<!-- Creates a "fat jar" with jar-with-dependencies at the end of the 
 				project jar -->

@@ -45,6 +45,11 @@ public class ItemTest {
 		assertNotEquals("$99.99", item.getPriceDouble());
 	}
 	
+	@Test void constructorTest3() {
+		Item item = new Item("Bic", "Ball-Point Pen", 1.49);
+		assertNull(item.getId());
+	}
+	
 //	SETTERS
 	@Test
 	public void settersTest() {

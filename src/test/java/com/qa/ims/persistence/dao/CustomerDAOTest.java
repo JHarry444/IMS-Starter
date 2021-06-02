@@ -1,59 +1,90 @@
 package com.qa.ims.persistence.dao;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import com.qa.ims.persistence.domain.Customer;
+import com.qa.ims.persistence.domain.Item;
 import com.qa.ims.utils.DBUtils;
 
 public class CustomerDAOTest {
 
 	private final CustomerDAO DAO = new CustomerDAO();
 
-	@Before
+	@BeforeEach
 	public void setup() {
 		DBUtils.connect();
 		DBUtils.getInstance().init("src/test/resources/sql-schema.sql", "src/test/resources/sql-data.sql");
 	}
 
 	@Test
-	public void testCreate() {
-		final Customer created = new Customer(2L, "chris", "perrins");
-		assertEquals(created, DAO.create(created));
+	public void testCreate() throws SQLException{
+		final Customer CREATED = new Customer("chris", "perrins");
+		final Customer CREATED2 = DAO.create(CREATED);
+		CREATED.setId(CREATED2.getId());
+		assertEquals(CREATED, CREATED2);
+		Customer c2 = new Customer((long) 1, "John", "Smith");
+		Customer added2 = DAO.create(c2);
+		Customer c3 = new Customer((long) 1, "John", "Smith");
+		Customer added3 = DAO.create(c3);
 	}
 
 	@Test
-	public void testReadAll() {
-		List<Customer> expected = new ArrayList<>();
-		expected.add(new Customer(1L, "jordan", "harrison"));
-		assertEquals(expected, DAO.readAll());
+	public void readAllTest() {
+		ArrayList<Customer> rows = DAO.readAll();
+		for (Customer c : rows) {
+			assertTrue(c instanceof Customer);
+		}
 	}
 
 	@Test
 	public void testReadLatest() {
-		assertEquals(new Customer(1L, "jordan", "harrison"), DAO.readLatest());
+		Customer c = new Customer("Person", "Example");
+		Customer addedCustomer = DAO.create(c);
+		c.setId(addedCustomer.getId());
+		Customer latest = DAO.readLatest();
+		assertEquals(c, latest);
 	}
 
 	@Test
-	public void testRead() {
-		final long ID = 1L;
-		assertEquals(new Customer(ID, "jordan", "harrison"), DAO.read(ID));
+	public void testRead() throws SQLException {
+		Customer c = new Customer("Wayne", "Campbell");
+		Customer addedCustomer = DAO.create(c);
+		c.setId(addedCustomer.getId());
+		Customer readCustomer = DAO.read(addedCustomer.getId());
+		assertEquals(c, readCustomer);
+		DAO.read((long) -111111);
 	}
 
 	@Test
 	public void testUpdate() {
-		final Customer updated = new Customer(1L, "chris", "perrins");
-		assertEquals(updated, DAO.update(updated));
+		Customer c = new Customer("Lucy", "Ricardo");
+		Customer addedCustomer = DAO.create(c);
+		Customer updatedCustomer = new Customer("Ricky", "Ricardo");
+		updatedCustomer.setId(addedCustomer.getId());
+		Customer updatedCustomerReturned = DAO.update(updatedCustomer);
+		assertNotEquals("Lucy", updatedCustomerReturned.getFirstName());
+		assertEquals("Ricky", updatedCustomerReturned.getFirstName());
+		assertEquals("Ricardo", updatedCustomerReturned.getSurname());
+		assertEquals(addedCustomer.getId(), updatedCustomerReturned.getId());
+		Customer c2 = new Customer((long) -1111111, "John", "Smith");
 
 	}
 
 	@Test
 	public void testDelete() {
-		assertEquals(1, DAO.delete(1));
+		Customer c = new Customer("Person", "Example");
+		Customer addedCustomer = DAO.create(c);
+		int result = DAO.delete(addedCustomer.getId());
+		assertEquals(1, result);
+		assertNotEquals(0, result);
 	}
 }
