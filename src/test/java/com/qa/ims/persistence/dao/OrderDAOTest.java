@@ -37,11 +37,7 @@ public class OrderDAOTest {
 	
 	@Test
 	public void createTest() {
-		Date date = new Date();
-		date.setYear(2021);
-		date.setMonth(3);
-		date.setDate(15);
-		Order o = new Order(added1.getId(), 25.99, date);
+		Order o = new Order(added1.getId(), 25.99, LocalDate.of(2020, 2, 10));
 		Order addedOrder = orderDAO.create(o);
 		o.setId(addedOrder.getId());
 		assertEquals(o, addedOrder);
