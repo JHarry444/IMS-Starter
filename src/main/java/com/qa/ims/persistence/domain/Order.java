@@ -5,36 +5,39 @@ import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Locale;
+
+import com.qa.ims.persistence.dao.ItemDAO;
 
 public class Order {
 
 	private Long id;
 	private Long customerId;
 	private BigDecimal total;
-	private LocalDate orderedOn;
+	private Date orderedOn;
 	
 //	CONSTRUCTORS
-	public Order(Long customerId, double total, LocalDate orderedOn) {
+	public Order(Long customerId, double total, Date orderedOn) {
 		this.setCustomerId(customerId);
 		this.setTotal(total + "");
 		this.setOrderedOn(orderedOn);
 	}
 	
-	public Order(Long customerId, String total, LocalDate orderedOn) {
+	public Order(Long customerId, String total, Date orderedOn) {
 		this.setCustomerId(customerId);
 		this.setTotal(total);
 		this.setOrderedOn(orderedOn);
 	}
 	
-	public Order(Long id, Long customerId, double total, LocalDate orderedOn) {
+	public Order(Long id, Long customerId, double total, Date orderedOn) {
 		this.setId(id);
 		this.setCustomerId(customerId);
 		this.setTotal(total + "");
 		this.setOrderedOn(orderedOn);
 	}
 	
-	public Order(Long id, Long customerId, String total, LocalDate orderedOn) {
+	public Order(Long id, Long customerId, String total, Date orderedOn) {
 		this.setId(id);
 		this.setCustomerId(customerId);
 		this.setTotal(total);
@@ -59,9 +62,21 @@ public class Order {
 		return this.total.doubleValue();
 	}
 	
-	public String getOrderedOn() {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-		return orderedOn.format(formatter);
+	public Date getOrderedOn() {
+		return this.orderedOn;
+	}
+	
+	public String getOrderedOnString() {
+		int year = this.orderedOn.getYear();
+		String month = this.orderedOn.getMonth() + "";
+		String day = this.orderedOn.getDate() + "";
+		if (month.length() == 1) {
+			month = 0 + month;
+		}
+		if (day.length() == 1) {
+			day = 0 + day;
+		}
+		return year + "-" + month + "-" + day;
 	}
 	
 //	SETTERS
@@ -85,14 +100,14 @@ public class Order {
 		this.total = nt;
 	}
 	
-	public void setOrderedOn(LocalDate newOrderedOn) {
+	public void setOrderedOn(Date newOrderedOn) {
 		this.orderedOn = newOrderedOn;
 	}
 	
 //	OVERRIDES
 	@Override
 	public String toString() {
-		return "id: " + this.getId() + ", customerId: " + this.getCustomerId() + ", total: " + this.getTotalDouble() + ", orderedOn: " + this.getOrderedOn();
+		return "id: " + this.getId() + ", customerId: " + this.getCustomerId() + ", total: " + this.getTotalDouble() + ", orderedOn: " + this.getOrderedOnString();
 	}
 	
 	@Override
