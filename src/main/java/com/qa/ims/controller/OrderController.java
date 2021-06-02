@@ -29,7 +29,7 @@ public class OrderController implements CrudController<Order> {
 		Long customerId = utils.getLong();
 		LOGGER.info("Please enter the total amount (ex. \"19.99\")");
 		Double total = utils.getDouble();
-		LOGGER.info("Please enter the date the order was placed (ex. \"YYYY-MM-DD\")");
+		LOGGER.info("Please enter the date the order was placed *MUST BE IN \"YYYY-MM-DD\" FORMAT*");
 		String date = utils.getString();
 		String[] dateArr = date.split("-", 0);
 //		PUT EXCEPTION HANDLERS HERE!!!!!!!!!
