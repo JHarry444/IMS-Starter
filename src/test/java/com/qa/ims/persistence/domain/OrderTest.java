@@ -37,6 +37,14 @@ public class OrderTest {
 		assertEquals("2021-01-12", order.getOrderedOn());
 	}
 	
+	@Test
+	public void constructorTest3() {
+		Order o = new Order((long) 22, 199.99, LocalDate.of(2020, 12, 22));
+		assertNull(o.getId());
+		Order o2 = new Order((long) 23, "20.88", LocalDate.of(2020, 1, 2));
+		assertNull(o.getId());
+	}
+	
 //	SETTERS
 	@Test
 	public void settersTest() {
@@ -82,5 +90,8 @@ public class OrderTest {
 		assertFalse(order4.equals(order5));
 		Order order6 = new Order((long) 843, (long) 414, "20.99", ordOn4);
 		assertTrue(order5.equals(order6));
+		Boolean res1 = order5.equals(null);
+		Item i = new Item("Spaulding", "Basketball", 19.99);
+		Boolean res2 = order5.equals(i);
 	}
 }

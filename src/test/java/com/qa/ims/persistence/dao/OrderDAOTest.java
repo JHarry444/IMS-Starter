@@ -43,50 +43,47 @@ public class OrderDAOTest {
 		assertEquals(o, addedOrder);
 	}
 	
-//	@Test
-//	public void readTest() {
-//		Item i = new Item("Mead", "100 Page Notebook- Blue", "1.49");
-//		Item item = itemDAO.create(i);
-//		Item testItem = itemDAO.read(item.getId());
-//		assertEquals("Mead", testItem.getCompany());
-//		assertEquals("100 Page Notebook- Blue", testItem.getProduct());
-//		assertEquals("$1.49", testItem.getPriceString());
-//		assertEquals(1.49, testItem.getPriceDouble());
-//		assertNotEquals("$1.49", testItem.getPriceDouble());
-//		Item testItem2 = itemDAO.read((long) -11111);
-//		
-//	}
-//	
-//	@Test
-//	public void readAllTest() {
-//		ArrayList<Item> rows = itemDAO.readAll();
-//		for (Item i : rows) {
-//			assertTrue(i instanceof Item);
-//		}
-//	}
-//	
-//	@Test
-//	public void updateTest() {
-//		Item i = new Item("Wilson", "Volleyball", "14.99");
-//		Item testItem = itemDAO.create(i);
-//		Long id = testItem.getId();
-//		assertEquals(testItem.getCompany(), "Wilson");
-//		assertEquals(testItem.getProduct(), "Volleyball");
-//		assertEquals(testItem.getPriceString(), "$14.99");
-//		Item updated = new Item(id, "Wilson", "Volleyball", "19.99");
-//		Item updatedTestItem = itemDAO.update(updated);
-//		assertEquals(19.99, updatedTestItem.getPriceDouble());
-//	}
-//	
-//	@Test
-//	public void deleteTest() {
-//		Item i = new Item("Spaulding", "Basketball", "24.99");
-//		Item testItem = itemDAO.create(i);
-//		int deleted = itemDAO.delete(testItem.getId());
-//		assertEquals(1, deleted);
-//		int deleted2 = itemDAO.delete(testItem.getId());
-//		assertEquals(0, deleted2);
-//		int deleted3 = itemDAO.delete((long) -100);
-//		assertEquals(0, deleted3);
-//	}
+	@Test
+	public void readTest() {
+		Order i = new Order(added1.getId(), 29.55, LocalDate.of(2020, 11, 1));
+		Order order = orderDAO.create(i);
+		Order testOrder = orderDAO.read(order.getId());
+		assertEquals(29.55, testOrder.getTotalDouble());
+		assertEquals(added1.getId(), testOrder.getCustomerId());
+		assertEquals("2020-11-01", testOrder.getOrderedOn());
+		Order testOrder2 = orderDAO.read((long) -11111);
+	}
+	
+	@Test
+	public void readAllTest() {
+		ArrayList<Order> rows = orderDAO.readAll();
+		for (Order i : rows) {
+			assertTrue(i instanceof Order);
+		}
+	}
+	
+	@Test
+	public void updateTest() {
+		Order o = new Order(added2.getId(), 102.34, LocalDate.of(2020, 5, 18));
+		Order testOrder = orderDAO.create(o);
+		Long id = testOrder.getId();
+		assertEquals(testOrder.getCustomerId(), added2.getId());
+		assertEquals(testOrder.getTotalDouble(), 102.34);
+		assertEquals(testOrder.getOrderedOn(), "2020-05-18");
+		Order updated = new Order(id, added2.getId(), 102.34, LocalDate.of(2020, 5, 19));
+		Order updatedTestOrder = orderDAO.update(updated);
+		assertEquals("2020-05-19", updatedTestOrder.getOrderedOn());
+	}
+	
+	@Test
+	public void deleteTest() {
+		Order o = new Order(added3.getId(), 1.99, LocalDate.of(2020, 4, 14));
+		Order testOrder = orderDAO.create(o);
+		int deleted = orderDAO.delete(testOrder.getId());
+		assertEquals(1, deleted);
+		int deleted2 = orderDAO.delete(testOrder.getId());
+		assertEquals(0, deleted2);
+		int deleted3 = orderDAO.delete((long) -100);
+		assertEquals(0, deleted3);
+	}
 }

@@ -1,10 +1,12 @@
 package com.qa.ims.controllers;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -16,6 +18,9 @@ import com.qa.ims.persistence.dao.ItemDAO;
 import com.qa.ims.persistence.domain.Item;
 import com.qa.ims.utils.Utils;
 
+import org.mockito.junit.jupiter.MockitoExtension;
+
+@ExtendWith(MockitoExtension.class)
 @RunWith(MockitoJUnitRunner.class)
 public class ItemControllerTest {
 
@@ -57,17 +62,35 @@ public class ItemControllerTest {
 
 	@Test
 	public void updateTest() {
-		Item updated = new Item("Bic", "Ball-Point Pen", "1.49");
+		Item i = new Item((long) 12, "Bic", "Ball-Point Pen", "1.49");
 
-		Mockito.when(this.utils.getLong()).thenReturn(null);
-		Mockito.when(this.utils.getString()).thenReturn(updated.getCompany(), updated.getProduct(), updated.getPriceString());
-		Mockito.when(this.dao.update(updated)).thenReturn(updated);
-
-		assertEquals(updated, this.controller.update());
+		Mockito.when(this.utils.getLong()).thenReturn((long) 12);
+		Mockito.when(this.utils.getString()).thenReturn(i.getCompany(), i.getProduct(), i.getPriceDouble() + "");
+		Mockito.when(this.dao.update(i)).thenReturn(i);
+		
+		Item updated = controller.update();
+		
+		assertEquals(i.getId(),updated.getId());
+		assertEquals(i.getCompany(), updated.getCompany());
+		assertTrue(i instanceof Item);
 
 		Mockito.verify(this.utils, Mockito.times(1)).getLong();
 		Mockito.verify(this.utils, Mockito.times(3)).getString();
 		Mockito.verify(this.dao, Mockito.times(1)).update(updated);
+	}
+	
+	@Test
+	public void deleteTest() {
+		Item i2 = new Item((long) 22, "Wilson", "Basketball", 19.99);
+		
+		Mockito.when(this.utils.getLong()).thenReturn((long) 22);
+		Mockito.when(this.dao.delete(22)).thenReturn(1);
+		
+		int result = controller.delete();
+		assertEquals(1, result);
+		
+		Mockito.verify(this.utils, Mockito.times(1)).getLong();
+		Mockito.verify(this.dao, Mockito.times(1)).delete(22);
 	}
 
 }

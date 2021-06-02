@@ -4,6 +4,7 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.junit.Before;
@@ -25,11 +26,15 @@ public class CustomerDAOTest {
 	}
 
 	@Test
-	public void testCreate() {
+	public void testCreate() throws SQLException{
 		final Customer CREATED = new Customer("chris", "perrins");
 		final Customer CREATED2 = DAO.create(CREATED);
 		CREATED.setId(CREATED2.getId());
 		assertEquals(CREATED, CREATED2);
+		Customer c2 = new Customer((long) 1, "John", "Smith");
+		Customer added2 = DAO.create(c2);
+		Customer c3 = new Customer((long) 1, "John", "Smith");
+		Customer added3 = DAO.create(c3);
 	}
 
 	@Test
@@ -50,12 +55,13 @@ public class CustomerDAOTest {
 	}
 
 	@Test
-	public void testRead() {
+	public void testRead() throws SQLException {
 		Customer c = new Customer("Wayne", "Campbell");
 		Customer addedCustomer = DAO.create(c);
 		c.setId(addedCustomer.getId());
 		Customer readCustomer = DAO.read(addedCustomer.getId());
 		assertEquals(c, readCustomer);
+		DAO.read((long) -111111);
 	}
 
 	@Test
@@ -69,6 +75,7 @@ public class CustomerDAOTest {
 		assertEquals("Ricky", updatedCustomerReturned.getFirstName());
 		assertEquals("Ricardo", updatedCustomerReturned.getSurname());
 		assertEquals(addedCustomer.getId(), updatedCustomerReturned.getId());
+		Customer c2 = new Customer((long) -1111111, "John", "Smith");
 
 	}
 
