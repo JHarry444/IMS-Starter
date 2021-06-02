@@ -3,9 +3,9 @@ package com.qa.ims.controllers;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -17,6 +17,9 @@ import com.qa.ims.persistence.dao.CustomerDAO;
 import com.qa.ims.persistence.domain.Customer;
 import com.qa.ims.utils.Utils;
 
+import org.mockito.junit.jupiter.MockitoExtension;
+
+@ExtendWith(MockitoExtension.class)
 @RunWith(MockitoJUnitRunner.class)
 public class CustomerControllerTest {
 
@@ -45,7 +48,7 @@ public class CustomerControllerTest {
 
 	@Test
 	public void testReadAll() {
-		List<Customer> customers = new ArrayList<>();
+		ArrayList<Customer> customers = new ArrayList<>();
 		customers.add(new Customer(1L, "jordan", "harrison"));
 
 		Mockito.when(dao.readAll()).thenReturn(customers);

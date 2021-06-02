@@ -9,8 +9,8 @@ public class CustomerTest {
 //	CONSTRUCTORS
 	@Test
 	public void constructorTest1() {
-		Customer c = new Customer((long) 1, "Bob", "Smith");
-		assertEquals(1, c.getId());
+		Customer c = new Customer((long) 5, "Bob", "Smith");
+		assertEquals(5, c.getId());
 		assertEquals("Bob", c.getFirstName());
 		assertEquals("Smith", c.getSurname());
 	}
