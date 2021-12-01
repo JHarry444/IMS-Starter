@@ -3,14 +3,14 @@ package com.qa.ims.persistence.domain;
 public class Item {
     private Long id;
     private String name;
-    private Integer value;
+    private Double value;
 
-    public Item(String name, Integer value) {
+    public Item(String name, Double value) {
         this.setName(name);
         this.setValue(value);
     }
 
-    public Item(Long id, String name, Integer value) {
+    public Item(Long id, String name, Double value) {
         this.setId(id);
         this.setName(name);
         this.setValue(value);
@@ -32,11 +32,11 @@ public class Item {
         this.name = name;
     }
 
-    public Integer getValue() {
+    public Double getValue() {
         return value;
     }
 
-    public void setValue(Integer value) {
+    public void setValue(Double value) {
         this.value = value;
     }
 
