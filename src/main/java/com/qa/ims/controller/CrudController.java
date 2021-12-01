@@ -10,6 +10,10 @@ public interface CrudController<T> {
 
 	List<T> readAll();
 
+	T read();
+
+	T readByName();
+
 	T create();
 
 	T update();
