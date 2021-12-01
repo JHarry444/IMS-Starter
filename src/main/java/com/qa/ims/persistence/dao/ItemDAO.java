@@ -59,6 +59,22 @@ public class ItemDAO implements Dao<Item>{
         return null;
     }
 
+
+    public Item readByName(String name) {
+        try (Connection connection = DBUtils.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement("SELECT * FROM items WHERE name = ?");) {
+            statement.setString(1, name);
+            try (ResultSet resultSet = statement.executeQuery();) {
+                resultSet.next();
+                return modelFromResultSet(resultSet);
+            }
+        } catch (Exception e) {
+            LOGGER.debug(e);
+            LOGGER.error(e.getMessage());
+        }
+        return null;
+    }
+
     @Override
     public Item create(Item item) {
         try (Connection connection = DBUtils.getInstance().getConnection();
