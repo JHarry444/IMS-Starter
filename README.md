@@ -9,26 +9,21 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+A MySQL database must be created with the SQL source located at `src\main\resources\qadump.sql`:
 
 ```
-Give examples
+CREATE DATABASE ims;
+USE ims;
+SOURCE src\main\resources\qadump.sql
 ```
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
+To build and install dependencies, change the working directory to the project root
+and type the following:
 
 ```
-until finished
+mvn install
 ```
 
 End with an example of getting some data out of the system or using it for a little demo
