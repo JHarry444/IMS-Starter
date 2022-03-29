@@ -90,6 +90,7 @@ public class ItemDAO implements Dao<Item> {
 						.prepareStatement("INSERT INTO items(name, description) VALUES(?, ?)");) {
 			statement.setString(1, item.getName());
 			statement.setString(2, item.getDescription());
+			statement.setDouble(3, item.getPrice());
 			statement.executeUpdate();
 			return readLatest();
 		} catch (Exception e) {

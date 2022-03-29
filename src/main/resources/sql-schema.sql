@@ -15,6 +15,8 @@ CREATE TABLE IF NOT EXISTS `ims`.`items` (
     `id` INT(11) NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(64) NOT NULL UNIQUE,
     `description` VARCHAR(255) NOT NULL,
-    `price` DECIMAL(4 , 2 ) DEFAULT 0,
+    `price` DECIMAL(4 , 2) NOT NULL,
     PRIMARY KEY (`id`)
 );
+
+SELECT * FROM `ims`.`items`;
