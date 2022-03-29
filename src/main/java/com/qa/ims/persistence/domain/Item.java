@@ -7,20 +7,20 @@ public class Item {
 	private Long id;
 	private String name;
 	private String description;
-	private float price;
+	private double price;
 	
-	public Item(String name, String description) {
+	public Item(String name, String description, double price) {
 		this.setName(name);
 		this.setDescription(description);
+		this.setPrice(price);
 	}
 	
-	public Item(Long id, String name, String description, float price) {
+	public Item(Long id, String name, String description, double price) {
 		this.setId(id);
 		this.setName(name);
 		this.setDescription(description);
 		this.setPrice(price);
 	}
-
 
 
 	public Long getId() {
@@ -59,14 +59,14 @@ public class Item {
 
 
 
-	public float getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
 
 
-	public void setPrice(float price) {
-		this.price = price;
+	public void setPrice(double price2) {
+		this.price = price2;
 	}
 
 	@Override
@@ -84,8 +84,11 @@ public class Item {
 			return false;
 		Item other = (Item) obj;
 		return Objects.equals(description, other.description) && Objects.equals(id, other.id)
-				&& Objects.equals(name, other.name) && Float.floatToIntBits(price) == Float.floatToIntBits(other.price);
+				&& Objects.equals(name, other.name)
+				&& Double.doubleToLongBits(price) == Double.doubleToLongBits(other.price);
 	}
+
+
 	
 	
 }
