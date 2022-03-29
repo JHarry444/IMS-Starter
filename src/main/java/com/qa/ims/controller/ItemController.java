@@ -16,6 +16,12 @@ public class ItemController implements CrudController<Item> {
 
 	private ItemDAO itemDAO;
 	private Utils utils;
+	
+	public ItemController(ItemDAO itemDAO, Utils utils) {
+		super();
+		this.itemDAO = itemDAO;
+		this.utils = utils;
+	}
 //  This will read all of the items in the list 'Item'.
 	@Override
 	public List<Item> readAll() {
@@ -49,7 +55,7 @@ public class ItemController implements CrudController<Item> {
 		String description = utils.getString();
 		LOGGER.info("Please enter a price for the item");
 		double price = utils.getDouble();
-		Item item = itemDAO.update(new Item(name, description, price));
+		Item item = itemDAO.update(new Item(id, name, description, price));
 		return item;
 	}
 //  This will allow a user to delete an item with the matching id they enter.

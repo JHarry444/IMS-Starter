@@ -69,9 +69,21 @@ public class Item {
 		this.price = price2;
 	}
 
+	
+	
+	@Override
+	public String toString() {
+		return "Item [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price + "]";
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(description, id, name, price);
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((description == null) ? 0 : description.hashCode());
+		return result;
 	}
 
 	@Override
