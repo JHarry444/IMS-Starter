@@ -11,7 +11,6 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.qa.ims.persistence.domain.Customer;
 import com.qa.ims.persistence.domain.Item;
 import com.qa.ims.utils.DBUtils;
 
@@ -22,11 +21,10 @@ public class ItemDAO implements Dao<Item> {
 	// This will essentially unwrap data from the sql table results row by row.
 	@Override
 	public Item modelFromResultSet(ResultSet resultSet) throws SQLException {
-		// TODO Auto-generated method stub
 		Long id = resultSet.getLong("id");
 		String name = resultSet.getString("name");
 		String description = resultSet.getString("description");
-		float price = resultSet.getFloat("price");
+		double price = resultSet.getDouble("price");
 		return new Item(id, name, description, price);
 	}
 
@@ -87,7 +85,7 @@ public class ItemDAO implements Dao<Item> {
 	public Item create(Item item) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection
-						.prepareStatement("INSERT INTO items(name, description) VALUES(?, ?)");) {
+						.prepareStatement("INSERT INTO items(name, description, price) VALUES(?, ?, ?)");) {
 			statement.setString(1, item.getName());
 			statement.setString(2, item.getDescription());
 			statement.setDouble(3, item.getPrice());
@@ -106,10 +104,11 @@ public class ItemDAO implements Dao<Item> {
 	public Item update(Item item) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				PreparedStatement statement = connection
-						.prepareStatement("UPDATE items SET name = ?, description = ? WHERE id = ?");) {
+						.prepareStatement("UPDATE items SET name = ?, description = ?, price = ? WHERE id = ?");) {
 			statement.setString(1, item.getName());
 			statement.setString(2, item.getDescription());
-			statement.setLong(3, item.getId());
+			statement.setDouble(3, item.getPrice());
+			statement.setLong(4, item.getId());
 			statement.executeUpdate();
 			return read(item.getId());
 		} catch (Exception e) {
