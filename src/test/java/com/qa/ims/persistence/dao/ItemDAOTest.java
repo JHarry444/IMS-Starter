@@ -1,7 +1,9 @@
 package com.qa.ims.persistence.dao;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,4 +57,21 @@ public class ItemDAOTest {
 	public void testDelete() {
 		assertEquals(1, DAO.delete(1));
 	}
+	
+	@Test
+	public void testReadInvalidID() {
+		final long ID = 5345L;
+		assertNull(DAO.read(ID));
+	}
+	
+//	@Test
+//	public void testDeleteCatch() {
+//		assertNull(DAO.delete(0));
+//	}
+//	
+//	@Test
+//	public void testCreateCatch() {
+//		
+//	}
+//	
 }
