@@ -37,6 +37,7 @@ public class Order {
 	public ArrayList<Item> getItem() {
 		return item;
 	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(customer, id, item);
@@ -53,6 +54,10 @@ public class Order {
 		Order other = (Order) obj;
 		return Objects.equals(customer, other.customer) && Objects.equals(id, other.id)
 				&& Objects.equals(item, other.item);
+	}
+
+	public Long getValue() {
+		return id;
 	}
 
 }
