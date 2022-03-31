@@ -8,14 +8,17 @@ public class Order {
 	private Long id;
 	private Customer customer;
 	private ArrayList<Item> item;
-	
+
 	public Order() {
 	}
-	
+
 	public Order(Long id, Customer customer, ArrayList<Item> item) {
 		this.id = id;
 		this.customer = customer;
 		this.item = item;
+	}
+
+	public Order(Long id) {
 	}
 
 	public Long getId() {
@@ -37,7 +40,7 @@ public class Order {
 	public ArrayList<Item> getItem() {
 		return item;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(customer, id, item);

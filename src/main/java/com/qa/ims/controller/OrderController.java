@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.qa.ims.persistence.dao.OrderDAO;
+import com.qa.ims.persistence.domain.Item;
 import com.qa.ims.persistence.domain.Order;
 import com.qa.ims.utils.Utils;
 
@@ -17,47 +18,43 @@ public class OrderController implements CrudController<Order> {
 	private Utils utils;
 	
 	public OrderController(OrderDAO orderDAO, Utils utils) {
-		// TODO Auto-generated constructor stub
+		super();
+		this.orderDAO = orderDAO;
+		this.utils = utils;
 	}
 
 	@Override
 	public List<Order> readAll() {
-		// TODO Auto-generated method stub
+		List<Order> orders = orderDAO.readAll();
+		for(Order order : orders) {
+			LOGGER.info(orders);
+		}
 		return null;
 	}
 
 	@Override
 	public Order create() {
-		// TODO Auto-generated method stub
-		return null;
+		LOGGER.info("Please enter a customer's id");
+		Long id = utils.getLong();
+		Order order = orderDAO.create(new Order(id));
+		LOGGER.info("Order created");
+		return order;
 	}
 
 	@Override
 	public Order update() {
-		// TODO Auto-generated method stub
-		return null;
+		LOGGER.info("Please enter the id of the order you would like to update");
+		Long id = utils.getLong();
+		Order order = orderDAO.update(new Order(id));
+		LOGGER.info("Order updated");
+		return order;
 	}
 
 	@Override
 	public int delete() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public OrderDAO getOrderDAO() {
-		return orderDAO;
-	}
-
-	public void setOrderDAO(OrderDAO orderDAO) {
-		this.orderDAO = orderDAO;
-	}
-
-	public Utils getUtils() {
-		return utils;
-	}
-
-	public void setUtils(Utils utils) {
-		this.utils = utils;
+		LOGGER.info("Please enter the id of the order you would like to delete");
+		Long id = utils.getLong();
+		return orderDAO.delete(id);
 	}
 	
 }
